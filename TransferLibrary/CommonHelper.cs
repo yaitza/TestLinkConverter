@@ -8,6 +8,11 @@ namespace TransferLibrary
 {
     static class CommonHelper
     {
+        /// <summary>
+        /// 删除HTML标签以及删除字符串换行符
+        /// </summary>
+        /// <param name="sourceStr">源字符串</param>
+        /// <returns>处理后字符串</returns>
         public static string DelTags(string sourceStr)
         {
             string newStr = CommonHelper.DelHtmlTags(sourceStr);
