@@ -11,9 +11,9 @@ TestLink XML Transfer Excel or Excel Transfer XML.
 1. 代码支持多层testsuite嵌套，均能解析出对应的testcase，图示例较为简单，只作为说明。
 
 ---
-# 问题  
+## 问题  
 代码过程中以及环境设置中出现的相关问题。
-## 1. 调用Excel相关类库市环境配置出现的问题
+### 1. 调用Excel相关类库时环境配置问题
 **问题：**  
 
 无法嵌入互操作类型“Microsoft.Office.Interop.Word.ApplicationClass”。请改用适用的接口。
@@ -27,11 +27,11 @@ TestLink XML Transfer Excel or Excel Transfer XML.
 **说明:**
 引用Excel类库：Microsoft Excel 14.0 Object Library，需要安装Office 2010.  
 
-![pic2](/Resource/Image/pic1.png)
+![pic2](/Resource/Image/pic2.png)
 
-# 临时记录
-## 1.
+## 临时记录
+### 1.
 http://wangsx.cn/?p=648
 
-## 2.  
+### 2.  
 http://blog.csdn.net/zzukun/article/details/50830439
