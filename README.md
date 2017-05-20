@@ -9,6 +9,7 @@ TestLink XML Transfer Excel or Excel Transfer XML.
 ![pic1](/Resource/Image/pic1.png)
 
 1. 代码支持多层testsuite嵌套，均能解析出对应的testcase，图示例较为简单，只作为说明。
+2. 本次针对XML解析至解析了常规使用字段，未解析全部导出XML字段。
 
 ---
 ## 问题  
@@ -18,7 +19,7 @@ TestLink XML Transfer Excel or Excel Transfer XML.
 
 无法嵌入互操作类型“Microsoft.Office.Interop.Word.ApplicationClass”。请改用适用的接口。
 错误 4317 无法嵌入互操作类型“Microsoft.Office.Interop.Word.ApplicationClass”。请改用适用的接口。
-类型“Microsoft.Office.Interop.Word.ApplicationClass”未定义构造函数
+类型“Microsoft.Office.Interop.Word.ApplicationClass”未定义构造函数。
 
 **解决办法：**  
 
