@@ -12,6 +12,10 @@ using TransferLibrary;
 
 namespace TestLinkTransfer
 {
+    //TODO 链接yaitza地址
+    //TODO 添加打赏功能
+    //TODO 处理时进度条
+    //TODO 处理完成后保存文件功能
     public partial class Form1 : Form
     {
         public Form1()
@@ -23,8 +27,52 @@ namespace TestLinkTransfer
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                filePathtB.Text = openFileDialog.FileName;
+                filePathTb.Text = openFileDialog.FileName;
             }
+        }
+
+        private void startBtn_Click(object sender, EventArgs e)
+        {
+            if (this.FileChecked(filePathTb.Text)) return;
+            if(xeRb.Checked)
+            { 
+                XmlAnalysis xmlAnalysis = new XmlAnalysis(filePathTb.Text);
+                XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
+                List<TestCase> tcList = xtm.OutputTestCases();
+                ExcelHandler eh = new ExcelHandler(tcList);
+                eh.WriteExcel();
+            }
+            MessageBox.Show("Comlpete Transfer!", "Info");
+
+        }
+
+        /// <summary>
+        /// 检查输入文件地址是否符合要求
+        /// </summary>
+        /// <param name="filePath">文件地址</param>
+        /// <returns>isChecked</returns>
+        private bool FileChecked(string filePath)
+        {
+            bool isChecked = false;
+            if (filePathTb.Text == string.Empty)
+            {
+                MessageBox.Show("请输入文件地址.", "Warning");
+                isChecked = true;
+            }
+
+            if (!(filePathTb.Text.EndsWith(".xml") || filePathTb.Text.EndsWith(".xls") || filePathTb.Text.EndsWith(".xlsx")))
+            {
+                MessageBox.Show("输入文件要求为xml，xls或xlsx格式.", "Warning");
+                isChecked = true;
+            }
+
+            if (!System.IO.File.Exists(filePathTb.Text))
+            {
+                MessageBox.Show($"{filePathTb.Text} 已不存在，请重新输入文件地址.", "Warning");
+                isChecked = true;
+            }
+
+            return isChecked;
         }
     }
 }
