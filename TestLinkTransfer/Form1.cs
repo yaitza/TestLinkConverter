@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TransferModel;
@@ -33,21 +34,74 @@ namespace TestLinkTransfer
 
         private void startBtn_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < 100; i++)
-            {
-                progressBar.Value++;
-            }
+            Thread myThread = new Thread(DoData);
+            myThread.IsBackground = true;
+            myThread.Start(100); //线程开始  
+             
+
             if (this.FileChecked(filePathTb.Text)) return;
             if(xeRb.Checked)
             { 
-                XmlAnalysis xmlAnalysis = new XmlAnalysis(filePathTb.Text);
-                XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
-                List<TestCase> tcList = xtm.OutputTestCases();
-                ExcelHandler eh = new ExcelHandler(tcList);
-                eh.WriteExcel();
+                Thread xeThread = new Thread(XmlToExcel);
+                xeThread.Start(filePathTb.Text);
             }
-            MessageBox.Show("Comlpete Transfer!", "Info");
+            dt = DateTime.Now;  //开始记录当前时间 
 
+        }
+
+        private void XmlToExcel(object filePath)
+        {
+            string fileDir = (string) filePath;
+            XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
+            XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
+            List<TestCase> tcList = xtm.OutputTestCases();
+            ExcelHandler eh = new ExcelHandler(tcList);
+            eh.WriteExcel();
+            isSuccess = true;
+        }
+
+        DateTime dt;
+        private bool isSuccess = false;
+
+        private delegate void DoDataDelegate(object number);
+        /// <summary>  
+        /// 进行循环  
+        /// </summary>  
+        /// <param name="number"></param>  
+        private void DoData(object number)
+        {
+            if (progressBar.InvokeRequired)
+            {
+                DoDataDelegate d = DoData;
+                progressBar.Invoke(d, number);
+            }
+            else
+            {
+                progressBar.Maximum = (int)number;
+                while (true)
+                {
+                    progressBar.Value += 5;
+                    Thread.Sleep(100);
+                    Application.DoEvents();
+                    if (progressBar.Value == 105)
+                    {
+                        progressBar.Value = 0;
+                    }
+                    if (isSuccess)
+                    {
+                        break;
+                    }
+                }
+//                for (int i = 0; i <= (int)number; i++)
+//                {
+//                    progressBar.Value = i;
+//                    Thread.Sleep(100);
+//                    Application.DoEvents();
+//                }
+//                MessageBox.Show(DateTime.Now.Subtract(dt).ToString());  //循环结束截止时间 
+                progressBar.Value = 0;
+                MessageBox.Show($"Comlpete Transfer! Time:{DateTime.Now.Subtract(dt).ToString()}.", "Info");
+            }
         }
 
         /// <summary>
