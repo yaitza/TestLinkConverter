@@ -33,6 +33,10 @@ namespace TestLinkTransfer
 
         private void startBtn_Click(object sender, EventArgs e)
         {
+            for (int i = 0; i < 100; i++)
+            {
+                progressBar.Value++;
+            }
             if (this.FileChecked(filePathTb.Text)) return;
             if(xeRb.Checked)
             { 
