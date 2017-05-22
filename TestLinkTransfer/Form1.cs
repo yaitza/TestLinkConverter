@@ -14,7 +14,7 @@ namespace TestLinkTransfer
 {
     //TODO 链接yaitza地址
     //TODO 添加打赏功能
-    //TODO 处理时进度条
+    //TODO 处理线程异步执行并添加处理时进度条
     //TODO 处理完成后保存文件功能
     public partial class Form1 : Form
     {
