@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TransferModel;
 using TransferLibrary;
+using TransferModel;
 
 namespace TestLinkTransfer
 {
@@ -34,9 +29,10 @@ namespace TestLinkTransfer
 
         private void startBtn_Click(object sender, EventArgs e)
         {
-            Thread myThread = new Thread(DoData);
-            myThread.IsBackground = true;
-            myThread.Start(100); //线程开始  
+            this.isSuccess = false;
+            progressBar.Style = ProgressBarStyle.Marquee;
+            Thread myThread = new Thread(DoData) {IsBackground = true};
+            myThread.Start(); //线程开始  
              
 
             if (this.FileChecked(filePathTb.Text)) return;
@@ -45,6 +41,8 @@ namespace TestLinkTransfer
                 Thread xeThread = new Thread(XmlToExcel);
                 xeThread.Start(filePathTb.Text);
             }
+
+
             dt = DateTime.Now;  //开始记录当前时间 
 
         }
@@ -61,45 +59,27 @@ namespace TestLinkTransfer
         }
 
         DateTime dt;
-        private bool isSuccess = false;
+        bool isSuccess = false;
 
-        private delegate void DoDataDelegate(object number);
+        private delegate void DoDataDelegate();
         /// <summary>  
         /// 进行循环  
         /// </summary>  
-        /// <param name="number"></param>  
-        private void DoData(object number)
+        private void DoData()
         {
             if (progressBar.InvokeRequired)
             {
                 DoDataDelegate d = DoData;
-                progressBar.Invoke(d, number);
+                progressBar.Invoke(d);
             }
             else
             {
-                progressBar.Maximum = (int)number;
                 while (true)
                 {
-                    progressBar.Value += 5;
-                    Thread.Sleep(100);
-                    Application.DoEvents();
-                    if (progressBar.Value == 105)
-                    {
-                        progressBar.Value = 0;
-                    }
-                    if (isSuccess)
-                    {
-                        break;
-                    }
+                    if (!isSuccess) continue;
+                    progressBar.Style = ProgressBarStyle.Blocks;
+                    break;
                 }
-//                for (int i = 0; i <= (int)number; i++)
-//                {
-//                    progressBar.Value = i;
-//                    Thread.Sleep(100);
-//                    Application.DoEvents();
-//                }
-//                MessageBox.Show(DateTime.Now.Subtract(dt).ToString());  //循环结束截止时间 
-                progressBar.Value = 0;
                 MessageBox.Show($"Comlpete Transfer! Time:{DateTime.Now.Subtract(dt).ToString()}.", "Info");
             }
         }
@@ -123,7 +103,7 @@ namespace TestLinkTransfer
                 return true;
             }
 
-            if (!System.IO.File.Exists(filePathTb.Text))
+            if (!File.Exists(filePathTb.Text))
             {
                 MessageBox.Show($"{filePathTb.Text} 已不存在，请重新输入文件地址.", "Warning");
                 return true;

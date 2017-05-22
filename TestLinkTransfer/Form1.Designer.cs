@@ -37,10 +37,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.startBtn = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.DisplayRtb = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // getFilePathBtn
             // 
+            this.getFilePathBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.getFilePathBtn.Location = new System.Drawing.Point(359, 58);
             this.getFilePathBtn.Name = "getFilePathBtn";
             this.getFilePathBtn.Size = new System.Drawing.Size(46, 23);
@@ -56,6 +58,8 @@
             // 
             // filePathTb
             // 
+            this.filePathTb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.filePathTb.Location = new System.Drawing.Point(76, 60);
             this.filePathTb.Name = "filePathTb";
             this.filePathTb.Size = new System.Drawing.Size(277, 21);
@@ -103,6 +107,7 @@
             // 
             // startBtn
             // 
+            this.startBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.startBtn.Location = new System.Drawing.Point(359, 106);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(75, 23);
@@ -113,16 +118,32 @@
             // 
             // progressBar
             // 
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar.Location = new System.Drawing.Point(14, 106);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(339, 23);
             this.progressBar.TabIndex = 7;
             // 
+            // DisplayRtb
+            // 
+            this.DisplayRtb.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DisplayRtb.BackColor = System.Drawing.SystemColors.WindowText;
+            this.DisplayRtb.ForeColor = System.Drawing.Color.Lime;
+            this.DisplayRtb.Location = new System.Drawing.Point(2, 151);
+            this.DisplayRtb.Name = "DisplayRtb";
+            this.DisplayRtb.Size = new System.Drawing.Size(442, 168);
+            this.DisplayRtb.TabIndex = 8;
+            this.DisplayRtb.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(446, 262);
+            this.ClientSize = new System.Drawing.Size(446, 323);
+            this.Controls.Add(this.DisplayRtb);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.startBtn);
             this.Controls.Add(this.label2);
@@ -149,6 +170,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.RichTextBox DisplayRtb;
     }
 }
 
