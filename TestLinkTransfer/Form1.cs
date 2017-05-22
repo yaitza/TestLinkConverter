@@ -53,26 +53,25 @@ namespace TestLinkTransfer
         /// <returns>isChecked</returns>
         private bool FileChecked(string filePath)
         {
-            bool isChecked = false;
             if (filePathTb.Text == string.Empty)
             {
                 MessageBox.Show("请输入文件地址.", "Warning");
-                isChecked = true;
+                return true;
             }
 
             if (!(filePathTb.Text.EndsWith(".xml") || filePathTb.Text.EndsWith(".xls") || filePathTb.Text.EndsWith(".xlsx")))
             {
                 MessageBox.Show("输入文件要求为xml，xls或xlsx格式.", "Warning");
-                isChecked = true;
+                return true;
             }
 
             if (!System.IO.File.Exists(filePathTb.Text))
             {
                 MessageBox.Show($"{filePathTb.Text} 已不存在，请重新输入文件地址.", "Warning");
-                isChecked = true;
+                return true;
             }
 
-            return isChecked;
+            return false;
         }
     }
 }

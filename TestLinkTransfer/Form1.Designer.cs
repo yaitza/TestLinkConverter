@@ -36,6 +36,7 @@
             this.exRb = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.startBtn = new System.Windows.Forms.Button();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // getFilePathBtn
@@ -102,7 +103,7 @@
             // 
             // startBtn
             // 
-            this.startBtn.Location = new System.Drawing.Point(359, 110);
+            this.startBtn.Location = new System.Drawing.Point(359, 106);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(75, 23);
             this.startBtn.TabIndex = 6;
@@ -110,11 +111,19 @@
             this.startBtn.UseVisualStyleBackColor = true;
             this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(14, 106);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(339, 23);
+            this.progressBar.TabIndex = 7;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(446, 262);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.startBtn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.exRb);
@@ -139,6 +148,7 @@
         private System.Windows.Forms.RadioButton exRb;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button startBtn;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }
 
