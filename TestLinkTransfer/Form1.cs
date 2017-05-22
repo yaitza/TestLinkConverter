@@ -27,12 +27,12 @@ namespace TestLinkTransfer
             }
         }
 
+        //TODO 未解决进度条展示停止的问题
         private void startBtn_Click(object sender, EventArgs e)
         {
-            this.isSuccess = false;
             progressBar.Style = ProgressBarStyle.Marquee;
-            Thread myThread = new Thread(DoData) {IsBackground = true};
-            myThread.Start(); //线程开始  
+//            Thread myThread = new Thread(DoData) {IsBackground = true};
+//            myThread.Start(); //线程开始  
              
 
             if (this.FileChecked(filePathTb.Text)) return;
@@ -41,10 +41,6 @@ namespace TestLinkTransfer
                 Thread xeThread = new Thread(XmlToExcel);
                 xeThread.Start(filePathTb.Text);
             }
-
-
-            dt = DateTime.Now;  //开始记录当前时间 
-
         }
 
         private void XmlToExcel(object filePath)
@@ -55,34 +51,32 @@ namespace TestLinkTransfer
             List<TestCase> tcList = xtm.OutputTestCases();
             ExcelHandler eh = new ExcelHandler(tcList);
             eh.WriteExcel();
-            isSuccess = true;
         }
 
-        DateTime dt;
-        bool isSuccess = false;
-
-        private delegate void DoDataDelegate();
-        /// <summary>  
-        /// 进行循环  
-        /// </summary>  
-        private void DoData()
-        {
-            if (progressBar.InvokeRequired)
-            {
-                DoDataDelegate d = DoData;
-                progressBar.Invoke(d);
-            }
-            else
-            {
-                while (true)
-                {
-                    if (!isSuccess) continue;
-                    progressBar.Style = ProgressBarStyle.Blocks;
-                    break;
-                }
-                MessageBox.Show($"Comlpete Transfer! Time:{DateTime.Now.Subtract(dt).ToString()}.", "Info");
-            }
-        }
+//        DateTime dt;
+//
+//        private delegate void DoDataDelegate();
+//        /// <summary>  
+//        /// 进行循环  
+//        /// </summary>  
+//        private void DoData()
+//        {
+//            if (progressBar.InvokeRequired)
+//            {
+//                DoDataDelegate d = DoData;
+//                progressBar.Invoke(d);
+//            }
+//            else
+//            {
+//                while (true)
+//                {
+//                    if (!isSuccess) continue;
+//                    progressBar.Style = ProgressBarStyle.Blocks;
+//                    break;
+//                }
+//                MessageBox.Show($"Comlpete Transfer! Time:{DateTime.Now.Subtract(dt).ToString()}.", "Info");
+//            }
+//        }
 
         /// <summary>
         /// 检查输入文件地址是否符合要求
