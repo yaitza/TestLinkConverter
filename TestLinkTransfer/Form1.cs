@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using TransferLibrary;
 using TransferModel;
@@ -36,10 +42,13 @@ namespace TestLinkTransfer
             if (this.FileChecked(filePathTb.Text)) return;
             if(xeRb.Checked)
             { 
-                Thread xeThread = new Thread(XmlToExcel);
-                xeThread.Start(filePathTb.Text);
+                Thread xtThread = new Thread(XmlToExcel);
+                xtThread.Start(filePathTb.Text);
+            }
+
             }
         }
+
 
         private void XmlToExcel(object filePath)
         {
@@ -50,6 +59,7 @@ namespace TestLinkTransfer
             ExcelHandler eh = new ExcelHandler(tcList);
             eh.WriteExcel();
         }
+
 
 //        DateTime dt;
 //        private bool isSuccess = false;
@@ -75,6 +85,7 @@ namespace TestLinkTransfer
 //                MessageBox.Show($"Comlpete Transfer! Time:{DateTime.Now.Subtract(dt).ToString()}.", "Info");
 //            }
 //        }
+
 
         /// <summary>
         /// 检查输入文件地址是否符合要求
