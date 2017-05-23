@@ -7,15 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
-using TransferModel;
 using TransferLibrary;
+using TransferModel;
 
 namespace TestLinkTransfer
 {
     //TODO 链接yaitza地址
     //TODO 添加打赏功能
-    //TODO 处理线程异步执行并添加处理时进度条
+    //TODO 添加处理时进度条,进度条展示停止问题
     //TODO 处理完成后保存文件功能
     public partial class Form1 : Form
     {
@@ -34,6 +35,10 @@ namespace TestLinkTransfer
 
         private void startBtn_Click(object sender, EventArgs e)
         {
+//            progressBar.Style = ProgressBarStyle.Marquee;
+//            Thread myThread = new Thread(DoData) {IsBackground = true};
+//            myThread.Start(); //线程开始  
+             
             if (this.FileChecked(filePathTb.Text)) return;
             if(xeRb.Checked)
             { 
@@ -41,9 +46,11 @@ namespace TestLinkTransfer
                 xtThread.Start(filePathTb.Text);
             }
 
+            }
         }
 
-        private void XmlToExcel(Object filePath)
+
+        private void XmlToExcel(object filePath)
         {
             string fileDir = (string) filePath;
             XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
@@ -52,6 +59,33 @@ namespace TestLinkTransfer
             ExcelHandler eh = new ExcelHandler(tcList);
             eh.WriteExcel();
         }
+
+
+//        DateTime dt;
+//        private bool isSuccess = false;
+//        private delegate void DoDataDelegate();
+//        /// <summary>  
+//        /// 进行循环  
+//        /// </summary>  
+//        private void DoData()
+//        {
+//            if (progressBar.InvokeRequired)
+//            {
+//                DoDataDelegate d = DoData;
+//                progressBar.Invoke(d);
+//            }
+//            else
+//            {
+//                while (true)
+//                {
+//                    if (!isSuccess) continue;
+//                    progressBar.Style = ProgressBarStyle.Continuous;
+//                    break;
+//                }
+//                MessageBox.Show($"Comlpete Transfer! Time:{DateTime.Now.Subtract(dt).ToString()}.", "Info");
+//            }
+//        }
+
 
         /// <summary>
         /// 检查输入文件地址是否符合要求
@@ -72,7 +106,7 @@ namespace TestLinkTransfer
                 return true;
             }
 
-            if (!System.IO.File.Exists(filePathTb.Text))
+            if (!File.Exists(filePathTb.Text))
             {
                 MessageBox.Show($"{filePathTb.Text} 已不存在，请重新输入文件地址.", "Warning");
                 return true;
