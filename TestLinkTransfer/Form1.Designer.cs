@@ -102,7 +102,7 @@
             // 
             // startBtn
             // 
-            this.startBtn.Location = new System.Drawing.Point(359, 110);
+            this.startBtn.Location = new System.Drawing.Point(76, 104);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(75, 23);
             this.startBtn.TabIndex = 6;
@@ -114,7 +114,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(446, 262);
+            this.ClientSize = new System.Drawing.Size(446, 139);
             this.Controls.Add(this.startBtn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.exRb);

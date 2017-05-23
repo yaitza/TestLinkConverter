@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TransferModel;
@@ -36,14 +37,20 @@ namespace TestLinkTransfer
             if (this.FileChecked(filePathTb.Text)) return;
             if(xeRb.Checked)
             { 
-                XmlAnalysis xmlAnalysis = new XmlAnalysis(filePathTb.Text);
-                XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
-                List<TestCase> tcList = xtm.OutputTestCases();
-                ExcelHandler eh = new ExcelHandler(tcList);
-                eh.WriteExcel();
+                Thread xtThread = new Thread(XmlToExcel);
+                xtThread.Start(filePathTb.Text);
             }
-            MessageBox.Show("Comlpete Transfer!", "Info");
 
+        }
+
+        private void XmlToExcel(Object filePath)
+        {
+            string fileDir = (string) filePath;
+            XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
+            XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
+            List<TestCase> tcList = xtm.OutputTestCases();
+            ExcelHandler eh = new ExcelHandler(tcList);
+            eh.WriteExcel();
         }
 
         /// <summary>
