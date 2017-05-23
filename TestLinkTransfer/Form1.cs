@@ -10,7 +10,7 @@ namespace TestLinkTransfer
 {
     //TODO 链接yaitza地址
     //TODO 添加打赏功能
-    //TODO 处理线程异步执行并添加处理时进度条
+    //TODO 添加处理时进度条,进度条展示停止问题
     //TODO 处理完成后保存文件功能
     public partial class Form1 : Form
     {
@@ -27,14 +27,12 @@ namespace TestLinkTransfer
             }
         }
 
-        //TODO 未解决进度条展示停止的问题
         private void startBtn_Click(object sender, EventArgs e)
         {
-            progressBar.Style = ProgressBarStyle.Marquee;
+//            progressBar.Style = ProgressBarStyle.Marquee;
 //            Thread myThread = new Thread(DoData) {IsBackground = true};
 //            myThread.Start(); //线程开始  
              
-
             if (this.FileChecked(filePathTb.Text)) return;
             if(xeRb.Checked)
             { 
@@ -54,7 +52,7 @@ namespace TestLinkTransfer
         }
 
 //        DateTime dt;
-//
+//        private bool isSuccess = false;
 //        private delegate void DoDataDelegate();
 //        /// <summary>  
 //        /// 进行循环  
@@ -71,7 +69,7 @@ namespace TestLinkTransfer
 //                while (true)
 //                {
 //                    if (!isSuccess) continue;
-//                    progressBar.Style = ProgressBarStyle.Blocks;
+//                    progressBar.Style = ProgressBarStyle.Continuous;
 //                    break;
 //                }
 //                MessageBox.Show($"Comlpete Transfer! Time:{DateTime.Now.Subtract(dt).ToString()}.", "Info");
