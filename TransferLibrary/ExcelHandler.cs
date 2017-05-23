@@ -44,7 +44,7 @@ namespace TransferLibrary
 
             excelApp.DisplayAlerts = false;
 
-            string saveDir = fileName.Replace("Template\\TestCaseTemplate.xlsx", string.Format("TestCase_{0}.xlsx", DateTime.Now.ToString("yyyyMMddHHmmss")));
+            string saveDir = fileName.Replace("Template\\TestCaseTemplate.xlsx", string.Format("TestCase_{0}.xlsx", DateTime.Now.ToString("yyyyMMddhhmmss")));
             workbook.SaveAs(saveDir);
             workbook.Close(false, Missing.Value, Missing.Value);
             excelApp.Quit();
