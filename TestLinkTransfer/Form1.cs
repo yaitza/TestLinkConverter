@@ -47,7 +47,6 @@ namespace TestLinkTransfer
             }
 
             }
-        }
 
 
         private void XmlToExcel(object filePath)
