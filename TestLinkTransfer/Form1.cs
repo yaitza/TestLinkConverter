@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TransferModel;
@@ -14,7 +15,7 @@ namespace TestLinkTransfer
 {
     //TODO 链接yaitza地址
     //TODO 添加打赏功能
-    //TODO 处理时进度条
+    //TODO 处理线程异步执行并添加处理时进度条
     //TODO 处理完成后保存文件功能
     public partial class Form1 : Form
     {
@@ -36,14 +37,20 @@ namespace TestLinkTransfer
             if (this.FileChecked(filePathTb.Text)) return;
             if(xeRb.Checked)
             { 
-                XmlAnalysis xmlAnalysis = new XmlAnalysis(filePathTb.Text);
-                XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
-                List<TestCase> tcList = xtm.OutputTestCases();
-                ExcelHandler eh = new ExcelHandler(tcList);
-                eh.WriteExcel();
+                Thread xtThread = new Thread(XmlToExcel);
+                xtThread.Start(filePathTb.Text);
             }
-            MessageBox.Show("Comlpete Transfer!", "Info");
 
+        }
+
+        private void XmlToExcel(Object filePath)
+        {
+            string fileDir = (string) filePath;
+            XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
+            XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
+            List<TestCase> tcList = xtm.OutputTestCases();
+            ExcelHandler eh = new ExcelHandler(tcList);
+            eh.WriteExcel();
         }
 
         /// <summary>
@@ -53,26 +60,25 @@ namespace TestLinkTransfer
         /// <returns>isChecked</returns>
         private bool FileChecked(string filePath)
         {
-            bool isChecked = false;
             if (filePathTb.Text == string.Empty)
             {
                 MessageBox.Show("请输入文件地址.", "Warning");
-                isChecked = true;
+                return true;
             }
 
             if (!(filePathTb.Text.EndsWith(".xml") || filePathTb.Text.EndsWith(".xls") || filePathTb.Text.EndsWith(".xlsx")))
             {
                 MessageBox.Show("输入文件要求为xml，xls或xlsx格式.", "Warning");
-                isChecked = true;
+                return true;
             }
 
             if (!System.IO.File.Exists(filePathTb.Text))
             {
                 MessageBox.Show($"{filePathTb.Text} 已不存在，请重新输入文件地址.", "Warning");
-                isChecked = true;
+                return true;
             }
 
-            return isChecked;
+            return false;
         }
     }
 }
