@@ -16,7 +16,7 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 支持解析Excel的格式如下：
 ![pic3](/Resource/Image/pic3.png)
 
-**注意:**暂不解析关键字，规约编号字段。
+**注意:** 暂不解析关键字，规约编号字段。
 
 ---
 ## 问题  
