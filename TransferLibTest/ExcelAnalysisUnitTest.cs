@@ -19,7 +19,8 @@ namespace TransferLibTest
         public void OpenExcelTest()
         {
             ExcelAnalysis ea = new ExcelAnalysis(this._efilePath);
-            ea.OpenExcel();
+            XmlHandler mx = new XmlHandler(ea.ReadExcel());
+            mx.writeXml();
 
             Assert.AreEqual(0, 0);
         }
