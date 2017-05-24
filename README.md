@@ -1,8 +1,8 @@
 # TestLinkTransfer  
 
-TestLink XML Transfer Excel or Excel Transfer XML.
+TestLink XML Convert to Excel or Excel Convert to XML.
 
-## XML Transfer to Excel
+## XML Convert to Excel
 
 支持解析的XML内部结构如下：
 
@@ -10,6 +10,13 @@ TestLink XML Transfer Excel or Excel Transfer XML.
 
 1. 代码支持多层testsuite嵌套，均能解析出对应的testcase，图示例较为简单，只作为说明。
 2. 本次针对XML解析至解析了常规使用字段，未解析全部导出XML字段。
+
+## Excel Convert To XML
+
+支持解析Excel的格式如下：
+![pic3](/Resource/Image/pic3.png)
+
+**注意:**暂不解析关键字，规约编号字段。
 
 ---
 ## 问题  
