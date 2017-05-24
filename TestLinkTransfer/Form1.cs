@@ -17,6 +17,7 @@ namespace TestLinkTransfer
     //TODO 添加打赏功能
     //TODO 处理线程异步执行并添加处理时进度条
     //TODO 处理完成后保存文件功能
+    //TODO 日志功能
     public partial class Form1 : Form
     {
         public Form1()
@@ -50,21 +51,39 @@ namespace TestLinkTransfer
 
         private void ExcelToXml(object filePath)
         {
-            string fileDir = (string) filePath;
-            ExcelAnalysis excelAnalysis = new ExcelAnalysis(fileDir);
-            List<TestCase> tcList = excelAnalysis.ReadExcel();
-            XmlHandler xh = new XmlHandler(tcList);
-            xh.writeXml();
+            try
+            {
+                string fileDir = (string)filePath;
+                ExcelAnalysis excelAnalysis = new ExcelAnalysis(fileDir);
+                List<TestCase> tcList = excelAnalysis.ReadExcel();
+                XmlHandler xh = new XmlHandler(tcList);
+                xh.writeXml();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                throw;
+            }
+            
         }
 
         private void XmlToExcel(Object filePath)
         {
-            string fileDir = (string) filePath;
-            XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
-            XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
-            List<TestCase> tcList = xtm.OutputTestCases();
-            ExcelHandler eh = new ExcelHandler(tcList);
-            eh.WriteExcel();
+            try
+            {
+                string fileDir = (string)filePath;
+                XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
+                XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
+                List<TestCase> tcList = xtm.OutputTestCases();
+                ExcelHandler eh = new ExcelHandler(tcList);
+                eh.WriteExcel();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                throw;
+            }
+            
         }
 
         /// <summary>
