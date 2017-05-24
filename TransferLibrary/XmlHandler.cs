@@ -9,6 +9,7 @@ namespace TransferLibrary
 {
     public class XmlHandler
     {
+        //TODO 测试套数据未妥善处理
         private readonly List<TestCase> _tcList;
 
         public XmlHandler(List<TestCase> tcCases)

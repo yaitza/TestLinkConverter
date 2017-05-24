@@ -37,10 +37,24 @@ namespace TestLinkTransfer
             if (this.FileChecked(filePathTb.Text)) return;
             if(xeRb.Checked)
             { 
-                Thread xtThread = new Thread(XmlToExcel);
-                xtThread.Start(filePathTb.Text);
+                Thread xeThread = new Thread(XmlToExcel);
+                xeThread.Start(filePathTb.Text);
+            }
+            if (exRb.Checked)
+            {
+                Thread exThread = new Thread(ExcelToXml);
+                exThread.Start(filePathTb.Text);
             }
 
+        }
+
+        private void ExcelToXml(object filePath)
+        {
+            string fileDir = (string) filePath;
+            ExcelAnalysis excelAnalysis = new ExcelAnalysis(fileDir);
+            List<TestCase> tcList = excelAnalysis.ReadExcel();
+            XmlHandler xh = new XmlHandler(tcList);
+            xh.writeXml();
         }
 
         private void XmlToExcel(Object filePath)

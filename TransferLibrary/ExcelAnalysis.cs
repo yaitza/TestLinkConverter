@@ -43,7 +43,7 @@ namespace TransferLibrary
             return tcList;
         }
 
-        public List<TestCase> GetExcelData(Worksheet eWorksheet)
+        private List<TestCase> GetExcelData(Worksheet eWorksheet)
         {
             List<TestCase> tcList = new List<TestCase>();
             int usedRows = eWorksheet.UsedRange.Cells.Rows.Count;
