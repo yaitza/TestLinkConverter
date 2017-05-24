@@ -54,6 +54,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ExcelHandlerUnitTest.cs" />
+    <Compile Include="ExcelAnalysisUnitTest.cs" />
     <Compile Include="XmlToModelUnitTest.cs" />
     <Compile Include="XmlAnalysisUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
