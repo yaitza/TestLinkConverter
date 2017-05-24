@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonHelper.cs" />
+    <Compile Include="ExcelAnalysis.cs" />
     <Compile Include="ExcelHandler.cs" />
     <Compile Include="XmlAnalysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
