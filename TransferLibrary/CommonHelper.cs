@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,18 @@ namespace TransferLibrary
 {
     static class CommonHelper
     {
+        /// <summary>
+        /// 杀掉Excel进程
+        /// </summary>
+        public static void KillExcelProcess()
+        {
+            Process[] procs = Process.GetProcessesByName("Excel");
+            foreach (Process pro in procs)
+            {
+                pro.Kill();
+            }
+        }
+
         /// <summary>
         /// 删除HTML标签以及删除字符串换行符
         /// </summary>

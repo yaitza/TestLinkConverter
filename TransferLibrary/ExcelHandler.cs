@@ -8,7 +8,7 @@ namespace TransferLibrary
 {
     public class ExcelHandler
     {
-        private List<TestCase> _sourceTestCases;
+        private readonly List<TestCase> _sourceTestCases;
 
         public ExcelHandler(List<TestCase> outputCases)
         {
@@ -18,7 +18,7 @@ namespace TransferLibrary
         public void WriteExcel()
         {
             string currentDir = System.Environment.CurrentDirectory;
-            string fileName = string.Format("{0}\\Template\\TestCaseTemplate.xlsx", currentDir);
+            string fileName = $"{currentDir}\\Template\\TestCaseTemplate.xlsx";
 
             Excel.Application excelApp = new Excel.ApplicationClass();
 
@@ -44,7 +44,7 @@ namespace TransferLibrary
 
             excelApp.DisplayAlerts = false;
 
-            string saveDir = fileName.Replace("Template\\TestCaseTemplate.xlsx", string.Format("TestCase_{0}.xlsx", DateTime.Now.ToString("yyyyMMddhhmmss")));
+            string saveDir = fileName.Replace("Template\\TestCaseTemplate.xlsx", $"TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
             workbook.SaveAs(saveDir);
             workbook.Close(false, Missing.Value, Missing.Value);
             excelApp.Quit();
@@ -55,8 +55,7 @@ namespace TransferLibrary
 
         private void InputWorkSheet(Excel.Workbook workBook)
         {
-            Excel.Worksheet workSheet = workBook.ActiveSheet as Excel.Worksheet;
-            workSheet = (Excel.Worksheet)workBook.Worksheets.get_Item(1);
+            var workSheet = (Excel.Worksheet)workBook.Worksheets.Item[1];
 
             int iFlag = 2;
             foreach(TestCase node in this._sourceTestCases)
@@ -84,7 +83,7 @@ namespace TransferLibrary
         {
             for(int i=1; i<=6; i++)
             {
-                Excel.Range rangeLecture = workSheet.get_Range(workSheet.Cells[iFlag, i], workSheet.Cells[iFlag + iMerge - 1, i]);
+                Excel.Range rangeLecture = workSheet.Range[workSheet.Cells[iFlag, i], workSheet.Cells[iFlag + iMerge - 1, i]];
                 rangeLecture.Application.DisplayAlerts = false;
                 rangeLecture.Merge(Missing.Value);
                 rangeLecture.Application.DisplayAlerts = true;
