@@ -22,18 +22,14 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 ## 问题  
 代码过程中以及环境设置中出现的相关问题。
 ### 1. 调用Excel相关类库时环境配置问题
-**问题：**  
-
+**问题描述：**  
 无法嵌入互操作类型“Microsoft.Office.Interop.Word.ApplicationClass”。请改用适用的接口。
 错误 4317 无法嵌入互操作类型“Microsoft.Office.Interop.Word.ApplicationClass”。请改用适用的接口。
-类型“Microsoft.Office.Interop.Word.ApplicationClass”未定义构造函数。
-
+类型“Microsoft.Office.Interop.Word.ApplicationClass”未定义构造函数。  
 **解决办法：**  
-
-在Visual Studio 中点击菜单项“视图->解决方案资源管理器”，在其中点开“引用”文件夹，在"Microsoft.Office.Interop.Excel;" 上点击鼠标右键，选择“属性”，将属性中的“嵌入互操作类型”的值改为“false”即可。
-
-**说明:**
-引用Excel类库：Microsoft Excel 14.0 Object Library，需要安装Office 2010.  
+在Visual Studio 中点击菜单项“视图->解决方案资源管理器”，在其中点开“引用”文件夹，在"Microsoft.Office.Interop.Excel;" 上点击鼠标右键，选择“属性”，将属性中的“嵌入互操作类型”的值改为“false”即可。  
+**说明:**  
+引用Excel类库：Microsoft Excel 14.0 Object Library，需要安装Office 2010.    
 
 ![pic2](/Resource/Image/pic2.png)
 
