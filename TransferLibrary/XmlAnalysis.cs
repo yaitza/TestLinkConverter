@@ -13,7 +13,7 @@ namespace TransferLibrary
     public class XmlAnalysis
     {
         // TODO 未实现获取测试用例并获取对应测试套
-        private readonly ILog _logger = LogManager.GetLogger(typeof(XmlAnalysis));
+        private readonly ILog _logger = LogManager.GetLogger("MyLogger");
         /// <summary>
         /// 解析文件地址
         /// </summary>
@@ -31,7 +31,6 @@ namespace TransferLibrary
 
         public XmlAnalysis(string filePath)
         {
-            this._logger.Info(filePath.ToString());
             if (File.Exists(filePath))
             {
                 this._filePath = filePath;

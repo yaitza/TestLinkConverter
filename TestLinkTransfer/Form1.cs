@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 using TransferModel;
 using TransferLibrary;
 
@@ -20,6 +21,7 @@ namespace TestLinkTransfer
     //TODO 日志功能
     public partial class Form1 : Form
     {
+        private ILog logger = LogManager.GetLogger(typeof(Form1));
         public Form1()
         {
             InitializeComponent();
@@ -35,6 +37,7 @@ namespace TestLinkTransfer
 
         private void startBtn_Click(object sender, EventArgs e)
         {
+            this.logger.Info("test");
             if (this.FileChecked(filePathTb.Text)) return;
             if(xeRb.Checked)
             { 
@@ -61,6 +64,7 @@ namespace TestLinkTransfer
             }
             catch (Exception ex)
             {
+                this.logger.Error(ex);
                 MessageBox.Show(ex.Message);
                 throw;
             }
@@ -80,8 +84,9 @@ namespace TestLinkTransfer
             }
             catch (Exception ex)
             {
+                this.logger.Error(ex);
                 MessageBox.Show(ex.Message);
-                throw;
+                return;
             }
             
         }
