@@ -19,6 +19,11 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 **注意:** 暂不解析关键字，规约编号字段。
 
 ---
+## 引用三方类库
+### 1.log4net
+**下载地址：**  <https://logging.apache.org/log4net/download_log4net.cgi>
+
+---
 ## 问题  
 代码过程中以及环境设置中出现的相关问题。
 ### 1. 调用Excel相关类库时环境配置问题
@@ -34,8 +39,8 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 ![pic2](/Resource/Image/pic2.png)
 
 ## 临时记录
-### 1.
+### 1. TestLink字段解析
 http://wangsx.cn/?p=648
 
-### 2.  
+### 2. Excel读写示例 
 http://blog.csdn.net/zzukun/article/details/50830439
