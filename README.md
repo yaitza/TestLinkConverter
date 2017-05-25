@@ -46,3 +46,6 @@ http://wangsx.cn/?p=648
 
 ### 2. Excel读写示例 
 http://blog.csdn.net/zzukun/article/details/50830439
+
+### 3. EXE打包教程  
+http://www.cnblogs.com/yinsq/p/5254893.html
