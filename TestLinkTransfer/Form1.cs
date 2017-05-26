@@ -100,18 +100,21 @@ namespace TestLinkTransfer
         {
             if (filePathTb.Text == string.Empty)
             {
+                this.logger.Info(new Exception("请输入文件地址."));
                 MessageBox.Show("请输入文件地址.", "Warning");
                 return true;
             }
 
             if (!(filePathTb.Text.EndsWith(".xml") || filePathTb.Text.EndsWith(".xls") || filePathTb.Text.EndsWith(".xlsx")))
             {
+                this.logger.Info(new Exception("输入文件要求为xml，xls或xlsx格式."));
                 MessageBox.Show("输入文件要求为xml，xls或xlsx格式.", "Warning");
                 return true;
             }
 
             if (!System.IO.File.Exists(filePathTb.Text))
             {
+                this.logger.Info(new Exception($"{filePathTb.Text} 已不存在，请重新输入文件地址."));
                 MessageBox.Show($"{filePathTb.Text} 已不存在，请重新输入文件地址.", "Warning");
                 return true;
             }

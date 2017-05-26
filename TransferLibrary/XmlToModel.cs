@@ -15,19 +15,17 @@ namespace TransferLibrary
 
         public List<TestCase> OutputTestCases()
         {
-            List<TestCase> tcList = new List<TestCase>();
-            foreach (XmlNode sourceNode in _sourceNodes)
-            {
-                tcList.Add(this.NodeToModel(sourceNode));
-            }
-            return tcList;
+            return _sourceNodes.Select(this.NodeToModel).ToList();
         }
 
         private TestCase NodeToModel(XmlNode node)
         {
             TestCase tc = new TestCase();
-            tc.InternalId = node.Attributes["internalid"].Value;
-            tc.Name = node.Attributes["name"].Value;
+            if (node.Attributes != null)
+            {
+                tc.InternalId = node.Attributes["internalid"].Value;
+                tc.Name = node.Attributes["name"].Value;
+            }
             foreach (XmlNode xmlNode in node)
             {
                 switch (xmlNode.Name)

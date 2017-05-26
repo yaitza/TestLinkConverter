@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using log4net;
 using TransferModel;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -8,6 +9,7 @@ namespace TransferLibrary
 {
     public class ExcelHandler
     {
+        private readonly ILog logger = LogManager.GetLogger(typeof (ExcelHandler));
         private readonly List<TestCase> _sourceTestCases;
 
         public ExcelHandler(List<TestCase> outputCases)
@@ -24,6 +26,7 @@ namespace TransferLibrary
 
             if (excelApp == null)
             {
+                this.logger.Warn(new Exception("Excel is not properly installed!"));
                 throw new Exception("Excel is not properly installed!");
             }
 
@@ -31,6 +34,7 @@ namespace TransferLibrary
 
             if (System.IO.File.Exists(fileName))
             {
+                this.logger.Warn(new Exception("Template.xlsx 丢失"));
                 workbook = excelApp.Workbooks.Open(fileName, 0, false, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
             }
             else

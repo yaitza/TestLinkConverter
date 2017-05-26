@@ -13,7 +13,7 @@ namespace TransferLibrary
     public class XmlAnalysis
     {
         // TODO 未实现获取测试用例并获取对应测试套
-        private readonly ILog _logger = LogManager.GetLogger("MyLogger");
+        private readonly ILog _logger = LogManager.GetLogger(typeof(XmlAnalysis));
         /// <summary>
         /// 解析文件地址
         /// </summary>

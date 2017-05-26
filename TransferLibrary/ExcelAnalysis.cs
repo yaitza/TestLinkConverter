@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using log4net;
 using Microsoft.Office.Interop.Excel;
 using TransferModel;
 
@@ -10,6 +11,7 @@ namespace TransferLibrary
     //TODO 解析合并格式的Excel数据
     public class ExcelAnalysis
     {
+        private readonly ILog logger = LogManager.GetLogger(typeof (ExcelAnalysis));
         private readonly string _eFilePath;
 
         public ExcelAnalysis(string filePath)
@@ -24,6 +26,7 @@ namespace TransferLibrary
             Application excel = new Application();
             if (excel == null)
             {
+                logger.Warn(new Exception("Excel is not properly installed!"));
                 throw new Exception("Excel is not properly installed!");
             }
             else
@@ -50,6 +53,7 @@ namespace TransferLibrary
 
             if (usedRows == 0 || usedRows == 1)
             {
+                this.logger.Warn(new Exception("No TestCase!"));
                 throw new Exception("No TestCase!");
             }
 
