@@ -6,13 +6,14 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using log4net;
 
 namespace TransferLibrary
 {
     public class XmlAnalysis
     {
         // TODO 未实现获取测试用例并获取对应测试套
-
+        private readonly ILog _logger = LogManager.GetLogger(typeof(XmlAnalysis));
         /// <summary>
         /// 解析文件地址
         /// </summary>
@@ -37,27 +38,12 @@ namespace TransferLibrary
             else
             {
                 string message = $"{filePath}文件已不存在.";
+                this._logger.Error(new Exception(message));
                 throw new Exception(message); 
             }
 
             this._xmlDoc = new XmlDocument();
             this._xmlDoc.Load(this._filePath);
-        }
-
-        /// <summary>
-        /// 无效方法
-        /// </summary>
-        /// <returns></returns>
-        public string GetAllNodes()
-        {
-            XmlNode xn = this._xmlDoc.SelectSingleNode("testsuite");
-
-            if (xn == null) throw new Exception("对应导出xml无测试用例数据.");
-            List<XmlNode> xnList = xn.ChildNodes.Cast<XmlNode>().Where(xmlNode => xmlNode.Name.Equals("testsuite")).ToList();
-
-            RecursionGetNodes(xnList);
-
-            return "";
         }
 
 
@@ -69,7 +55,11 @@ namespace TransferLibrary
         {
             XmlNode xn = this._xmlDoc.SelectSingleNode("testsuite");
 
-            if (xn == null) throw new Exception("对应导出xml无测试用例数据.");
+            if (xn == null)
+            {
+                this._logger.Warn(new Exception("对应导出xml无测试用例数据."));
+                throw new Exception("对应导出xml无测试用例数据.");
+            }
             List<XmlNode> xnList = xn.ChildNodes.Cast<XmlNode>().Where(xmlNode => xmlNode.Name.Equals("testsuite")).ToList();
 
             RecursionGetNodes(xnList);

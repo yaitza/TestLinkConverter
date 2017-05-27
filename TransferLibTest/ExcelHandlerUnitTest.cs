@@ -15,8 +15,6 @@ namespace TransferLibTest
         [TestInitialize]
         public void SetUp()
         {
-            //string currentDir = System.Environment.CurrentDirectory;
-
             string filepath = @"G:\Code\TestLinkTransfer\trunk\Resource\CRM.xml";
 
             XmlAnalysis xmlAnalysis = new XmlAnalysis(filepath);

@@ -20,7 +20,7 @@ namespace TransferLibTest
         {
             ExcelAnalysis ea = new ExcelAnalysis(this._efilePath);
             XmlHandler mx = new XmlHandler(ea.ReadExcel());
-            mx.writeXml();
+            mx.WriteXml();
 
             Assert.AreEqual(0, 0);
         }
