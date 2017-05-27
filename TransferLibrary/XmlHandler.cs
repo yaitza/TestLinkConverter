@@ -50,7 +50,7 @@ namespace TransferLibrary
             return tcStrList;
         }
 
-        public void writeXml()
+        public void WriteXml()
         {
             string filePath = $"{System.Environment.CurrentDirectory}\\TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xml";
             FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate);

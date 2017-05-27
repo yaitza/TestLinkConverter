@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 using TransferModel;
 using TransferLibrary;
 
@@ -20,6 +21,7 @@ namespace TestLinkTransfer
     //TODO 日志功能
     public partial class Form1 : Form
     {
+        private ILog logger = LogManager.GetLogger(typeof(Form1));
         public Form1()
         {
             InitializeComponent();
@@ -35,6 +37,7 @@ namespace TestLinkTransfer
 
         private void startBtn_Click(object sender, EventArgs e)
         {
+            this.logger.Info("test");
             if (this.FileChecked(filePathTb.Text)) return;
             if(xeRb.Checked)
             { 
@@ -57,10 +60,11 @@ namespace TestLinkTransfer
                 ExcelAnalysis excelAnalysis = new ExcelAnalysis(fileDir);
                 List<TestCase> tcList = excelAnalysis.ReadExcel();
                 XmlHandler xh = new XmlHandler(tcList);
-                xh.writeXml();
+                xh.WriteXml();
             }
             catch (Exception ex)
             {
+                this.logger.Error(ex);
                 MessageBox.Show(ex.Message);
                 throw;
             }
@@ -80,8 +84,9 @@ namespace TestLinkTransfer
             }
             catch (Exception ex)
             {
+                this.logger.Error(ex);
                 MessageBox.Show(ex.Message);
-                throw;
+                return;
             }
             
         }
@@ -95,18 +100,21 @@ namespace TestLinkTransfer
         {
             if (filePathTb.Text == string.Empty)
             {
+                this.logger.Info(new Exception("请输入文件地址."));
                 MessageBox.Show("请输入文件地址.", "Warning");
                 return true;
             }
 
             if (!(filePathTb.Text.EndsWith(".xml") || filePathTb.Text.EndsWith(".xls") || filePathTb.Text.EndsWith(".xlsx")))
             {
+                this.logger.Info(new Exception("输入文件要求为xml，xls或xlsx格式."));
                 MessageBox.Show("输入文件要求为xml，xls或xlsx格式.", "Warning");
                 return true;
             }
 
             if (!System.IO.File.Exists(filePathTb.Text))
             {
+                this.logger.Info(new Exception($"{filePathTb.Text} 已不存在，请重新输入文件地址."));
                 MessageBox.Show($"{filePathTb.Text} 已不存在，请重新输入文件地址.", "Warning");
                 return true;
             }
