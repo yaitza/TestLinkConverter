@@ -7,19 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.IO;
 using System.Windows.Forms;
-using TransferLibrary;
+using log4net;
 using TransferModel;
+using TransferLibrary;
 
 namespace TestLinkTransfer
 {
     //TODO 链接yaitza地址
     //TODO 添加打赏功能
-    //TODO 添加处理时进度条,进度条展示停止问题
+    //TODO 处理线程异步执行并添加处理时进度条
     //TODO 处理完成后保存文件功能
+    //TODO 日志功能
     public partial class Form1 : Form
     {
+        private ILog logger = LogManager.GetLogger(typeof(Form1));
         public Form1()
         {
             InitializeComponent();
@@ -35,56 +37,59 @@ namespace TestLinkTransfer
 
         private void startBtn_Click(object sender, EventArgs e)
         {
-//            progressBar.Style = ProgressBarStyle.Marquee;
-//            Thread myThread = new Thread(DoData) {IsBackground = true};
-//            myThread.Start(); //线程开始  
-             
+            this.logger.Info("test");
             if (this.FileChecked(filePathTb.Text)) return;
             if(xeRb.Checked)
             { 
-                Thread xtThread = new Thread(XmlToExcel);
-                xtThread.Start(filePathTb.Text);
+                Thread xeThread = new Thread(XmlToExcel);
+                xeThread.Start(filePathTb.Text);
+            }
+            if (exRb.Checked)
+            {
+                Thread exThread = new Thread(ExcelToXml);
+                exThread.Start(filePathTb.Text);
             }
 
-            }
-
-
-        private void XmlToExcel(object filePath)
-        {
-            string fileDir = (string) filePath;
-            XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
-            XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
-            List<TestCase> tcList = xtm.OutputTestCases();
-            ExcelHandler eh = new ExcelHandler(tcList);
-            eh.WriteExcel();
         }
 
+        private void ExcelToXml(object filePath)
+        {
+            try
+            {
+                string fileDir = (string)filePath;
+                ExcelAnalysis excelAnalysis = new ExcelAnalysis(fileDir);
+                List<TestCase> tcList = excelAnalysis.ReadExcel();
+                XmlHandler xh = new XmlHandler(tcList);
+                xh.WriteXml();
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error(ex);
+                MessageBox.Show(ex.Message);
+                throw;
+            }
+            
+        }
 
-//        DateTime dt;
-//        private bool isSuccess = false;
-//        private delegate void DoDataDelegate();
-//        /// <summary>  
-//        /// 进行循环  
-//        /// </summary>  
-//        private void DoData()
-//        {
-//            if (progressBar.InvokeRequired)
-//            {
-//                DoDataDelegate d = DoData;
-//                progressBar.Invoke(d);
-//            }
-//            else
-//            {
-//                while (true)
-//                {
-//                    if (!isSuccess) continue;
-//                    progressBar.Style = ProgressBarStyle.Continuous;
-//                    break;
-//                }
-//                MessageBox.Show($"Comlpete Transfer! Time:{DateTime.Now.Subtract(dt).ToString()}.", "Info");
-//            }
-//        }
-
+        private void XmlToExcel(Object filePath)
+        {
+            try
+            {
+                string fileDir = (string)filePath;
+                XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
+                XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
+                List<TestCase> tcList = xtm.OutputTestCases();
+                ExcelHandler eh = new ExcelHandler(tcList);
+                eh.WriteExcel();
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            
+        }
 
         /// <summary>
         /// 检查输入文件地址是否符合要求
@@ -95,18 +100,21 @@ namespace TestLinkTransfer
         {
             if (filePathTb.Text == string.Empty)
             {
+                this.logger.Info(new Exception("请输入文件地址."));
                 MessageBox.Show("请输入文件地址.", "Warning");
                 return true;
             }
 
             if (!(filePathTb.Text.EndsWith(".xml") || filePathTb.Text.EndsWith(".xls") || filePathTb.Text.EndsWith(".xlsx")))
             {
+                this.logger.Info(new Exception("输入文件要求为xml，xls或xlsx格式."));
                 MessageBox.Show("输入文件要求为xml，xls或xlsx格式.", "Warning");
                 return true;
             }
 
-            if (!File.Exists(filePathTb.Text))
+            if (!System.IO.File.Exists(filePathTb.Text))
             {
+                this.logger.Info(new Exception($"{filePathTb.Text} 已不存在，请重新输入文件地址."));
                 MessageBox.Show($"{filePathTb.Text} 已不存在，请重新输入文件地址.", "Warning");
                 return true;
             }

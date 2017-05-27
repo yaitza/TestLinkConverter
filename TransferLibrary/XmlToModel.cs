@@ -1,12 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Xml;
+using log4net;
 using TransferModel;
 
 namespace TransferLibrary
 {
     public class XmlToModel
     {
+        private readonly ILog _logger = LogManager.GetLogger(typeof (XmlToModel));
+
         private List<XmlNode> _sourceNodes; 
         public XmlToModel(List<XmlNode> xmlNodes)
         {
@@ -15,19 +20,22 @@ namespace TransferLibrary
 
         public List<TestCase> OutputTestCases()
         {
-            List<TestCase> tcList = new List<TestCase>();
-            foreach (XmlNode sourceNode in _sourceNodes)
-            {
-                tcList.Add(this.NodeToModel(sourceNode));
-            }
-            return tcList;
+            return _sourceNodes.Select(this.NodeToModel).ToList();
         }
 
         private TestCase NodeToModel(XmlNode node)
         {
             TestCase tc = new TestCase();
-            tc.InternalId = node.Attributes["internalid"].Value;
-            tc.Name = node.Attributes["name"].Value;
+            try
+            {
+                tc.InternalId = node.Attributes["internalid"].Value;
+                tc.Name = node.Attributes["name"].Value;
+            }
+            catch (NullReferenceException ex)
+            {
+                this._logger.Error(node.InnerText, ex);
+            }
+               
             foreach (XmlNode xmlNode in node)
             {
                 switch (xmlNode.Name)
