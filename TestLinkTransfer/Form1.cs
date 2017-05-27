@@ -60,7 +60,7 @@ namespace TestLinkTransfer
                 ExcelAnalysis excelAnalysis = new ExcelAnalysis(fileDir);
                 List<TestCase> tcList = excelAnalysis.ReadExcel();
                 XmlHandler xh = new XmlHandler(tcList);
-                xh.writeXml();
+                xh.WriteXml();
             }
             catch (Exception ex)
             {

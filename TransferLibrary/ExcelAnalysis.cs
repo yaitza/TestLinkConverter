@@ -11,7 +11,7 @@ namespace TransferLibrary
     //TODO 解析合并格式的Excel数据
     public class ExcelAnalysis
     {
-        private readonly ILog logger = LogManager.GetLogger(typeof (ExcelAnalysis));
+        private readonly ILog _logger = LogManager.GetLogger(typeof (ExcelAnalysis));
         private readonly string _eFilePath;
 
         public ExcelAnalysis(string filePath)
@@ -26,7 +26,7 @@ namespace TransferLibrary
             Application excel = new Application();
             if (excel == null)
             {
-                logger.Warn(new Exception("Excel is not properly installed!"));
+                _logger.Warn(new Exception("Excel is not properly installed!"));
                 throw new Exception("Excel is not properly installed!");
             }
             else
@@ -53,7 +53,7 @@ namespace TransferLibrary
 
             if (usedRows == 0 || usedRows == 1)
             {
-                this.logger.Warn(new Exception("No TestCase!"));
+                this._logger.Warn(new Exception("No TestCase!"));
                 throw new Exception("No TestCase!");
             }
 
@@ -61,7 +61,7 @@ namespace TransferLibrary
             {
                 TestCase tc = new TestCase();
                 tc.Name = ((Range)eWorksheet.Cells[i, 1]).Text.ToString();
-                //tc.Importance = (ImportanceType)((Range)eWorksheet.Cells[i, 2]).Text.ToString();
+                tc.Importance = this.ConvertToImportanceType(((Range)eWorksheet.Cells[i, 2]).Text.ToString());
                 tc.ExecutionType = (ExecType)int.Parse(((Range)eWorksheet.Cells[i, 3]).Text.ToString());
                 tc.Keywords = ((Range)eWorksheet.Cells[i, 4]).Text.ToString().Split(',').ToList();
                 tc.Summary = ((Range)eWorksheet.Cells[i, 5]).Text.ToString();
@@ -80,5 +80,21 @@ namespace TransferLibrary
 
             return tcList;
         }
+
+        private ImportanceType ConvertToImportanceType(string impType)
+        {
+            switch (impType.ToLower())
+            {
+                case "high":
+                    return ImportanceType.高;
+                case "medium":
+                    return ImportanceType.中;
+                case "low":
+                    return ImportanceType.高;
+                default:
+                    return ImportanceType.高;
+            }
+        }
     }
+
 }
