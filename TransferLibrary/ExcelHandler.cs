@@ -17,6 +17,9 @@ namespace TransferLibrary
             this._sourceTestCases = outputCases;
         }
 
+        /// <summary>
+        /// 写Excel
+        /// </summary>
         public void WriteExcel()
         {
             string currentDir = System.Environment.CurrentDirectory;
@@ -83,6 +86,12 @@ namespace TransferLibrary
             }
         }
 
+        /// <summary>
+        /// 合并单元格
+        /// </summary>
+        /// <param name="workSheet">指定Sheet页</param>
+        /// <param name="iMerge"></param>
+        /// <param name="iFlag"></param>
         private void MergeCells(Excel.Worksheet workSheet, int iMerge, int iFlag)
         {
             for(int i=1; i<=6; i++)

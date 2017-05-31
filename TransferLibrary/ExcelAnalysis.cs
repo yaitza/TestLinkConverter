@@ -19,6 +19,10 @@ namespace TransferLibrary
             this._eFilePath = filePath;
         }
 
+        /// <summary>
+        /// 读取Excel数据
+        /// </summary>
+        /// <returns>TestCase</returns>
         public List<TestCase> ReadExcel()
         {
             List<TestCase> tcList;
@@ -46,6 +50,11 @@ namespace TransferLibrary
             return tcList;
         }
 
+        /// <summary>
+        /// 获取Excel数据并转为TestCase
+        /// </summary>
+        /// <param name="eWorksheet">Sheet页</param>
+        /// <returns>Model类型测试用例</returns>
         private List<TestCase> GetExcelData(Worksheet eWorksheet)
         {
             List<TestCase> tcList = new List<TestCase>();
@@ -81,6 +90,11 @@ namespace TransferLibrary
             return tcList;
         }
 
+        /// <summary>
+        /// 测试用例优先级类型转换
+        /// </summary>
+        /// <param name="impType">优先级</param>
+        /// <returns>ImportanceType</returns>
         private ImportanceType ConvertToImportanceType(string impType)
         {
             switch (impType.ToLower())

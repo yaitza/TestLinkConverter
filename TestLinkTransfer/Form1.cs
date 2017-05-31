@@ -13,14 +13,12 @@ namespace TestLinkTransfer
 {
     //TODO 链接yaitza地址
     //TODO 添加打赏功能
-    //TODO 处理线程异步执行并添加处理时进度条
     //TODO 处理完成后保存文件功能
-    //TODO 日志功能
     public partial class Form1 : Form
     {
-        private ILog logger = LogManager.GetLogger(typeof(Form1));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(Form1));
 
-        private DateTime starTime; 
+        private DateTime _starTime; 
         
         public Form1()
         {
@@ -44,7 +42,7 @@ namespace TestLinkTransfer
         {
             this.timer.Stop();
             this.progressBar.Value = this.progressBar.Maximum;
-            MessageBox.Show($"Convert Success. Time : {DateTime.Now - this.starTime}.");
+            MessageBox.Show($"Convert Success. Time : {DateTime.Now - this._starTime}.");
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -64,9 +62,10 @@ namespace TestLinkTransfer
             }
         }
 
+
         private void startBtn_Click(object sender, EventArgs e)
         {
-            this.starTime = DateTime.Now;
+            this._starTime = DateTime.Now;
             CommonHelper.KillExcelProcess();
             if (this.FileChecked(filePathTb.Text)) return;
           
@@ -74,11 +73,14 @@ namespace TestLinkTransfer
             this.timer.Start();
         }
 
-        private void ExcelToXml(object filePath)
+        /// <summary>
+        /// Excel转换为XML
+        /// </summary>
+        /// <param name="fileDir">文件路径</param>
+        private void ExcelToXml(string fileDir)
         {
             try
             {
-                string fileDir = (string)filePath;
                 ExcelAnalysis excelAnalysis = new ExcelAnalysis(fileDir);
                 List<TestCase> tcList = excelAnalysis.ReadExcel();
                 XmlHandler xh = new XmlHandler(tcList);
@@ -86,17 +88,20 @@ namespace TestLinkTransfer
             }
             catch (Exception ex)
             {
-                this.logger.Error(ex);
+                this._logger.Error(ex);
                 MessageBox.Show(ex.Message);
                 return;
             }
         }
 
-        private void XmlToExcel(Object filePath)
+        /// <summary>
+        /// XML转换为Excel
+        /// </summary>
+        /// <param name="fileDir">文件路径</param>
+        private void XmlToExcel(string fileDir)
         {
             try
             {
-                string fileDir = (string)filePath;
                 XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
                 XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
                 List<TestCase> tcList = xtm.OutputTestCases();
@@ -105,7 +110,7 @@ namespace TestLinkTransfer
             }
             catch (Exception ex)
             {
-                this.logger.Error(ex);
+                this._logger.Error(ex);
                 MessageBox.Show(ex.Message);
                 return;
             }
@@ -121,21 +126,21 @@ namespace TestLinkTransfer
         {
             if (filePathTb.Text == string.Empty)
             {
-                this.logger.Info(new Exception("请输入文件地址."));
+                this._logger.Info(new Exception("请输入文件地址."));
                 MessageBox.Show("请输入文件地址.", "Warning");
                 return true;
             }
 
             if (!(filePathTb.Text.EndsWith(".xml") || filePathTb.Text.EndsWith(".xls") || filePathTb.Text.EndsWith(".xlsx")))
             {
-                this.logger.Info(new Exception("输入文件要求为xml，xls或xlsx格式."));
+                this._logger.Info(new Exception("输入文件要求为xml，xls或xlsx格式."));
                 MessageBox.Show("输入文件要求为xml，xls或xlsx格式.", "Warning");
                 return true;
             }
 
             if (!File.Exists(filePathTb.Text))
             {
-                this.logger.Info(new Exception($"{filePathTb.Text} 已不存在，请重新输入文件地址."));
+                this._logger.Info(new Exception($"{filePathTb.Text} 已不存在，请重新输入文件地址."));
                 MessageBox.Show($"{filePathTb.Text} 已不存在，请重新输入文件地址.", "Warning");
                 return true;
             }
