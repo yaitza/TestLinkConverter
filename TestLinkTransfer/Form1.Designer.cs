@@ -1,4 +1,5 @@
-﻿namespace TestLinkTransfer
+﻿
+namespace TestLinkTransfer
 {
     partial class Form1
     {
@@ -28,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.getFilePathBtn = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.filePathTb = new System.Windows.Forms.TextBox();
@@ -38,10 +40,13 @@
             this.startBtn = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.DisplayRtb = new System.Windows.Forms.RichTextBox();
+            this.timer = new System.Windows.Forms.Timer(this.components);
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // getFilePathBtn
             // 
+            this.getFilePathBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.getFilePathBtn.Location = new System.Drawing.Point(359, 58);
             this.getFilePathBtn.Name = "getFilePathBtn";
             this.getFilePathBtn.Size = new System.Drawing.Size(46, 23);
@@ -57,6 +62,8 @@
             // 
             // filePathTb
             // 
+            this.filePathTb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.filePathTb.Location = new System.Drawing.Point(76, 60);
             this.filePathTb.Name = "filePathTb";
             this.filePathTb.Size = new System.Drawing.Size(277, 21);
@@ -118,8 +125,10 @@
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar.Location = new System.Drawing.Point(14, 106);
+            this.progressBar.Maximum = 500;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(339, 23);
+            this.progressBar.Step = 1;
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar.TabIndex = 7;
             // 
@@ -136,11 +145,20 @@
             this.DisplayRtb.TabIndex = 8;
             this.DisplayRtb.Text = "";
             // 
+            // timer
+            // 
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.WorkerReportsProgress = true;
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.worker_DoWork);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.worker_RunWorkerCompleted);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-
             this.ClientSize = new System.Drawing.Size(446, 323);
             this.Controls.Add(this.DisplayRtb);
             this.Controls.Add(this.progressBar);
@@ -157,7 +175,6 @@
             this.PerformLayout();
 
         }
-
         #endregion
 
         private System.Windows.Forms.Button getFilePathBtn;
@@ -170,6 +187,8 @@
         private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.RichTextBox DisplayRtb;
+        private System.Windows.Forms.Timer timer;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
     }
 }
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TransferLibrary
 {
-    static class CommonHelper
+    public static class CommonHelper
     {
         /// <summary>
         /// 杀掉Excel进程

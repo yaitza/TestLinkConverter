@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using log4net;
-using TransferModel;
 using TransferLibrary;
+using TransferModel;
+using Timer = System.Windows.Forms.Timer;
 
 namespace TestLinkTransfer
 {
@@ -22,10 +19,42 @@ namespace TestLinkTransfer
     public partial class Form1 : Form
     {
         private ILog logger = LogManager.GetLogger(typeof(Form1));
+
+        private DateTime starTime; 
+        
         public Form1()
         {
             InitializeComponent();
         }
+
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            string filePath = (string) e.Argument;
+            if (filePath.Split('.')[1].Equals("xml"))
+            {
+                this.XmlToExcel(filePath);
+            }
+            else
+            {
+                this.ExcelToXml(filePath);
+            }
+        }
+
+        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.timer.Stop();
+            this.progressBar.Value = this.progressBar.Maximum;
+            MessageBox.Show($"Convert Success. Time : {DateTime.Now - this.starTime}.");
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            if (this.progressBar.Value < this.progressBar.Maximum)
+            {
+                this.progressBar.PerformStep();
+            }
+        }
+
 
         private void getFilePathBtn_Click(object sender, EventArgs e)
         {
@@ -37,19 +66,12 @@ namespace TestLinkTransfer
 
         private void startBtn_Click(object sender, EventArgs e)
         {
-            this.logger.Info("test");
+            this.starTime = DateTime.Now;
+            CommonHelper.KillExcelProcess();
             if (this.FileChecked(filePathTb.Text)) return;
-            if(xeRb.Checked)
-            { 
-                Thread xeThread = new Thread(XmlToExcel);
-                xeThread.Start(filePathTb.Text);
-            }
-            if (exRb.Checked)
-            {
-                Thread exThread = new Thread(ExcelToXml);
-                exThread.Start(filePathTb.Text);
-            }
-
+          
+            this.backgroundWorker.RunWorkerAsync(filePathTb.Text);
+            this.timer.Start();
         }
 
         private void ExcelToXml(object filePath)
@@ -66,9 +88,8 @@ namespace TestLinkTransfer
             {
                 this.logger.Error(ex);
                 MessageBox.Show(ex.Message);
-                throw;
+                return;
             }
-            
         }
 
         private void XmlToExcel(Object filePath)
@@ -112,7 +133,7 @@ namespace TestLinkTransfer
                 return true;
             }
 
-            if (!System.IO.File.Exists(filePathTb.Text))
+            if (!File.Exists(filePathTb.Text))
             {
                 this.logger.Info(new Exception($"{filePathTb.Text} 已不存在，请重新输入文件地址."));
                 MessageBox.Show($"{filePathTb.Text} 已不存在，请重新输入文件地址.", "Warning");
