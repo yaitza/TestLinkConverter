@@ -1,4 +1,4 @@
-# TestLinkTransfer  
+# TestLinkConverter  
 
 TestLink XML Convert to Excel or Excel Convert to XML.
 
@@ -49,3 +49,6 @@ http://blog.csdn.net/zzukun/article/details/50830439
 
 ### 3. EXE打包教程  
 http://www.cnblogs.com/yinsq/p/5254893.html
+
+### 4. C#中跨线程访问控件问题解决方案  
+http://blog.csdn.net/henreash/article/details/7789566
