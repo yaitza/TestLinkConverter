@@ -17,6 +17,10 @@ namespace TransferLibrary
             this._tcList = tcCases;
         }
 
+        /// <summary>
+        /// 测试用例转为Str
+        /// </summary>
+        /// <returns>List String</returns>
         private List<string> CaseToStr()
         {
             List<string> tcStrList = new List<string>();
@@ -50,6 +54,9 @@ namespace TransferLibrary
             return tcStrList;
         }
 
+        /// <summary>
+        /// 写XML
+        /// </summary>
         public void WriteXml()
         {
             string filePath = $"{System.Environment.CurrentDirectory}\\TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xml";

@@ -23,6 +23,11 @@ namespace TransferLibrary
             return _sourceNodes.Select(this.NodeToModel).ToList();
         }
 
+        /// <summary>
+        /// Node转为Model
+        /// </summary>
+        /// <param name="node">XML节点Node</param>
+        /// <returns>TestCase Model</returns>
         private TestCase NodeToModel(XmlNode node)
         {
             TestCase tc = new TestCase();
@@ -84,6 +89,11 @@ namespace TransferLibrary
             return tc;
         }
 
+        /// <summary>
+        /// 获取测试步骤
+        /// </summary>
+        /// <param name="xmlNode">XML Node</param>
+        /// <returns>List TestStep</returns>
         private List<TestStep> GetAllSteps(XmlNode xmlNode)
         {
             List<TestStep> stepsList = new List<TestStep>();
