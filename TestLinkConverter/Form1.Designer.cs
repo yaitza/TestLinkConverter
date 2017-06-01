@@ -170,7 +170,7 @@ namespace TestLinkTransfer
             this.Controls.Add(this.filePathTb);
             this.Controls.Add(this.getFilePathBtn);
             this.Name = "Form1";
-            this.Text = "TestLinkTransfer";
+            this.Text = "TestLinkConverter";
             this.ResumeLayout(false);
             this.PerformLayout();
 
