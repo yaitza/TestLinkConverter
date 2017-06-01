@@ -189,6 +189,7 @@ namespace TestLinkTransfer
         private System.Windows.Forms.RichTextBox DisplayRtb;
         private System.Windows.Forms.Timer timer;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
+
     }
 }
 
