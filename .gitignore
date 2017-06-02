@@ -3,3 +3,4 @@ bin/
 .vs/
 
 *.user
+/Setup/Setup/Express
