@@ -1,6 +1,6 @@
 # TestLinkConverter  
 
-[![Build Status](https://travis-ci.org/yaitza/TestLinkConverter)][![Docs](https://yaitza.github.io/2017-05-21-CSharp-TestLink)]
+[![Gitter](https://badges.gitter.im/yaitza/TestLinkConverter.svg)](https://gitter.im/yaitza/TestLinkConverter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)[![Travis](https://travis-ci.org/yaitza/TestLinkConverter.svg?branch=master)](https://travis-ci.org/yaitza/TestLinkConverter)[![Docs](https://img.shields.io/badge/Docs-Chinese-blue.svg)](https://yaitza.github.io/2017-05-21-CSharp-TestLink)
 
 TestLink XML Convert to Excel or Excel Convert to XML.
 
