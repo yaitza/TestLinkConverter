@@ -39,7 +39,6 @@ namespace TestLinkTransfer
             this.label2 = new System.Windows.Forms.Label();
             this.startBtn = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.DisplayRtb = new System.Windows.Forms.RichTextBox();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
@@ -132,19 +131,6 @@ namespace TestLinkTransfer
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar.TabIndex = 7;
             // 
-            // DisplayRtb
-            // 
-            this.DisplayRtb.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.DisplayRtb.BackColor = System.Drawing.SystemColors.WindowText;
-            this.DisplayRtb.ForeColor = System.Drawing.Color.Lime;
-            this.DisplayRtb.Location = new System.Drawing.Point(2, 151);
-            this.DisplayRtb.Name = "DisplayRtb";
-            this.DisplayRtb.Size = new System.Drawing.Size(442, 168);
-            this.DisplayRtb.TabIndex = 8;
-            this.DisplayRtb.Text = "";
-            // 
             // timer
             // 
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
@@ -159,8 +145,7 @@ namespace TestLinkTransfer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(446, 323);
-            this.Controls.Add(this.DisplayRtb);
+            this.ClientSize = new System.Drawing.Size(446, 137);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.startBtn);
             this.Controls.Add(this.label2);
@@ -186,7 +171,6 @@ namespace TestLinkTransfer
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.ProgressBar progressBar;
-        private System.Windows.Forms.RichTextBox DisplayRtb;
         private System.Windows.Forms.Timer timer;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
 
