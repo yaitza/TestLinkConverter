@@ -1,5 +1,7 @@
 # TestLinkConverter  
 
+[![Build Status](https://travis-ci.org/yaitza/TestLinkConverter)][![Docs](https://yaitza.github.io/2017-05-21-CSharp-TestLink)]
+
 TestLink XML Convert to Excel or Excel Convert to XML.
 
 ## XML Convert to Excel
