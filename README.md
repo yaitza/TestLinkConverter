@@ -1,6 +1,10 @@
-# TestLinkTransfer  
+# TestLinkConverter  
 
-TestLink XML Convert to Excel or Excel Convert to XML.
+[![Gitter](https://badges.gitter.im/yaitza/TestLinkConverter.svg)](https://gitter.im/yaitza/TestLinkConverter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)[![Travis](https://travis-ci.org/yaitza/TestLinkConverter.svg?branch=master)](https://travis-ci.org/yaitza/TestLinkConverter)[![GitHub release](https://img.shields.io/github/release/yaitza/TestLinkConverter.svg)](https://github.com/yaitza/TestLinkConverter/releases)[![GitHub tag](https://img.shields.io/github/tag/yaitza/TestLinkConverter.svg)](https://github.com/yaitza/TestLinkConverter/tags)[![Docs](https://img.shields.io/badge/Docs-Chinese-blue.svg)](https://yaitza.github.io/2017-05-21-CSharp-TestLink)
+
+TestLink XML Convert to Excel or Excel Convert to XML.  
+
+![pic4](/Resource/Image/pic4.png)
 
 ## XML Convert to Excel
 
@@ -49,3 +53,6 @@ http://blog.csdn.net/zzukun/article/details/50830439
 
 ### 3. EXE打包教程  
 http://www.cnblogs.com/yinsq/p/5254893.html
+
+### 4. C#中跨线程访问控件问题解决方案  
+http://blog.csdn.net/henreash/article/details/7789566
