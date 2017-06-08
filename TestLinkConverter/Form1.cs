@@ -19,7 +19,9 @@ namespace TestLinkTransfer
         private readonly ILog _logger = LogManager.GetLogger(typeof(Form1));
 
         private DateTime _starTime; 
-        
+
+        private List<TestCase> tcList = new List<TestCase>();
+
         public Form1()
         {
             InitializeComponent();
@@ -42,7 +44,8 @@ namespace TestLinkTransfer
         {
             this.timer.Stop();
             this.progressBar.Value = this.progressBar.Maximum;
-            MessageBox.Show($"Convert Success. Time : {DateTime.Now - this._starTime}.");
+            MessageBox.Show($"Convert Cases: {tcList.Count}. Time : {DateTime.Now - this._starTime}.");
+            this.progressBar.Value = this.progressBar.Minimum;
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -82,7 +85,7 @@ namespace TestLinkTransfer
             try
             {
                 ExcelAnalysis excelAnalysis = new ExcelAnalysis(fileDir);
-                List<TestCase> tcList = excelAnalysis.ReadExcel();
+                tcList = excelAnalysis.ReadExcel();
                 XmlHandler xh = new XmlHandler(tcList);
                 xh.WriteXml();
             }
@@ -104,7 +107,7 @@ namespace TestLinkTransfer
             {
                 XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
                 XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
-                List<TestCase> tcList = xtm.OutputTestCases();
+                tcList = xtm.OutputTestCases();
                 ExcelHandler eh = new ExcelHandler(tcList);
                 eh.WriteExcel();
             }
@@ -114,7 +117,6 @@ namespace TestLinkTransfer
                 MessageBox.Show(ex.Message);
                 return;
             }
-            
         }
 
         /// <summary>

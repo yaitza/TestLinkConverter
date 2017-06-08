@@ -94,6 +94,7 @@ namespace TransferLibrary
         /// <param name="iFlag"></param>
         private void MergeCells(Excel.Worksheet workSheet, int iMerge, int iFlag)
         {
+            //导出Excel前6列均需要合并单元格
             for(int i=1; i<=6; i++)
             {
                 Excel.Range rangeLecture = workSheet.Range[workSheet.Cells[iFlag, i], workSheet.Cells[iFlag + iMerge - 1, i]];
