@@ -149,5 +149,10 @@ namespace TestLinkTransfer
 
             return false;
         }
+
+        private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://yaitza.github.io/");
+        }
     }
 }
