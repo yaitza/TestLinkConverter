@@ -5,24 +5,24 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using log4net;
+using TestLinkConverter;
 using TransferLibrary;
 using TransferModel;
 using Timer = System.Windows.Forms.Timer;
 
 namespace TestLinkTransfer
 {
-    //TODO 链接yaitza地址
     //TODO 添加打赏功能
     //TODO 处理完成后保存文件功能
-    public partial class Form1 : Form
+    public partial class Form : System.Windows.Forms.Form
     {
-        private readonly ILog _logger = LogManager.GetLogger(typeof(Form1));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(Form));
 
         private DateTime _starTime; 
 
         private List<TestCase> tcList = new List<TestCase>();
 
-        public Form1()
+        public Form()
         {
             InitializeComponent();
         }
@@ -153,6 +153,12 @@ namespace TestLinkTransfer
         private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://yaitza.github.io/");
+        }
+
+        private void moneylb_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Form donateForm = new DonateForm();
+            donateForm.Show();
         }
     }
 }
