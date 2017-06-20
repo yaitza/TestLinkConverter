@@ -45,7 +45,7 @@ namespace TransferLibrary
                 workbook = excelApp.Workbooks.Add(true);
             }
 
-            this.InputWorkSheet(workbook);
+            this.WriteInWorkSheet(workbook);
 
             excelApp.Visible = false;
 
@@ -60,7 +60,7 @@ namespace TransferLibrary
             excelApp = null;
         }
 
-        private void InputWorkSheet(Excel.Workbook workBook)
+        private void WriteInWorkSheet(Excel.Workbook workBook)
         {
             var workSheet = (Excel.Worksheet)workBook.Worksheets.Item[1];
 
