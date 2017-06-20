@@ -161,7 +161,8 @@ namespace TestLinkTransfer
             // 
             this.moneylb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.moneylb.AutoSize = true;
-            this.moneylb.Location = new System.Drawing.Point(366, 146);
+            this.moneylb.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.moneylb.Location = new System.Drawing.Point(361, 146);
             this.moneylb.Name = "moneylb";
             this.moneylb.Size = new System.Drawing.Size(77, 12);
             this.moneylb.TabIndex = 9;
