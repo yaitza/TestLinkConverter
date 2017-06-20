@@ -46,6 +46,7 @@ namespace TestLinkTransfer
             this.progressBar.Value = this.progressBar.Maximum;
             MessageBox.Show($"Convert Cases: {tcList.Count}. Time : {DateTime.Now - this._starTime}.");
             this.progressBar.Value = this.progressBar.Minimum;
+            this.filePathTb.Text = string.Empty;
         }
 
         private void timer_Tick(object sender, EventArgs e)
