@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Xml;
 using log4net;
 using TransferModel;
@@ -31,15 +32,20 @@ namespace TransferLibrary
         private TestCase NodeToModel(XmlNode node)
         {
             TestCase tc = new TestCase();
+
             try
             {
-                tc.InternalId = node.Attributes["internalid"].Value;
+                if (node.Attributes.Count != 1)
+                {
+                    tc.InternalId = node.Attributes["internalid"].Value;
+                }
                 tc.Name = node.Attributes["name"].Value;
             }
             catch (NullReferenceException ex)
             {
-                this._logger.Error(node.InnerText, ex);
+                this._logger.Error("用例名称为空", ex);
             }
+            
                
             foreach (XmlNode xmlNode in node)
             {
@@ -61,10 +67,11 @@ namespace TransferLibrary
                         tc.Preconditions = CommonHelper.DelTags(xmlNode.InnerText);
                         break;
                     case "execution_type":
-                        tc.ExecutionType = (ExecType) int.Parse(xmlNode.InnerText);
+                        
+                        tc.ExecutionType = StrToExecType(xmlNode.InnerText);
                         break;
                     case "importance":
-                        tc.Importance = (ImportanceType) int.Parse(xmlNode.InnerText);
+                        tc.Importance = StrToImportanceType(xmlNode.InnerText);
                         break;
                     case "estimated_exec_duration":
                         if (xmlNode.InnerText.Equals(""))
@@ -87,6 +94,51 @@ namespace TransferLibrary
                 }
             }
             return tc;
+        }
+
+        private ImportanceType StrToImportanceType(string innerText)
+        {
+            if (Regex.IsMatch(innerText, @"^[+-]?\d*[.]?\d*$"))
+            {
+                return (ImportanceType)int.Parse(innerText);
+            }
+            else
+            {
+                switch (innerText)
+                {
+                    case "高":
+                    case "high":
+                        return ImportanceType.高;
+                    case "中":
+                    case "medium":
+                        return ImportanceType.中;
+                    case "低":
+                    case "low":
+                        return ImportanceType.低;
+                    default:
+                        return ImportanceType.高;
+                }
+            }
+        }
+
+        private ExecType StrToExecType(string innerText)
+        {
+            if (Regex.IsMatch(innerText, @"^[+-]?\d*[.]?\d*$"))
+            {
+                return (ExecType) int.Parse(innerText);
+            }
+            else
+            {
+                switch (innerText)
+                {
+                    case "手动":
+                        return ExecType.手动;
+                    case "自动":
+                        return ExecType.自动;
+                    default:
+                        return ExecType.手动; 
+                }
+            }
         }
 
         /// <summary>
@@ -114,7 +166,7 @@ namespace TransferLibrary
                             ts.ExpectedResults = CommonHelper.DelTags(xNode.InnerText);
                             break;
                         case "execution_type":
-                            ts.ExecutionType = (ExecType) int.Parse(xNode.InnerText);
+                            ts.ExecutionType = StrToExecType(xNode.InnerText);
                             break;
                         default:
                             break;
