@@ -43,7 +43,7 @@ namespace TestLinkTransfer
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.linkLabel = new System.Windows.Forms.LinkLabel();
-            this.moneylb = new System.Windows.Forms.Label();
+            this.DonateLab = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // getFilePathBtn
@@ -157,24 +157,26 @@ namespace TestLinkTransfer
             this.linkLabel.Text = "© yaitza";
             this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
             // 
-            // moneylb
+            // DonateLab
             // 
-            this.moneylb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.moneylb.AutoSize = true;
-            this.moneylb.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.moneylb.Location = new System.Drawing.Point(361, 146);
-            this.moneylb.Name = "moneylb";
-            this.moneylb.Size = new System.Drawing.Size(77, 12);
-            this.moneylb.TabIndex = 9;
-            this.moneylb.Text = "打赏(Donate)";
-            this.moneylb.Click += new System.EventHandler(this.moneylb_Click);
+            this.DonateLab.AutoSize = true;
+            this.DonateLab.BackColor = System.Drawing.Color.LightCoral;
+            this.DonateLab.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DonateLab.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.DonateLab.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.DonateLab.Location = new System.Drawing.Point(355, 144);
+            this.DonateLab.Name = "DonateLab";
+            this.DonateLab.Size = new System.Drawing.Size(87, 17);
+            this.DonateLab.TabIndex = 11;
+            this.DonateLab.Text = "赞赏(Donate)";
+            this.DonateLab.Click += new System.EventHandler(this.DonateLab_Click);
             // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(445, 167);
-            this.Controls.Add(this.moneylb);
+            this.Controls.Add(this.DonateLab);
             this.Controls.Add(this.linkLabel);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.startBtn);
@@ -205,7 +207,7 @@ namespace TestLinkTransfer
         private System.Windows.Forms.Timer timer;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.LinkLabel linkLabel;
-        private System.Windows.Forms.Label moneylb;
+        private System.Windows.Forms.Label DonateLab;
     }
 }
 

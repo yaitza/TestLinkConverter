@@ -155,7 +155,7 @@ namespace TestLinkTransfer
             System.Diagnostics.Process.Start("https://yaitza.github.io/");
         }
 
-        private void moneylb_Click(object sender, EventArgs e)
+        private void DonateLab_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Form donateForm = new DonateForm();
             donateForm.Show();

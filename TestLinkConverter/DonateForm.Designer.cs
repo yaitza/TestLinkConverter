@@ -41,7 +41,7 @@
             this.alipayp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.alipayp.Location = new System.Drawing.Point(12, 101);
             this.alipayp.Name = "alipayp";
-            this.alipayp.Size = new System.Drawing.Size(180, 205);
+            this.alipayp.Size = new System.Drawing.Size(185, 205);
             this.alipayp.TabIndex = 1;
             // 
             // alipayicop
@@ -68,7 +68,7 @@
             this.wechat.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.wechat.Location = new System.Drawing.Point(228, 101);
             this.wechat.Name = "wechat";
-            this.wechat.Size = new System.Drawing.Size(199, 205);
+            this.wechat.Size = new System.Drawing.Size(211, 205);
             this.wechat.TabIndex = 4;
             // 
             // DonateForm

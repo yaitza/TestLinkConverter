@@ -121,7 +121,7 @@
   <data name="alipayp.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAXUAAAGrCAYAAAA/yQeXAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAIkESURBVHhe7Z0HYBRF+8YBP8tn77397eWzFxQVRIqNYkOa
+        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAIkESURBVHhe7Z0HYBRF+8YBP8tn77397eWzFxQVRIqNYkOa
         IkWkSBOQIipVKdKLUhN6b6GFhCSEEtIrhPSE0Kug9Obzn3dzi8tm9nbvbu9yCe+Dj1d2Z+bd2bnfzW12
         ZsqVD9yNyycX4go2m81ml1oTx4nn5W6flo9Ve44jjM1ms9ml1sRx4nm5B6bl4gT+AXCezWaz2aXUxHHi
         uQbqbDabzS6tvgD1+xWos1gsFqs067gwQ53FYrHKiBjqLBaLVYbEUGexWKwyJIY6i8VilSEx1FksFqsM
@@ -712,7 +712,7 @@
   <data name="alipayicop.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAPAAAABcCAYAAABQizgHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAADoRSURBVHhe7X0HmFXXdW4kWc2yYkd27DiR4ziOEyd5eV9e
+        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AADoRSURBVHhe7X0HmFXXdW4kWc2yYkd27DiR4ziOEyd5eV9e
         /EUgmEbvRSAkBEJ0IYQKRUioItFRB1Fk2TBDr6L3Kqqoovcy7d7pvff11r/22feeW+fcMgNYd8Gave85
         u5/977V2/yuKUIQidMdSBMARitAdTBEARyhCdzBFAByhCN3BFAFwhCJ0B1MEwBGK0B1MEQBHKEJ3MEUA
         HKEI3cEUAXCEInQHUwTAEYrQHUwWAVxnmH5InODP94i11WmYLBGKUMNTwBLYpX7W8S/Tgxr+Uc6/C2vr
@@ -966,7 +966,7 @@
   <data name="wechaticop.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAXgAAABvCAYAAADmOdsxAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAACvESURBVHhe7Z2HfxRV9/9/f8n3efRRARU7CgJKRzoIKh1B
+        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AACvESURBVHhe7Z2HfxRV9/9/f8n3efRRARU7CgJKRzoIKh1B
         VLpSBCkCooCACFix0FSKlAAJPUhNINTQS4AAoRM6CS3A+c37undfS5wkO7szk81yP7zOKyEzOzN7597P
         PffcU/6fGBgYGBjEJQzBGxgYGMQpDMEbGBgYxCkMwRsYGBjEKQzBGxgYGMQpDMEbGBgYxCkMwRsYGBjE
         KQzBGxgYGMQpDMEbGBgYxCkMwRsYGBjEKQzBGxgYGMQpDMEbGBgYxCkMwRsYGBjEKQzBGxgYGMQpDMEb
@@ -1159,7 +1159,7 @@
   <data name="wechat.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAWEAAAFhCAYAAACh/xvXAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAHajSURBVHhe7Z0HfBTV2ofTgYTeexNBRRHbVbH33sXerl67
+        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAHajSURBVHhe7Z0HfBTV2ofTgYTeexNBRRHbVbH33sXerl67
         YrkWUKRZEWxgQUClQ3ojlV4CIaT3QgIJKZBed7O72fy/8252vPHzJDOwmxDw/d/fcxOzc86cmd195uxy
         zhmH8d5XgGEYhjk1WCT8VvQnmBn7BcMwDNNJkHf/lHCJ7jg4HA6H03kh77KEORwO5xSFJczhcDinMCxh
         DofDOYVhCXM4HM4pDEuYw+FwTmFYwhwOh3MKwxLmcDicUxiWMIfD4ZzCsIQ5HA7nFIYlzOFwOKcwLGEO
