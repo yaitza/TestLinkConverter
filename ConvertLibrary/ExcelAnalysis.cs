@@ -72,8 +72,8 @@ namespace TransferLibrary
             {
                 TestCase tc = new TestCase();
                 tc.Name = ((Range) eWorksheet.Cells[i, 1]).Text.ToString();
-                tc.Importance = this.ConvertToImportanceType(((Range) eWorksheet.Cells[i, 2]).Text.ToString());
-                tc.ExecutionType = (ExecType) int.Parse(((Range) eWorksheet.Cells[i, 3]).Text.ToString());
+                tc.Importance = CommonHelper.StrToImportanceType(((Range) eWorksheet.Cells[i, 2]).Text.ToString());
+                tc.ExecutionType = CommonHelper.StrToExecType(((Range) eWorksheet.Cells[i, 3]).Text.ToString());
                 tc.Keywords = ((Range) eWorksheet.Cells[i, 4]).Text.ToString().Split(',').ToList();
                 tc.Summary = ((Range) eWorksheet.Cells[i, 5]).Text.ToString();
                 tc.Preconditions = ((Range) eWorksheet.Cells[i, 6]).Text.ToString();
@@ -90,36 +90,6 @@ namespace TransferLibrary
             }
 
             return tcList;
-        }
-
-        /// <summary>
-        /// 测试用例优先级类型转换
-        /// </summary>
-        /// <param name="impType">优先级</param>
-        /// <returns>ImportanceType</returns>
-        private ImportanceType ConvertToImportanceType(string innerText)
-        {
-            if (Regex.IsMatch(innerText, @"^[+-]?\d*[.]?\d*$"))
-            {
-                return (ImportanceType) int.Parse(innerText);
-            }
-            else
-            {
-                switch (innerText.ToLower())
-                {
-                    case "高":
-                    case "high":
-                        return ImportanceType.高;
-                    case "中":
-                    case "medium":
-                        return ImportanceType.中;
-                    case "低":
-                    case "low":
-                        return ImportanceType.低;
-                    default:
-                        return ImportanceType.高;
-                }
-            }
         }
     }
 }

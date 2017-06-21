@@ -37,7 +37,7 @@ namespace TransferLibrary
 
             if (System.IO.File.Exists(fileName))
             {
-                this._logger.Warn(new Exception("Template.xlsx 丢失"));
+                this._logger.Warn(new Exception("TestCaseTemplate.xlsx 丢失"));
                 workbook = excelApp.Workbooks.Open(fileName, 0, false, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
             }
             else

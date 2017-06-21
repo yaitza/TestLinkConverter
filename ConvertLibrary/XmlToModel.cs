@@ -68,10 +68,10 @@ namespace TransferLibrary
                         break;
                     case "execution_type":
                         
-                        tc.ExecutionType = StrToExecType(xmlNode.InnerText);
+                        tc.ExecutionType = CommonHelper.StrToExecType(xmlNode.InnerText);
                         break;
                     case "importance":
-                        tc.Importance = StrToImportanceType(xmlNode.InnerText);
+                        tc.Importance = CommonHelper.StrToImportanceType(xmlNode.InnerText);
                         break;
                     case "estimated_exec_duration":
                         if (xmlNode.InnerText.Equals(""))
@@ -96,50 +96,6 @@ namespace TransferLibrary
             return tc;
         }
 
-        private ImportanceType StrToImportanceType(string innerText)
-        {
-            if (Regex.IsMatch(innerText, @"^[+-]?\d*[.]?\d*$"))
-            {
-                return (ImportanceType)int.Parse(innerText);
-            }
-            else
-            {
-                switch (innerText)
-                {
-                    case "高":
-                    case "high":
-                        return ImportanceType.高;
-                    case "中":
-                    case "medium":
-                        return ImportanceType.中;
-                    case "低":
-                    case "low":
-                        return ImportanceType.低;
-                    default:
-                        return ImportanceType.高;
-                }
-            }
-        }
-
-        private ExecType StrToExecType(string innerText)
-        {
-            if (Regex.IsMatch(innerText, @"^[+-]?\d*[.]?\d*$"))
-            {
-                return (ExecType) int.Parse(innerText);
-            }
-            else
-            {
-                switch (innerText)
-                {
-                    case "手动":
-                        return ExecType.手动;
-                    case "自动":
-                        return ExecType.自动;
-                    default:
-                        return ExecType.手动; 
-                }
-            }
-        }
 
         /// <summary>
         /// 获取测试步骤
@@ -166,7 +122,7 @@ namespace TransferLibrary
                             ts.ExpectedResults = CommonHelper.DelTags(xNode.InnerText);
                             break;
                         case "execution_type":
-                            ts.ExecutionType = StrToExecType(xNode.InnerText);
+                            ts.ExecutionType = CommonHelper.StrToExecType(xNode.InnerText);
                             break;
                         default:
                             break;
