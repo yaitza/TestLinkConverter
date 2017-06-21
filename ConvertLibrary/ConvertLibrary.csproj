@@ -79,7 +79,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Template\TestCaseTemplate.xlsx">
+    <EmbeddedResource Include="TestCaseTemplate.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

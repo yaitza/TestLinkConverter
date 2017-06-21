@@ -23,7 +23,7 @@ namespace TransferLibrary
         public void WriteExcel()
         {
             string currentDir = System.Environment.CurrentDirectory;
-            string fileName = $"{currentDir}\\Template\\TestCaseTemplate.xlsx";
+            string fileName = $"{currentDir}\\TestCaseTemplate.xlsx";
 
             Excel.Application excelApp = new Excel.ApplicationClass();
 
@@ -51,7 +51,7 @@ namespace TransferLibrary
 
             excelApp.DisplayAlerts = false;
 
-            string saveDir = fileName.Replace("Template\\TestCaseTemplate.xlsx", $"TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
+            string saveDir = fileName.Replace("TestCaseTemplate.xlsx", $"TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
             workbook.SaveAs(saveDir);
             workbook.Close(false, Missing.Value, Missing.Value);
             excelApp.Quit();
