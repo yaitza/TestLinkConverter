@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertLibrary", "ConvertLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertLibTest", "ConvertLibTest\ConvertLibTest.csproj", "{3FC8F9C9-D4A5-4332-8E44-A95C5F127069}"
 EndProject
-Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "Setup", "Setup\Setup.isproj", "{DD7D108F-328F-43D3-918D-9D9DEA7A9FB6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -62,16 +60,6 @@ Global
 		{3FC8F9C9-D4A5-4332-8E44-A95C5F127069}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3FC8F9C9-D4A5-4332-8E44-A95C5F127069}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{3FC8F9C9-D4A5-4332-8E44-A95C5F127069}.SingleImage|Any CPU.Build.0 = Release|Any CPU
-		{DD7D108F-328F-43D3-918D-9D9DEA7A9FB6}.CD_ROM|Any CPU.ActiveCfg = CD_ROM
-		{DD7D108F-328F-43D3-918D-9D9DEA7A9FB6}.CD_ROM|Any CPU.Build.0 = CD_ROM
-		{DD7D108F-328F-43D3-918D-9D9DEA7A9FB6}.Debug|Any CPU.ActiveCfg = DVD-5
-		{DD7D108F-328F-43D3-918D-9D9DEA7A9FB6}.Debug|Any CPU.Build.0 = DVD-5
-		{DD7D108F-328F-43D3-918D-9D9DEA7A9FB6}.DVD-5|Any CPU.ActiveCfg = DVD-5
-		{DD7D108F-328F-43D3-918D-9D9DEA7A9FB6}.DVD-5|Any CPU.Build.0 = DVD-5
-		{DD7D108F-328F-43D3-918D-9D9DEA7A9FB6}.Release|Any CPU.ActiveCfg = SingleImage
-		{DD7D108F-328F-43D3-918D-9D9DEA7A9FB6}.Release|Any CPU.Build.0 = SingleImage
-		{DD7D108F-328F-43D3-918D-9D9DEA7A9FB6}.SingleImage|Any CPU.ActiveCfg = SingleImage
-		{DD7D108F-328F-43D3-918D-9D9DEA7A9FB6}.SingleImage|Any CPU.Build.0 = SingleImage
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

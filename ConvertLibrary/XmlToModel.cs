@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Xml;
 using log4net;
 using TransferModel;
@@ -31,15 +32,20 @@ namespace TransferLibrary
         private TestCase NodeToModel(XmlNode node)
         {
             TestCase tc = new TestCase();
+
             try
             {
-                tc.InternalId = node.Attributes["internalid"].Value;
+                if (node.Attributes.Count != 1)
+                {
+                    tc.InternalId = node.Attributes["internalid"].Value;
+                }
                 tc.Name = node.Attributes["name"].Value;
             }
             catch (NullReferenceException ex)
             {
-                this._logger.Error(node.InnerText, ex);
+                this._logger.Error("用例名称为空", ex);
             }
+            
                
             foreach (XmlNode xmlNode in node)
             {
@@ -61,10 +67,11 @@ namespace TransferLibrary
                         tc.Preconditions = CommonHelper.DelTags(xmlNode.InnerText);
                         break;
                     case "execution_type":
-                        tc.ExecutionType = (ExecType) int.Parse(xmlNode.InnerText);
+                        
+                        tc.ExecutionType = CommonHelper.StrToExecType(xmlNode.InnerText);
                         break;
                     case "importance":
-                        tc.Importance = (ImportanceType) int.Parse(xmlNode.InnerText);
+                        tc.Importance = CommonHelper.StrToImportanceType(xmlNode.InnerText);
                         break;
                     case "estimated_exec_duration":
                         if (xmlNode.InnerText.Equals(""))
@@ -88,6 +95,7 @@ namespace TransferLibrary
             }
             return tc;
         }
+
 
         /// <summary>
         /// 获取测试步骤
@@ -114,7 +122,7 @@ namespace TransferLibrary
                             ts.ExpectedResults = CommonHelper.DelTags(xNode.InnerText);
                             break;
                         case "execution_type":
-                            ts.ExecutionType = (ExecType) int.Parse(xNode.InnerText);
+                            ts.ExecutionType = CommonHelper.StrToExecType(xNode.InnerText);
                             break;
                         default:
                             break;

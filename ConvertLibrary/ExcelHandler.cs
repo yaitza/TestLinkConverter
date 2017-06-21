@@ -23,7 +23,7 @@ namespace TransferLibrary
         public void WriteExcel()
         {
             string currentDir = System.Environment.CurrentDirectory;
-            string fileName = $"{currentDir}\\Template\\TestCaseTemplate.xlsx";
+            string fileName = $"{currentDir}\\TestCaseTemplate.xlsx";
 
             Excel.Application excelApp = new Excel.ApplicationClass();
 
@@ -37,7 +37,7 @@ namespace TransferLibrary
 
             if (System.IO.File.Exists(fileName))
             {
-                this._logger.Warn(new Exception("Template.xlsx 丢失"));
+                this._logger.Warn(new Exception("TestCaseTemplate.xlsx 丢失"));
                 workbook = excelApp.Workbooks.Open(fileName, 0, false, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
             }
             else
@@ -45,13 +45,13 @@ namespace TransferLibrary
                 workbook = excelApp.Workbooks.Add(true);
             }
 
-            this.InputWorkSheet(workbook);
+            this.WriteInWorkSheet(workbook);
 
             excelApp.Visible = false;
 
             excelApp.DisplayAlerts = false;
 
-            string saveDir = fileName.Replace("Template\\TestCaseTemplate.xlsx", $"TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
+            string saveDir = fileName.Replace("TestCaseTemplate.xlsx", $"TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
             workbook.SaveAs(saveDir);
             workbook.Close(false, Missing.Value, Missing.Value);
             excelApp.Quit();
@@ -60,7 +60,7 @@ namespace TransferLibrary
             excelApp = null;
         }
 
-        private void InputWorkSheet(Excel.Workbook workBook)
+        private void WriteInWorkSheet(Excel.Workbook workBook)
         {
             var workSheet = (Excel.Worksheet)workBook.Worksheets.Item[1];
 

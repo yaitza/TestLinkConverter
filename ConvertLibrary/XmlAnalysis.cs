@@ -62,7 +62,17 @@ namespace TransferLibrary
             }
             List<XmlNode> xnList = xn.ChildNodes.Cast<XmlNode>().Where(xmlNode => xmlNode.Name.Equals("testsuite")).ToList();
 
-            RecursionGetNodes(xnList);
+            if (xnList.Count == 0)
+            {
+                foreach (XmlNode node in xn.ChildNodes)
+                {
+                    this._nodesList.Add(node);
+                }
+            }
+            else
+            {
+                RecursionGetNodes(xnList);
+            }
 
             return this._nodesList;
         }

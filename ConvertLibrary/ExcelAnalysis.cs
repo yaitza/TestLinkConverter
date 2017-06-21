@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using log4net;
 using Microsoft.Office.Interop.Excel;
 using TransferModel;
@@ -38,9 +39,10 @@ namespace TransferLibrary
                 excel.Visible = false;
                 excel.UserControl = true;
                 // 以只读的形式打开EXCEL文件
-                Workbook wb = excel.Application.Workbooks.Open(this._eFilePath, missing, true, missing, missing, missing, missing, missing, missing, true, missing, missing, missing, missing, missing);
+                Workbook wb = excel.Application.Workbooks.Open(this._eFilePath, missing, true, missing, missing, missing,
+                    missing, missing, missing, true, missing, missing, missing, missing, missing);
                 //取得第一个工作薄
-                Worksheet ws = (Worksheet)wb.Worksheets.Item[1];
+                Worksheet ws = (Worksheet) wb.Worksheets.Item[1];
                 tcList = this.GetExcelData(ws);
             }
             excel.Quit();
@@ -69,46 +71,25 @@ namespace TransferLibrary
             for (int i = 2; i <= usedRows; i++)
             {
                 TestCase tc = new TestCase();
-                tc.Name = ((Range)eWorksheet.Cells[i, 1]).Text.ToString();
-                tc.Importance = this.ConvertToImportanceType(((Range)eWorksheet.Cells[i, 2]).Text.ToString());
-                tc.ExecutionType = (ExecType)int.Parse(((Range)eWorksheet.Cells[i, 3]).Text.ToString());
-                tc.Keywords = ((Range)eWorksheet.Cells[i, 4]).Text.ToString().Split(',').ToList();
-                tc.Summary = ((Range)eWorksheet.Cells[i, 5]).Text.ToString();
-                tc.Preconditions = ((Range)eWorksheet.Cells[i, 6]).Text.ToString();
+                tc.Name = ((Range) eWorksheet.Cells[i, 1]).Text.ToString();
+                tc.Importance = CommonHelper.StrToImportanceType(((Range) eWorksheet.Cells[i, 2]).Text.ToString());
+                tc.ExecutionType = CommonHelper.StrToExecType(((Range) eWorksheet.Cells[i, 3]).Text.ToString());
+                tc.Keywords = ((Range) eWorksheet.Cells[i, 4]).Text.ToString().Split(',').ToList();
+                tc.Summary = ((Range) eWorksheet.Cells[i, 5]).Text.ToString();
+                tc.Preconditions = ((Range) eWorksheet.Cells[i, 6]).Text.ToString();
                 TestStep ts = new TestStep
                 {
                     StepNumber = 1,
                     ExecutionType = ExecType.手动,
-                    Actions = ((Range)eWorksheet.Cells[i, 7]).Text.ToString(),
-                    ExpectedResults = ((Range)eWorksheet.Cells[i, 8]).Text.ToString()
+                    Actions = ((Range) eWorksheet.Cells[i, 7]).Text.ToString(),
+                    ExpectedResults = ((Range) eWorksheet.Cells[i, 8]).Text.ToString()
                 };
-                tc.TestSteps = new List<TestStep> { ts };
+                tc.TestSteps = new List<TestStep> {ts};
 
                 tcList.Add(tc);
             }
 
             return tcList;
         }
-
-        /// <summary>
-        /// 测试用例优先级类型转换
-        /// </summary>
-        /// <param name="impType">优先级</param>
-        /// <returns>ImportanceType</returns>
-        private ImportanceType ConvertToImportanceType(string impType)
-        {
-            switch (impType.ToLower())
-            {
-                case "high":
-                    return ImportanceType.高;
-                case "medium":
-                    return ImportanceType.中;
-                case "low":
-                    return ImportanceType.高;
-                default:
-                    return ImportanceType.高;
-            }
-        }
     }
-
 }
