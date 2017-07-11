@@ -79,18 +79,18 @@ namespace TransferLibrary
             {
                 TestCase tc = new TestCase();
 
-                Range currentCell1 = (Range) eWorksheet.Cells[i, 1];
+                Range currentCell1 = (Range)eWorksheet.Cells[i, 1];
                 int icount = currentCell1.MergeArea.Count;
-                tc.Name = currentCell1.Text.ToString();
+                tc.ExternalId = currentCell1.Text.ToString().ToString();
 
-                Range currentCell2 = (Range)eWorksheet.Cells[i, 2];
-                tc.Importance = CommonHelper.StrToImportanceType(currentCell2.Text.ToString());
+                Range currentCell2 = (Range) eWorksheet.Cells[i, 2];
+                tc.Name = currentCell2.Text.ToString();
 
                 Range currentCell3 = (Range)eWorksheet.Cells[i, 3];
-                tc.ExecutionType = CommonHelper.StrToExecType(currentCell3.Text.ToString());
+                tc.Importance = CommonHelper.StrToImportanceType(currentCell3.Text.ToString());
 
                 Range currentCell4 = (Range)eWorksheet.Cells[i, 4];
-                tc.Keywords = currentCell4.Text.ToString().Split(',').ToList();
+                tc.ExecutionType = CommonHelper.StrToExecType(currentCell4.Text.ToString());
 
                 Range currentCell5 = (Range)eWorksheet.Cells[i, 5];
                 tc.Summary = currentCell5.Text.ToString();
