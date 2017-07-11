@@ -30,7 +30,7 @@ namespace TestLinkTransfer
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             string filePath = (string) e.Argument;
-            if (filePath.Split('.')[1].Equals("xml"))
+            if (filePath.EndsWith("xml"))
             {
                 this.XmlToExcel(filePath);
             }
