@@ -68,25 +68,48 @@ namespace TransferLibrary
                 throw new Exception("No TestCase!");
             }
 
-            for (int i = 2; i <= usedRows; i++)
+            for (int i = 1; i < usedRows; i++)
+            {
+                if (!((Range)eWorksheet.Cells[i, 1]).Text.ToString().Equals("END")) continue;
+                usedRows = i;
+                break;
+            }
+
+            for (int i = 2; i < usedRows; i++)
             {
                 TestCase tc = new TestCase();
-                tc.Name = ((Range) eWorksheet.Cells[i, 1]).Text.ToString();
-                tc.Importance = CommonHelper.StrToImportanceType(((Range) eWorksheet.Cells[i, 2]).Text.ToString());
-                tc.ExecutionType = CommonHelper.StrToExecType(((Range) eWorksheet.Cells[i, 3]).Text.ToString());
-                tc.Keywords = ((Range) eWorksheet.Cells[i, 4]).Text.ToString().Split(',').ToList();
-                tc.Summary = ((Range) eWorksheet.Cells[i, 5]).Text.ToString();
-                tc.Preconditions = ((Range) eWorksheet.Cells[i, 6]).Text.ToString();
-                TestStep ts = new TestStep
-                {
-                    StepNumber = 1,
-                    ExecutionType = ExecType.手动,
-                    Actions = ((Range) eWorksheet.Cells[i, 7]).Text.ToString(),
-                    ExpectedResults = ((Range) eWorksheet.Cells[i, 8]).Text.ToString()
-                };
-                tc.TestSteps = new List<TestStep> {ts};
 
+                Range currentCell1 = (Range) eWorksheet.Cells[i, 1];
+                int icount = currentCell1.MergeArea.Count;
+                tc.Name = currentCell1.Text.ToString();
+
+                Range currentCell2 = (Range)eWorksheet.Cells[i, 2];
+                tc.Importance = CommonHelper.StrToImportanceType(currentCell2.Text.ToString());
+
+                Range currentCell3 = (Range)eWorksheet.Cells[i, 3];
+                tc.ExecutionType = CommonHelper.StrToExecType(currentCell3.Text.ToString());
+
+                Range currentCell4 = (Range)eWorksheet.Cells[i, 4];
+                tc.Keywords = currentCell4.Text.ToString().Split(',').ToList();
+
+                Range currentCell5 = (Range)eWorksheet.Cells[i, 5];
+                tc.Summary = currentCell5.Text.ToString();
+
+                Range currentCell6 = (Range)eWorksheet.Cells[i, 6];
+                tc.Preconditions = currentCell6.Text.ToString();
+
+                tc.TestSteps = new List<TestStep>();
+                for (int j = i; j < i+icount; j++)
+                {
+                    TestStep ts = new TestStep();
+                    ts.StepNumber = 1;
+                    ts.ExecutionType = ExecType.手动;
+                    ts.Actions = ((Range) eWorksheet.Cells[j, 7]).Text.ToString();
+                    ts.ExpectedResults = ((Range) eWorksheet.Cells[j, 8]).Text.ToString();
+                    tc.TestSteps.Add(ts);
+                }
                 tcList.Add(tc);
+                i = i + icount - 1;
             }
 
             return tcList;
