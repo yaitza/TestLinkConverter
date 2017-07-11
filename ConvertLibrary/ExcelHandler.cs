@@ -84,6 +84,7 @@ namespace TransferLibrary
 
                 this.MergeCells(workSheet, iMerge, iFlag - iMerge);
             }
+            workSheet.Cells[iFlag++, 1] = "END";
         }
 
         /// <summary>
