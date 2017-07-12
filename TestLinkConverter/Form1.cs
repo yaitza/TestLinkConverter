@@ -46,7 +46,7 @@ namespace TestLinkTransfer
             this.timer.Stop();
             this.progressBar.Value = this.progressBar.Maximum;
             TimeSpan consume = DateTime.Now - this._starTime;
-            MessageBox.Show($"Convert Cases: {tcList.Count}. Time : {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.");
+            MessageBox.Show($"转换用例数: {tcList.Count}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.\n用例生成目录: {System.Environment.CurrentDirectory.ToString()}");
             this.progressBar.Value = this.progressBar.Minimum;
             this.filePathTb.Text = string.Empty;
         }

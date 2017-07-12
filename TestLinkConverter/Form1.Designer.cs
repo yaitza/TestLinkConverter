@@ -60,7 +60,7 @@ namespace TestLinkTransfer
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
-            this.openFileDialog.Filter = "xml(*.xml)|*.xml|Excel 2003(*.xls)|*.xls|Excel 2007Plus(*.xlsx)|*.xlsx";
+            this.openFileDialog.Filter = "xml|*.xml|Excel 2007Plus|*.xlsx";
             // 
             // filePathTb
             // 
