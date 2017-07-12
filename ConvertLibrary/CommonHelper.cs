@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using TransferModel;
 
 namespace TransferLibrary
@@ -30,8 +25,8 @@ namespace TransferLibrary
         /// <returns>处理后字符串</returns>
         public static string DelTags(string sourceStr)
         {
-            string newStr = CommonHelper.DelHtmlTags(sourceStr);
-            return CommonHelper.DelLinsTags(newStr);
+            string newStr = DelHtmlTags(sourceStr);
+            return DelLinsTags(newStr);
         }
 
 
@@ -42,7 +37,7 @@ namespace TransferLibrary
         /// <returns>处理后字符串</returns>
         private static string DelHtmlTags(string sourceStr)
         {
-            string newStr = System.Text.RegularExpressions.Regex.Replace(sourceStr, "<[^>]+>", "");
+            string newStr = Regex.Replace(sourceStr, "<[^>]+>", "");
             return newStr;
         }
 

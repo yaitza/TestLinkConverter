@@ -27,12 +27,6 @@ namespace TransferLibrary
 
             Excel.Application excelApp = new Excel.ApplicationClass();
 
-            if (excelApp == null)
-            {
-                this._logger.Warn(new Exception("Excel is not properly installed!"));
-                throw new Exception("Excel is not properly installed!");
-            }
-
             Excel.Workbook workbook;
 
             if (System.IO.File.Exists(fileName))
@@ -84,6 +78,7 @@ namespace TransferLibrary
 
                 this.MergeCells(workSheet, iMerge, iFlag - iMerge);
             }
+            workSheet.Cells[iFlag++, 1] = "END";
         }
 
         /// <summary>
