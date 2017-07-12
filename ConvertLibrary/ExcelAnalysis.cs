@@ -80,7 +80,7 @@ namespace ConvertLibrary
 
                 Range currentCell1 = (Range)eWorksheet.Cells[i, 1];
                 int icount = currentCell1.MergeArea.Count;
-                tc.ExternalId = currentCell1.Text.ToString().ToString();
+                tc.ExternalId = currentCell1.Text.ToString();
 
                 Range currentCell2 = (Range) eWorksheet.Cells[i, 2];
                 tc.Name = currentCell2.Text.ToString();
