@@ -6,6 +6,8 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 
 ![pic4](/Resource/Image/pic4.png)
 
+**注意：**支持XML转换为Excel后，对应Excel转换为XML；XML和Excel相互转换。
+
 ## XML Convert to Excel
 
 支持解析的XML内部结构如下：
