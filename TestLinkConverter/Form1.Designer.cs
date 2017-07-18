@@ -91,6 +91,7 @@ namespace TestLinkTransfer
             this.xeRb.TabStop = true;
             this.xeRb.Text = "XML -> Excel";
             this.xeRb.UseVisualStyleBackColor = true;
+            this.xeRb.CheckedChanged += new System.EventHandler(this.xeRb_CheckedChanged);
             // 
             // exRb
             // 
@@ -101,6 +102,7 @@ namespace TestLinkTransfer
             this.exRb.TabIndex = 4;
             this.exRb.Text = "Excel -> XML";
             this.exRb.UseVisualStyleBackColor = true;
+            this.exRb.CheckedChanged += new System.EventHandler(this.exRb_CheckedChanged);
             // 
             // label2
             // 

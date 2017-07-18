@@ -163,5 +163,15 @@ namespace TestLinkTransfer
             System.Windows.Forms.Form donateForm = new DonateForm();
             donateForm.Show();
         }
+
+        private void xeRb_CheckedChanged(object sender, EventArgs e)
+        {
+            this.openFileDialog.Filter = "xml|*.xml|Excel 2007Plus|*.xlsx";
+        }
+
+        private void exRb_CheckedChanged(object sender, EventArgs e)
+        {
+            this.openFileDialog.Filter = "Excel 2007Plus|*.xlsx|xml|*.xml";
+        }
     }
 }
