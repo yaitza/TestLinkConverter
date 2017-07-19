@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Reflection;
+using System.Threading;
+using ConvertLibrary;
 using log4net;
 using TransferModel;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -61,6 +64,7 @@ namespace TransferLibrary
             int iFlag = 2;
             foreach(TestCase node in this._sourceTestCases)
             {
+                OutputDisplay.ShowMessage(node.Name, Color.Chartreuse);
                 workSheet.Cells[iFlag, 1] = node.ExternalId;
                 workSheet.Cells[iFlag, 2] = node.Name;
                 workSheet.Cells[iFlag, 3] = node.Importance.ToString();
@@ -77,6 +81,7 @@ namespace TransferLibrary
                 }
 
                 this.MergeCells(workSheet, iMerge, iFlag - iMerge);
+                Thread.Sleep(1000);
             }
             workSheet.Cells[iFlag++, 1] = "END";
         }

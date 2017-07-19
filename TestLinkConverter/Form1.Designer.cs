@@ -44,12 +44,13 @@ namespace TestLinkTransfer
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.linkLabel = new System.Windows.Forms.LinkLabel();
             this.DonateLab = new System.Windows.Forms.Label();
+            this.outputRtb = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // getFilePathBtn
             // 
             this.getFilePathBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.getFilePathBtn.Location = new System.Drawing.Point(358, 58);
+            this.getFilePathBtn.Location = new System.Drawing.Point(367, 58);
             this.getFilePathBtn.Name = "getFilePathBtn";
             this.getFilePathBtn.Size = new System.Drawing.Size(46, 23);
             this.getFilePathBtn.TabIndex = 0;
@@ -60,7 +61,7 @@ namespace TestLinkTransfer
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
-            this.openFileDialog.Filter = "xml|*.xml|Excel 2007Plus|*.xlsx";
+            this.openFileDialog.Filter = "所有文件(*.*)|*.*";
             // 
             // filePathTb
             // 
@@ -68,7 +69,7 @@ namespace TestLinkTransfer
             | System.Windows.Forms.AnchorStyles.Right)));
             this.filePathTb.Location = new System.Drawing.Point(76, 60);
             this.filePathTb.Name = "filePathTb";
-            this.filePathTb.Size = new System.Drawing.Size(276, 21);
+            this.filePathTb.Size = new System.Drawing.Size(285, 21);
             this.filePathTb.TabIndex = 1;
             // 
             // label1
@@ -116,7 +117,7 @@ namespace TestLinkTransfer
             // startBtn
             // 
             this.startBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.startBtn.Location = new System.Drawing.Point(358, 106);
+            this.startBtn.Location = new System.Drawing.Point(367, 106);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(75, 23);
             this.startBtn.TabIndex = 6;
@@ -129,9 +130,9 @@ namespace TestLinkTransfer
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar.Location = new System.Drawing.Point(14, 106);
-            this.progressBar.Maximum = 500;
+            this.progressBar.Maximum = 1000;
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(338, 23);
+            this.progressBar.Size = new System.Drawing.Size(347, 23);
             this.progressBar.Step = 1;
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar.TabIndex = 7;
@@ -151,7 +152,7 @@ namespace TestLinkTransfer
             this.linkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel.AutoSize = true;
-            this.linkLabel.Location = new System.Drawing.Point(12, 146);
+            this.linkLabel.Location = new System.Drawing.Point(12, 415);
             this.linkLabel.Name = "linkLabel";
             this.linkLabel.Size = new System.Drawing.Size(53, 12);
             this.linkLabel.TabIndex = 8;
@@ -161,23 +162,38 @@ namespace TestLinkTransfer
             // 
             // DonateLab
             // 
+            this.DonateLab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.DonateLab.AutoSize = true;
             this.DonateLab.BackColor = System.Drawing.Color.LightCoral;
             this.DonateLab.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DonateLab.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.DonateLab.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.DonateLab.Location = new System.Drawing.Point(355, 144);
+            this.DonateLab.Location = new System.Drawing.Point(355, 415);
             this.DonateLab.Name = "DonateLab";
             this.DonateLab.Size = new System.Drawing.Size(87, 17);
             this.DonateLab.TabIndex = 11;
             this.DonateLab.Text = "赞赏(Donate)";
             this.DonateLab.Click += new System.EventHandler(this.DonateLab_Click);
             // 
+            // outputRtb
+            // 
+            this.outputRtb.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.outputRtb.BackColor = System.Drawing.SystemColors.MenuText;
+            this.outputRtb.ForeColor = System.Drawing.Color.Red;
+            this.outputRtb.Location = new System.Drawing.Point(12, 147);
+            this.outputRtb.Name = "outputRtb";
+            this.outputRtb.Size = new System.Drawing.Size(438, 265);
+            this.outputRtb.TabIndex = 12;
+            this.outputRtb.Text = "";
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(445, 167);
+            this.ClientSize = new System.Drawing.Size(454, 436);
+            this.Controls.Add(this.outputRtb);
             this.Controls.Add(this.DonateLab);
             this.Controls.Add(this.linkLabel);
             this.Controls.Add(this.progressBar);
@@ -210,6 +226,7 @@ namespace TestLinkTransfer
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.LinkLabel linkLabel;
         private System.Windows.Forms.Label DonateLab;
+        private System.Windows.Forms.RichTextBox outputRtb;
     }
 }
 
