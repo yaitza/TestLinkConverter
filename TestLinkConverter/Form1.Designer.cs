@@ -50,7 +50,7 @@ namespace TestLinkTransfer
             // getFilePathBtn
             // 
             this.getFilePathBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.getFilePathBtn.Location = new System.Drawing.Point(367, 58);
+            this.getFilePathBtn.Location = new System.Drawing.Point(361, 58);
             this.getFilePathBtn.Name = "getFilePathBtn";
             this.getFilePathBtn.Size = new System.Drawing.Size(46, 23);
             this.getFilePathBtn.TabIndex = 0;
@@ -67,7 +67,7 @@ namespace TestLinkTransfer
             // 
             this.filePathTb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.filePathTb.Location = new System.Drawing.Point(76, 60);
+            this.filePathTb.Location = new System.Drawing.Point(70, 60);
             this.filePathTb.Name = "filePathTb";
             this.filePathTb.Size = new System.Drawing.Size(285, 21);
             this.filePathTb.TabIndex = 1;
@@ -75,7 +75,7 @@ namespace TestLinkTransfer
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 64);
+            this.label1.Location = new System.Drawing.Point(6, 64);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 2;
@@ -85,7 +85,7 @@ namespace TestLinkTransfer
             // 
             this.xeRb.AutoSize = true;
             this.xeRb.Checked = true;
-            this.xeRb.Location = new System.Drawing.Point(80, 19);
+            this.xeRb.Location = new System.Drawing.Point(74, 19);
             this.xeRb.Name = "xeRb";
             this.xeRb.Size = new System.Drawing.Size(95, 16);
             this.xeRb.TabIndex = 3;
@@ -97,7 +97,7 @@ namespace TestLinkTransfer
             // exRb
             // 
             this.exRb.AutoSize = true;
-            this.exRb.Location = new System.Drawing.Point(197, 19);
+            this.exRb.Location = new System.Drawing.Point(191, 19);
             this.exRb.Name = "exRb";
             this.exRb.Size = new System.Drawing.Size(95, 16);
             this.exRb.TabIndex = 4;
@@ -108,7 +108,7 @@ namespace TestLinkTransfer
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 21);
+            this.label2.Location = new System.Drawing.Point(6, 21);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 5;
@@ -117,7 +117,7 @@ namespace TestLinkTransfer
             // startBtn
             // 
             this.startBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.startBtn.Location = new System.Drawing.Point(367, 106);
+            this.startBtn.Location = new System.Drawing.Point(361, 106);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(75, 23);
             this.startBtn.TabIndex = 6;
@@ -129,7 +129,7 @@ namespace TestLinkTransfer
             // 
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(14, 106);
+            this.progressBar.Location = new System.Drawing.Point(8, 106);
             this.progressBar.Maximum = 1000;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(347, 23);
@@ -152,7 +152,7 @@ namespace TestLinkTransfer
             this.linkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel.AutoSize = true;
-            this.linkLabel.Location = new System.Drawing.Point(12, 415);
+            this.linkLabel.Location = new System.Drawing.Point(6, 415);
             this.linkLabel.Name = "linkLabel";
             this.linkLabel.Size = new System.Drawing.Size(53, 12);
             this.linkLabel.TabIndex = 8;
@@ -168,7 +168,7 @@ namespace TestLinkTransfer
             this.DonateLab.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DonateLab.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.DonateLab.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.DonateLab.Location = new System.Drawing.Point(355, 415);
+            this.DonateLab.Location = new System.Drawing.Point(349, 415);
             this.DonateLab.Name = "DonateLab";
             this.DonateLab.Size = new System.Drawing.Size(87, 17);
             this.DonateLab.TabIndex = 11;
@@ -182,9 +182,9 @@ namespace TestLinkTransfer
             | System.Windows.Forms.AnchorStyles.Right)));
             this.outputRtb.BackColor = System.Drawing.SystemColors.MenuText;
             this.outputRtb.ForeColor = System.Drawing.Color.Red;
-            this.outputRtb.Location = new System.Drawing.Point(12, 147);
+            this.outputRtb.Location = new System.Drawing.Point(6, 147);
             this.outputRtb.Name = "outputRtb";
-            this.outputRtb.Size = new System.Drawing.Size(438, 265);
+            this.outputRtb.Size = new System.Drawing.Size(445, 265);
             this.outputRtb.TabIndex = 12;
             this.outputRtb.Text = "";
             // 

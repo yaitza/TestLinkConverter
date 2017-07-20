@@ -14,7 +14,6 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace TestLinkTransfer
 {
-    //TODO 添加打赏功能
     //TODO 处理完成后保存文件功能
     public partial class Form : System.Windows.Forms.Form
     {
