@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
@@ -13,24 +14,43 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace TestLinkTransfer
 {
-    //TODO 添加打赏功能
     //TODO 处理完成后保存文件功能
     public partial class Form : System.Windows.Forms.Form
     {
         private readonly ILog _logger = LogManager.GetLogger(typeof(Form));
 
-        private DateTime _starTime; 
+        private DateTime _starTime;
 
         private List<TestCase> tcList = new List<TestCase>();
+
+        private delegate void DisplayMessage(string msg, Color color);
+
 
         public Form()
         {
             InitializeComponent();
+            OutputDisplay.ShowMethod += this.OutputRichTextBox;
+        }
+
+        private void OutputRichTextBox(string msg, Color color)
+        {
+            if (this.outputRtb.InvokeRequired)
+            {
+                DisplayMessage dm = new DisplayMessage(OutputRichTextBox);
+                this.Invoke(dm, new object[] { msg, color});
+            }
+            else
+            {
+                this.outputRtb.SelectionColor = color;
+                this.outputRtb.AppendText( $"{DateTime.Now.ToString("u")} {msg} {Environment.NewLine}");
+                this.outputRtb.Focus();
+
+            }
         }
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            string filePath = (string) e.Argument;
+            string filePath = (string)e.Argument;
             if (filePath.EndsWith("xml"))
             {
                 this.XmlToExcel(filePath);
@@ -46,7 +66,9 @@ namespace TestLinkTransfer
             this.timer.Stop();
             this.progressBar.Value = this.progressBar.Maximum;
             TimeSpan consume = DateTime.Now - this._starTime;
-            MessageBox.Show($"转换用例数: {tcList.Count}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.\n用例生成目录: {System.Environment.CurrentDirectory.ToString()}");
+            string showMsg = $"转换用例数: {tcList.Count}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.\n用例生成目录: {System.Environment.CurrentDirectory.ToString()}";
+            MessageBox.Show(showMsg);
+            OutputDisplay.ShowMessage(showMsg, Color.Azure);
             this.progressBar.Value = this.progressBar.Minimum;
             this.filePathTb.Text = string.Empty;
         }
@@ -74,7 +96,7 @@ namespace TestLinkTransfer
             this._starTime = DateTime.Now;
             CommonHelper.KillExcelProcess();
             if (this.FileChecked(filePathTb.Text)) return;
-          
+
             this.backgroundWorker.RunWorkerAsync(filePathTb.Text);
             this.timer.Start();
         }
@@ -95,6 +117,7 @@ namespace TestLinkTransfer
             catch (Exception ex)
             {
                 this._logger.Error(ex);
+                OutputDisplay.ShowMessage(ex.ToString(), Color.Red);
                 MessageBox.Show(ex.Message);
                 return;
             }
@@ -117,6 +140,7 @@ namespace TestLinkTransfer
             catch (Exception ex)
             {
                 this._logger.Error(ex);
+                OutputDisplay.ShowMessage(ex.ToString(), Color.Red);
                 MessageBox.Show(ex.Message);
                 return;
             }
@@ -162,6 +186,16 @@ namespace TestLinkTransfer
         {
             System.Windows.Forms.Form donateForm = new DonateForm();
             donateForm.Show();
+        }
+
+        private void xeRb_CheckedChanged(object sender, EventArgs e)
+        {
+            this.openFileDialog.Filter = "xml|*.xml|Excel 2007Plus|*.xlsx";
+        }
+
+        private void exRb_CheckedChanged(object sender, EventArgs e)
+        {
+            this.openFileDialog.Filter = "Excel 2007Plus|*.xlsx|xml|*.xml";
         }
     }
 }

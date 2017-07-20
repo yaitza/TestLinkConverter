@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Xml;
+using ConvertLibrary;
 using TransferModel;
 
 namespace TransferLibrary
@@ -26,6 +29,7 @@ namespace TransferLibrary
             List<string> tcStrList = new List<string>();
             foreach (TestCase testCase in this._tcList)
             {
+                OutputDisplay.ShowMessage(testCase.Name, Color.Chartreuse);
                 string fieldsStr = $"<node_order><![CDATA[{testCase.NodeOrder}]]></node_order>";
                 fieldsStr += $"<externalid><![CDATA[{testCase.ExternalId}]]></externalid>";
                 fieldsStr += $"<version><![CDATA[{testCase.Version}]]></version>";
@@ -47,7 +51,7 @@ namespace TransferLibrary
                 }
                 fieldsStr += $"<steps>{tsStr}</steps>";
                 string tcStr = $"<testcase name=\"{testCase.Name}\">{fieldsStr}</testcase>";
-
+                Thread.Sleep(1000);
                 tcStrList.Add(tcStr);
             }
 
