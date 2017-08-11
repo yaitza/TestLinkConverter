@@ -89,6 +89,10 @@ namespace TransferLibrary
         /// <returns>ExecType</returns>
         public static ExecType StrToExecType(string innerText)
         {
+            if (string.IsNullOrEmpty(innerText))
+            {
+                return ExecType.手动;
+            }
             if (Regex.IsMatch(innerText, @"^[+-]?\d*[.]?\d*$"))
             {
                 return (ExecType)int.Parse(innerText);
