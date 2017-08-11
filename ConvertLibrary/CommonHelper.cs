@@ -59,6 +59,10 @@ namespace TransferLibrary
         /// <returns>ImportanceType</returns>
         public static ImportanceType StrToImportanceType(string innerText)
         {
+            if (string.IsNullOrEmpty(innerText))
+            {
+                return ImportanceType.高;
+            }
             if (Regex.IsMatch(innerText, @"^[+-]?\d*[.]?\d*$"))
             {
                 return (ImportanceType)int.Parse(innerText);
