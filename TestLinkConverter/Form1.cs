@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using ConvertLibrary;
@@ -21,7 +22,7 @@ namespace TestLinkTransfer
 
         private DateTime _starTime;
 
-        private List<TestCase> tcList = new List<TestCase>();
+        private Dictionary<string, List<TestCase>> tcDic = new Dictionary<string, List<TestCase>>();
 
         private delegate void DisplayMessage(string msg, Color color);
 
@@ -66,7 +67,8 @@ namespace TestLinkTransfer
             this.timer.Stop();
             this.progressBar.Value = this.progressBar.Maximum;
             TimeSpan consume = DateTime.Now - this._starTime;
-            string showMsg = $"转换用例数: {tcList.Count}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.\n用例生成目录: {System.Environment.CurrentDirectory.ToString()}";
+
+            string showMsg = $"转换用例数: {tcDic.Sum(keyValuePair => keyValuePair.Value.Count)}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.\n用例生成目录: {System.Environment.CurrentDirectory.ToString()}";
             MessageBox.Show(showMsg);
             OutputDisplay.ShowMessage(showMsg, Color.Azure);
             this.progressBar.Value = this.progressBar.Minimum;
@@ -110,15 +112,14 @@ namespace TestLinkTransfer
             try
             {
                 ExcelAnalysis excelAnalysis = new ExcelAnalysis(fileDir);
-                tcList = excelAnalysis.ReadExcel();
-                XmlHandler xh = new XmlHandler(tcList);
+                tcDic = excelAnalysis.ReadExcel();
+                XmlHandler xh = new XmlHandler(tcDic);
                 xh.WriteXml();
             }
             catch (Exception ex)
             {
                 this._logger.Error(ex);
                 OutputDisplay.ShowMessage(ex.ToString(), Color.Red);
-                MessageBox.Show(ex.Message);
                 return;
             }
         }
@@ -133,7 +134,7 @@ namespace TestLinkTransfer
             {
                 XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
                 XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
-                tcList = xtm.OutputTestCases();
+                List<TestCase> tcList = xtm.OutputTestCases();
                 ExcelHandler eh = new ExcelHandler(tcList);
                 eh.WriteExcel();
             }
@@ -141,7 +142,6 @@ namespace TestLinkTransfer
             {
                 this._logger.Error(ex);
                 OutputDisplay.ShowMessage(ex.ToString(), Color.Red);
-                MessageBox.Show(ex.Message);
                 return;
             }
         }
@@ -156,14 +156,14 @@ namespace TestLinkTransfer
             if (filePathTb.Text == string.Empty)
             {
                 this._logger.Info(new Exception("请输入文件地址."));
-                MessageBox.Show("请输入文件地址.", "Warning");
+                OutputDisplay.ShowMessage("请输入文件地址.", Color.Red);
                 return true;
             }
 
             if (!(filePathTb.Text.EndsWith(".xml") || filePathTb.Text.EndsWith(".xls") || filePathTb.Text.EndsWith(".xlsx")))
             {
                 this._logger.Info(new Exception("输入文件要求为xml，xls或xlsx格式."));
-                MessageBox.Show("输入文件要求为xml，xls或xlsx格式.", "Warning");
+                OutputDisplay.ShowMessage("输入文件要求为xml，xls或xlsx格式.", Color.Red);
                 return true;
             }
 
