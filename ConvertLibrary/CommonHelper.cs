@@ -38,6 +38,15 @@ namespace TransferLibrary
         private static string DelHtmlTags(string sourceStr)
         {
             string newStr = Regex.Replace(sourceStr, "<[^>]+>", "");
+            newStr = Regex.Replace(newStr, @"<(.[^>]*)>", "", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"([\r\n])[\s]+", "", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"-->", "", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"<!--.*", "", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&(quot|#34);", "\"", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&(amp|#38);", "&", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&(lt|#60);", "<", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&(gt|#62);", ">", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&#(\d+);", "", RegexOptions.IgnoreCase);
             return newStr;
         }
 
