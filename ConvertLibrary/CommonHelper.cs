@@ -38,6 +38,15 @@ namespace TransferLibrary
         private static string DelHtmlTags(string sourceStr)
         {
             string newStr = Regex.Replace(sourceStr, "<[^>]+>", "");
+            newStr = Regex.Replace(newStr, @"<(.[^>]*)>", "", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"([\r\n])[\s]+", "", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"-->", "", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"<!--.*", "", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&(quot|#34);", "\"", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&(amp|#38);", "&", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&(lt|#60);", "<", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&(gt|#62);", ">", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&#(\d+);", "", RegexOptions.IgnoreCase);
             return newStr;
         }
 
@@ -59,6 +68,10 @@ namespace TransferLibrary
         /// <returns>ImportanceType</returns>
         public static ImportanceType StrToImportanceType(string innerText)
         {
+            if (string.IsNullOrEmpty(innerText))
+            {
+                return ImportanceType.高;
+            }
             if (Regex.IsMatch(innerText, @"^[+-]?\d*[.]?\d*$"))
             {
                 return (ImportanceType)int.Parse(innerText);
@@ -89,6 +102,10 @@ namespace TransferLibrary
         /// <returns>ExecType</returns>
         public static ExecType StrToExecType(string innerText)
         {
+            if (string.IsNullOrEmpty(innerText))
+            {
+                return ExecType.手动;
+            }
             if (Regex.IsMatch(innerText, @"^[+-]?\d*[.]?\d*$"))
             {
                 return (ExecType)int.Parse(innerText);

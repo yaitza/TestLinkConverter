@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Xml;
+using ConvertLibrary;
 using log4net;
 using TransferModel;
 
@@ -44,6 +46,7 @@ namespace TransferLibrary
             catch (NullReferenceException ex)
             {
                 this._logger.Error("用例名称为空", ex);
+                OutputDisplay.ShowMessage("用例名称为空", Color.Red);
             }
             
                
