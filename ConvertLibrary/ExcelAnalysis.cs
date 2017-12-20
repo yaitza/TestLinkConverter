@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Reflection;
 using log4net;
 using Microsoft.Office.Interop.Excel;
@@ -23,32 +24,48 @@ namespace ConvertLibrary
         /// 读取Excel数据
         /// </summary>
         /// <returns>TestCase</returns>
-        public List<TestCase> ReadExcel()
+        public Dictionary<string, List<TestCase>> ReadExcel()
         {
-            List<TestCase> tcList;
             object missing = Missing.Value;
-            Application excel = new Application();
-            if (excel == null)
+            Application excel = new Application
             {
-                _logger.Warn(new Exception("Excel is not properly installed!"));
-                throw new Exception("Excel is not properly installed!");
-            }
-            else
+                Visible = false,
+                UserControl = true
+            };
+
+            // 以只读的形式打开EXCEL文件
+            Workbook wb = excel.Application.Workbooks.Open(this._eFilePath, missing, true, missing, missing, missing,
+                missing, missing, missing, true, missing, missing, missing, missing, missing);
+            //取得第一个工作薄
+
+            Dictionary<string,List<TestCase>> dic = new Dictionary<string, List<TestCase>>();
+
+            foreach (Worksheet sheet in wb.Worksheets)
             {
-                excel.Visible = false;
-                excel.UserControl = true;
-                // 以只读的形式打开EXCEL文件
-                Workbook wb = excel.Application.Workbooks.Open(this._eFilePath, missing, true, missing, missing, missing,
-                    missing, missing, missing, true, missing, missing, missing, missing, missing);
-                //取得第一个工作薄
-                Worksheet ws = (Worksheet) wb.Worksheets.Item[1];
-                tcList = this.GetExcelData(ws);
+                string sheetName = sheet.Name;
+                List<TestCase> tcs = this.GetExcelData(sheet);
+
+                if (dic.ContainsKey(sheetName))
+                {
+                    OutputDisplay.ShowMessage($"同一页签名：{sheetName}已在本Excel中出现过.", Color.GreenYellow);
+                }
+                
+                if (tcs.Count == 0)
+                {
+                    OutputDisplay.ShowMessage($"页签：{sheetName} 无任何可转换用例数据.", Color.GreenYellow);
+                    continue;
+                }
+
+                dic.Add(sheetName, tcs);
             }
+
+//          Worksheet ws = (Worksheet) wb.Worksheets.Item[1];
+//          tcList = this.GetExcelData(ws);
             excel.Quit();
             excel = null;
             CommonHelper.KillExcelProcess();
 
-            return tcList;
+            return dic;
         }
 
         /// <summary>
@@ -64,7 +81,7 @@ namespace ConvertLibrary
             if (usedRows == 0 || usedRows == 1)
             {
                 this._logger.Warn(new Exception("No TestCase!"));
-                throw new Exception("No TestCase!");
+                return tcList;
             }
 
             for (int i = 1; i < usedRows; i++)
