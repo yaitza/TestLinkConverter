@@ -135,6 +135,9 @@ namespace TestLinkTransfer
                 XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
                 XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
                 List<TestCase> tcList = xtm.OutputTestCases();
+                this.tcDic = new Dictionary<string, List<TestCase>>();
+                tcDic.Add("TestCase", tcList);
+
                 ExcelHandler eh = new ExcelHandler(tcList);
                 eh.WriteExcel();
             }
