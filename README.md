@@ -22,7 +22,10 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 支持解析Excel的格式如下：
 ![pic3](/Resource/Image/pic3.png)
 
-**注意:** 暂不解析关键字，规约编号字段。
+**注意:**   
+
+1. 暂不解析关键字，规约编号字段。
+2. 支持Excel多Sheet页转换，每个Sheet页默认为一个测试套。
 
 ---
 ## 引用三方类库
@@ -34,7 +37,11 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 ---
 ## 问题  
 代码过程中以及环境设置中出现的相关问题。
-### 1. 调用Excel相关类库时环境配置问题
+### 1. 安装包安装，建议安装至C盘以外的系统盘。存在写入Excel文件时，没有权限等问题。
+
+### 2. 进行文件转换时，建议不要打开Excel进程，可能出现进程占用导致转换失败等问题。
+
+### 3. 调用Excel相关类库时环境配置问题。
 **问题描述：**  
 无法嵌入互操作类型“Microsoft.Office.Interop.Word.ApplicationClass”。请改用适用的接口。
 错误 4317 无法嵌入互操作类型“Microsoft.Office.Interop.Word.ApplicationClass”。请改用适用的接口。
