@@ -12,7 +12,7 @@ namespace ConvertLibrary
     //TODO 解析合并格式的Excel数据
     public class ExcelAnalysis
     {
-        private readonly ILog _logger = LogManager.GetLogger(typeof (ExcelAnalysis));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(ExcelAnalysis));
         private readonly string _eFilePath;
 
         public ExcelAnalysis(string filePath)
@@ -38,7 +38,7 @@ namespace ConvertLibrary
                 missing, missing, missing, true, missing, missing, missing, missing, missing);
             //取得第一个工作薄
 
-            Dictionary<string,List<TestCase>> dic = new Dictionary<string, List<TestCase>>();
+            Dictionary<string, List<TestCase>> dic = new Dictionary<string, List<TestCase>>();
 
             foreach (Worksheet sheet in wb.Worksheets)
             {
@@ -49,7 +49,7 @@ namespace ConvertLibrary
                 {
                     OutputDisplay.ShowMessage($"同一页签名：{sheetName}已在本Excel中出现过.", Color.GreenYellow);
                 }
-                
+
                 if (tcs.Count == 0)
                 {
                     OutputDisplay.ShowMessage($"页签：{sheetName} 无任何可转换用例数据.", Color.GreenYellow);
@@ -59,8 +59,8 @@ namespace ConvertLibrary
                 dic.Add(sheetName, tcs);
             }
 
-//          Worksheet ws = (Worksheet) wb.Worksheets.Item[1];
-//          tcList = this.GetExcelData(ws);
+            //          Worksheet ws = (Worksheet) wb.Worksheets.Item[1];
+            //          tcList = this.GetExcelData(ws);
             excel.Quit();
             excel = null;
             CommonHelper.KillExcelProcess();
@@ -86,7 +86,10 @@ namespace ConvertLibrary
 
             for (int i = 1; i < usedRows; i++)
             {
-                if (!((Range)eWorksheet.Cells[i, 1]).Text.ToString().Equals("END")) continue;
+                if (((Range)eWorksheet.Cells[i, 1]).Text != null || ((Range)eWorksheet.Cells[i, 1]).Text.ToString() != string.Empty || !((Range)eWorksheet.Cells[i, 1]).Text.ToString().Equals("END"))
+                {
+                    continue;
+                }
                 usedRows = i;
                 break;
             }
@@ -97,9 +100,9 @@ namespace ConvertLibrary
 
                 Range currentCell1 = (Range)eWorksheet.Cells[i, 1];
                 int icount = currentCell1.MergeArea.Count;
-                tc.ExternalId = currentCell1.Text.ToString();
+                tc.ExternalId = string.Format("%s%s",new Random().Next(0,10000), currentCell1.Text.ToString());
 
-                Range currentCell2 = (Range) eWorksheet.Cells[i, 2];
+                Range currentCell2 = (Range)eWorksheet.Cells[i, 2];
                 tc.Name = currentCell2.Text.ToString();
 
                 Range currentCell3 = (Range)eWorksheet.Cells[i, 3];
@@ -115,13 +118,13 @@ namespace ConvertLibrary
                 tc.Preconditions = currentCell6.Text.ToString();
 
                 tc.TestSteps = new List<TestStep>();
-                for (int j = i; j < i+icount; j++)
+                for (int j = i; j < i + icount; j++)
                 {
                     TestStep ts = new TestStep();
                     ts.StepNumber = 1;
                     ts.ExecutionType = ExecType.手动;
-                    ts.Actions = ((Range) eWorksheet.Cells[j, 7]).Text.ToString();
-                    ts.ExpectedResults = ((Range) eWorksheet.Cells[j, 8]).Text.ToString();
+                    ts.Actions = ((Range)eWorksheet.Cells[j, 7]).Text.ToString();
+                    ts.ExpectedResults = ((Range)eWorksheet.Cells[j, 8]).Text.ToString();
                     tc.TestSteps.Add(ts);
                 }
                 tcList.Add(tc);
