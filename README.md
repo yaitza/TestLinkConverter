@@ -35,9 +35,12 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 **参考博客：**  <http://www.cnblogs.com/kissazi2/p/3389551.html>
 
 ### 2.EPPlus
-**下载地址：**    <https://github.com/JanKallman/EPPlus>  
+**下载地址：**  <https://github.com/JanKallman/EPPlus>  
 
-**参考博客：**   <http://blog.csdn.net/ejinxian/article/details/52315950>
+**参考博客：**  <http://blog.csdn.net/ejinxian/article/details/52315950>
+
+### 3..Net FrameWork 4.5.2  
+**下载地址：**	<https://www.microsoft.com/net/download/thank-you/net452-developer-pack>  
 
 ---
 ## 问题  
@@ -74,6 +77,6 @@ http://www.cnblogs.com/yinsq/p/5254893.html
 ### 4. C#中跨线程访问控件问题解决方案  
 http://blog.csdn.net/henreash/article/details/7789566
 
-### 5.Excel解析采用开源库EPPlus  
+### 5. Excel解析采用开源库EPPlus  
 https://github.com/JanKallman/EPPlus
 
