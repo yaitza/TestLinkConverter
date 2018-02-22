@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ExcelHandlerUnitTest.cs" />
     <Compile Include="ExcelAnalysisUnitTest.cs" />
+    <Compile Include="EpplusExcelAnalysisTest.cs" />
     <Compile Include="XmlToModelUnitTest.cs" />
     <Compile Include="XmlAnalysisUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +65,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\DLL\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Xml">
       <Private>True</Private>
     </Reference>
