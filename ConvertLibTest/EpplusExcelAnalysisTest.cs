@@ -7,18 +7,20 @@ namespace ConvertLibTest
     [TestClass]
     public class EpplusExcelAnalysisTest
     {
+        private EpplusExcelAnalysis epplusExcelAnalysis;
+
         [TestInitialize]
         public void SetUp()
         {
             string filePath = @"E:\Github\TestLinkConverter\Resource\TestCase.xlsx";
 
-            EpplusExcelAnalysis epplusExcelAnalysis = new EpplusExcelAnalysis(filePath);
+            this.epplusExcelAnalysis = new EpplusExcelAnalysis(filePath);
         }
 
         [TestMethod]
         public void ReadExcelTest()
         {
-
+            this.epplusExcelAnalysis.ReadExcel();
         }
     }
 }
