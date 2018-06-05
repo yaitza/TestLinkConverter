@@ -111,7 +111,7 @@ namespace TestLinkTransfer
         {
             try
             {
-                ExcelAnalysis excelAnalysis = new ExcelAnalysis(fileDir);
+                EpplusExcelAnalysis excelAnalysis = new EpplusExcelAnalysis(fileDir);
                 tcDic = excelAnalysis.ReadExcel();
                 XmlHandler xh = new XmlHandler(tcDic);
                 xh.WriteXml();

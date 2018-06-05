@@ -51,7 +51,7 @@ namespace ConvertLibrary
                 return null;
             }
 
-            for(int iFlag = 1; iFlag <= iCount; iCount++)
+            for(int iFlag = 1; iFlag <= iCount; iFlag++)
             {
                 ExcelWorksheet excelWorksheet = this.excelPackage.Workbook.Worksheets[iFlag];
                 var TestCase = this.GetExcelSheetData(excelWorksheet);
@@ -76,9 +76,18 @@ namespace ConvertLibrary
         public List<TestCase> GetExcelSheetData(ExcelWorksheet eWorksheet)
         {
             List<TestCase> tcList = new List<TestCase>();
+            int usedRows, usedCols;
 
-            int usedRows = eWorksheet.Dimension.End.Row;
-            int usedCols = eWorksheet.Dimension.End.Column;
+            if(eWorksheet.Dimension is null)
+            {
+                this._logger.Warn(new Exception("No TestCase, this Sheet is new!"));
+                return new List<TestCase>();
+            }
+            else
+            {
+                usedRows = eWorksheet.Dimension.End.Row;
+                usedCols = eWorksheet.Dimension.End.Column;
+            }
 
             if(usedRows == 0 || usedRows == 1)
             {
@@ -97,48 +106,53 @@ namespace ConvertLibrary
                 break;
             }
 
-            for(int i = 2; i < usedRows; i++)
-            {
-                TestCase tc = new TestCase();
-                var currentCell = eWorksheet.Cells[i, 1];
-                int iStep = 1;
+            TestCase tc = new TestCase();
 
-                tc.TestSteps = new List<TestStep>();
-                if (currentCell.Text == null)
+            for (int i = 2; i < usedRows; i++)
+            {
+                var currentCell = eWorksheet.Cells[i, 1];
+                
+                if (currentCell.Value is null)
                 {
                     TestStep ts = new TestStep();
-                    ts.StepNumber = iStep;
+                    ts.StepNumber = tc.TestSteps.Count + 1;
                     ts.ExecutionType = ExecType.手动;
                     ts.Actions = eWorksheet.Cells[i, 7].Text.ToString();
                     ts.ExpectedResults = eWorksheet.Cells[i, 8].Text.ToString();
-                    iStep++;
 
                     tc.TestSteps.Add(ts);
                     continue;
                 }
+                else
+                {
+                    if(tc.ExternalId != null)
+                    {
+                        tcList.Add(tc);
+                    }
+                    tc = new TestCase();
 
-                tc.ExternalId = string.Format($"{currentCell.Text.ToString()}_{new Random().Next(0, 10000)}");
+                    tc.ExternalId = string.Format($"{currentCell.Text.ToString()}_{new Random().Next(0, 10000)}");
 
-                tc.Name = eWorksheet.Cells[i, 2].Text.ToString();
+                    tc.Name = eWorksheet.Cells[i, 2].Text.ToString();
 
-                tc.Importance = CommonHelper.StrToImportanceType(eWorksheet.Cells[i, 3].Text.ToString());
+                    tc.Importance = CommonHelper.StrToImportanceType(eWorksheet.Cells[i, 3].Text.ToString());
 
-                tc.ExecutionType = CommonHelper.StrToExecType(eWorksheet.Cells[i, 4].Text.ToString());
+                    tc.ExecutionType = CommonHelper.StrToExecType(eWorksheet.Cells[i, 4].Text.ToString());
 
-                tc.Summary = eWorksheet.Cells[i, 5].Text.ToString();
+                    tc.Summary = eWorksheet.Cells[i, 5].Text.ToString();
 
-                tc.Preconditions = eWorksheet.Cells[i, 6].Text.ToString();
+                    tc.Preconditions = eWorksheet.Cells[i, 6].Text.ToString();
 
-                TestStep ts_one = new TestStep();
-                ts_one.StepNumber = iStep;
-                ts_one.ExecutionType = ExecType.手动;
-                ts_one.Actions = eWorksheet.Cells[i, 7].Text.ToString();
-                ts_one.ExpectedResults = eWorksheet.Cells[i, 8].Text.ToString();
-                iStep++;
+                    TestStep ts_one = new TestStep();
+                    ts_one.StepNumber = 1;
+                    ts_one.ExecutionType = ExecType.手动;
+                    ts_one.Actions = eWorksheet.Cells[i, 7].Text.ToString();
+                    ts_one.ExpectedResults = eWorksheet.Cells[i, 8].Text.ToString();
 
-                tc.TestSteps.Add(ts_one);
+                    tc.TestSteps = new List<TestStep>();
+                    tc.TestSteps.Add(ts_one);
+                }
             }
-
 
             return tcList;
         }
