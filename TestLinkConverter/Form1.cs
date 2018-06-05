@@ -200,5 +200,11 @@ namespace TestLinkTransfer
         {
             this.openFileDialog.Filter = "Excel 2007Plus|*.xlsx|xml|*.xml";
         }
+
+
+        private void downloadlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("IExplore.exe", "https://github.com/yaitza/TestLinkConverter/blob/master/Resource/TestCaseTemplate.xlsx");
+        }
     }
 }
