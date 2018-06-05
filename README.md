@@ -39,6 +39,8 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 
 **参考博客：**  <http://blog.csdn.net/ejinxian/article/details/52315950>
 
+**资源地址：**  <https://archive.codeplex.com/?p=epplus>
+
 ### 3..Net FrameWork 4.5.2  
 **下载地址：**	<https://www.microsoft.com/net/download/thank-you/net452-developer-pack>  
 
