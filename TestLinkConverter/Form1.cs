@@ -204,7 +204,7 @@ namespace TestLinkTransfer
 
         private void downloadlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("IExplore.exe", "https://github.com/yaitza/TestLinkConverter/blob/master/Resource/TestCaseTemplate.xlsx");
+            System.Diagnostics.Process.Start("IExplore.exe", "https://raw.githubusercontent.com/yaitza/TestLinkConverter/master/Resource/TestCaseTemplate.xlsx");
         }
     }
 }
