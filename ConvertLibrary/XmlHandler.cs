@@ -94,6 +94,7 @@ namespace TransferLibrary
                 sw.Write("</testsuite>");
                 sw.Close();
             }
+            OutputDisplay.ShowMessage(string.Format("文件保存路勁：{0}\n", filePath), Color.Azure);
         }
     }
 }

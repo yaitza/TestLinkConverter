@@ -37,6 +37,10 @@ namespace TransferLibrary
 
             try
             {
+                if (node.Attributes.Count == 0)
+                {
+                    return tc;
+                }
                 if (node.Attributes.Count != 1)
                 {
                     tc.InternalId = node.Attributes["internalid"].Value;

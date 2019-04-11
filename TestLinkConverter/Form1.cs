@@ -4,14 +4,12 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using ConvertLibrary;
 using log4net;
 using TestLinkConverter;
 using TransferLibrary;
 using TransferModel;
-using Timer = System.Windows.Forms.Timer;
 
 namespace TestLinkTransfer
 {

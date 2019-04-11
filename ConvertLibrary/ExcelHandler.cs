@@ -48,6 +48,7 @@ namespace TransferLibrary
             excelApp.DisplayAlerts = false;
 
             string saveDir = fileName.Replace("TestCaseTemplate.xlsx", $"TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
+            OutputDisplay.ShowMessage(string.Format("文件保存路勁：{0}\n", saveDir), Color.Azure);
             workbook.SaveAs(saveDir);
             workbook.Close(false, Missing.Value, Missing.Value);
             excelApp.Quit();
