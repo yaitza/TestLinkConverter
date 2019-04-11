@@ -51,7 +51,7 @@ namespace TestLinkTransfer
             // getFilePathBtn
             // 
             this.getFilePathBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.getFilePathBtn.Location = new System.Drawing.Point(481, 72);
+            this.getFilePathBtn.Location = new System.Drawing.Point(520, 72);
             this.getFilePathBtn.Margin = new System.Windows.Forms.Padding(4);
             this.getFilePathBtn.Name = "getFilePathBtn";
             this.getFilePathBtn.Size = new System.Drawing.Size(61, 29);
@@ -69,10 +69,10 @@ namespace TestLinkTransfer
             // 
             this.filePathTb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.filePathTb.Location = new System.Drawing.Point(93, 75);
+            this.filePathTb.Location = new System.Drawing.Point(95, 74);
             this.filePathTb.Margin = new System.Windows.Forms.Padding(4);
             this.filePathTb.Name = "filePathTb";
-            this.filePathTb.Size = new System.Drawing.Size(379, 25);
+            this.filePathTb.Size = new System.Drawing.Size(417, 25);
             this.filePathTb.TabIndex = 1;
             // 
             // label1

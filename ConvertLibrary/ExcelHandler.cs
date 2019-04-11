@@ -63,6 +63,10 @@ namespace TransferLibrary
             int iFlag = 2;
             foreach(TestCase node in this._sourceTestCases)
             {
+                if(node.Name == null && node.TestSteps == null)
+                {
+                    continue;
+                }
                 OutputDisplay.ShowMessage(node.Name, Color.Chartreuse);
                 workSheet.Cells[iFlag, 1] = node.ExternalId;
                 workSheet.Cells[iFlag, 2] = node.Name;
