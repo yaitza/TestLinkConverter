@@ -12,7 +12,7 @@ namespace TransferLibrary
 {
     public class ExcelHandler
     {
-        private readonly ILog _logger = LogManager.GetLogger(typeof (ExcelHandler));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(ExcelHandler));
         private readonly List<TestCase> _sourceTestCases;
 
         public ExcelHandler(List<TestCase> outputCases)
@@ -62,9 +62,9 @@ namespace TransferLibrary
             var workSheet = (Excel.Worksheet)workBook.Worksheets.Item[1];
 
             int iFlag = 2;
-            foreach(TestCase node in this._sourceTestCases)
+            foreach (TestCase node in this._sourceTestCases)
             {
-                if(node.Name == null && node.TestSteps == null)
+                if (node.Name == null && node.TestSteps == null)
                 {
                     continue;
                 }
@@ -76,14 +76,22 @@ namespace TransferLibrary
                 workSheet.Cells[iFlag, 5] = node.Summary;
                 workSheet.Cells[iFlag, 6] = node.Preconditions;
                 int iMerge = 0;
-                foreach(TestStep step in node.TestSteps)
+
+                if (node.TestSteps != null && node.TestSteps.Count != 0)
                 {
-                    workSheet.Cells[iFlag, 7] = CommonHelper.DelTags(step.Actions);
-                    workSheet.Cells[iFlag, 8] = CommonHelper.DelTags(step.ExpectedResults);
+                    foreach (TestStep step in node.TestSteps)
+                    {
+                        workSheet.Cells[iFlag, 7] = CommonHelper.DelTags(step.Actions);
+                        workSheet.Cells[iFlag, 8] = CommonHelper.DelTags(step.ExpectedResults);
+                        iFlag++;
+                        iMerge++;
+                    }
+                }
+                else
+                {
                     iFlag++;
                     iMerge++;
                 }
-
                 this.MergeCells(workSheet, iMerge, iFlag - iMerge);
                 Thread.Sleep(1000);
             }
@@ -99,7 +107,7 @@ namespace TransferLibrary
         private void MergeCells(Excel.Worksheet workSheet, int iMerge, int iFlag)
         {
             //导出Excel前6列均需要合并单元格
-            for(int i=1; i<=6; i++)
+            for (int i = 1; i <= 6; i++)
             {
                 Excel.Range rangeLecture = workSheet.Range[workSheet.Cells[iFlag, i], workSheet.Cells[iFlag + iMerge - 1, i]];
                 rangeLecture.Application.DisplayAlerts = false;
