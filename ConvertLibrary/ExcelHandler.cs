@@ -70,11 +70,11 @@ namespace TransferLibrary
                 }
                 OutputDisplay.ShowMessage(node.Name, Color.Chartreuse);
                 workSheet.Cells[iFlag, 1] = node.ExternalId;
-                workSheet.Cells[iFlag, 2] = node.Name;
+                workSheet.Cells[iFlag, 2] = CommonHelper.DelTags(node.Name);
                 workSheet.Cells[iFlag, 3] = node.Importance.ToString();
                 workSheet.Cells[iFlag, 4] = node.ExecutionType.ToString();
-                workSheet.Cells[iFlag, 5] = node.Summary;
-                workSheet.Cells[iFlag, 6] = node.Preconditions;
+                workSheet.Cells[iFlag, 5] = CommonHelper.DelTags(node.Summary);
+                workSheet.Cells[iFlag, 6] = CommonHelper.DelTags(node.Preconditions);
                 int iMerge = 0;
 
                 if (node.TestSteps != null && node.TestSteps.Count != 0)

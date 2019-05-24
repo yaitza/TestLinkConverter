@@ -47,6 +47,10 @@ namespace TransferLibrary
             newStr = Regex.Replace(newStr, @"&(lt|#60);", "<", RegexOptions.IgnoreCase);
             newStr = Regex.Replace(newStr, @"&(gt|#62);", ">", RegexOptions.IgnoreCase);
             newStr = Regex.Replace(newStr, @"&#(\d+);", "", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&ldquo;", "\"", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&rdquo;", "\"", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&nbsp;", " ", RegexOptions.IgnoreCase);
+            newStr = Regex.Replace(newStr, @"&mdash;", "-", RegexOptions.IgnoreCase);
             return newStr;
         }
 
