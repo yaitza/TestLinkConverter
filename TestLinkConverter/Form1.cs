@@ -7,11 +7,10 @@ using System.Linq;
 using System.Windows.Forms;
 using ConvertLibrary;
 using log4net;
-using TestLinkConverter;
 using TransferLibrary;
 using TransferModel;
 
-namespace TestLinkTransfer
+namespace TestLinkConverter
 {
     //TODO 处理完成后保存文件功能
     public partial class Form : System.Windows.Forms.Form
@@ -20,7 +19,7 @@ namespace TestLinkTransfer
 
         private DateTime _starTime;
 
-        private Dictionary<string, List<TestCase>> tcDic = new Dictionary<string, List<TestCase>>();
+        private Dictionary<string, List<TestCase>> _tcDic = new Dictionary<string, List<TestCase>>();
 
         private delegate void DisplayMessage(string msg, Color color);
 
@@ -43,7 +42,6 @@ namespace TestLinkTransfer
                 this.outputRtb.SelectionColor = color;
                 this.outputRtb.AppendText( $"{DateTime.Now.ToString("u")} {msg} {Environment.NewLine}");
                 this.outputRtb.Focus();
-
             }
         }
 
@@ -66,7 +64,7 @@ namespace TestLinkTransfer
             this.progressBar.Value = this.progressBar.Maximum;
             TimeSpan consume = DateTime.Now - this._starTime;
 
-            string showMsg = $"转换用例数: {tcDic.Sum(keyValuePair => keyValuePair.Value.Count)}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.\n用例生成目录: {System.Environment.CurrentDirectory.ToString()}";
+            string showMsg = $"转换用例数: {_tcDic.Sum(keyValuePair => keyValuePair.Value.Count)}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.\n用例生成目录: {System.Environment.CurrentDirectory.ToString()}";
             MessageBox.Show(showMsg);
             OutputDisplay.ShowMessage(showMsg, Color.Azure);
             this.progressBar.Value = this.progressBar.Minimum;
@@ -110,8 +108,8 @@ namespace TestLinkTransfer
             try
             {
                 EpplusExcelAnalysis excelAnalysis = new EpplusExcelAnalysis(fileDir);
-                tcDic = excelAnalysis.ReadExcel();
-                XmlHandler xh = new XmlHandler(tcDic);
+                _tcDic = excelAnalysis.ReadExcel();
+                XmlHandler xh = new XmlHandler(_tcDic);
                 xh.WriteXml();
             }
             catch (Exception ex)
@@ -133,8 +131,8 @@ namespace TestLinkTransfer
                 XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
                 XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
                 List<TestCase> tcList = xtm.OutputTestCases();
-                this.tcDic = new Dictionary<string, List<TestCase>>();
-                tcDic.Add("TestCase", tcList);
+                this._tcDic = new Dictionary<string, List<TestCase>>();
+                _tcDic.Add("TestCase", tcList);
 
                 ExcelHandler eh = new ExcelHandler(tcList);
                 eh.WriteExcel();
@@ -156,22 +154,22 @@ namespace TestLinkTransfer
         {
             if (filePathTb.Text == string.Empty)
             {
-                this._logger.Info(new Exception("请输入文件地址."));
-                OutputDisplay.ShowMessage("请输入文件地址.", Color.Red);
+                this._logger.Info(message: new Exception(message: "请输入文件地址."));
+                OutputDisplay.ShowMessage(msg: "请输入文件地址.", color: Color.Red);
                 return true;
             }
 
-            if (!(filePathTb.Text.EndsWith(".xml") || filePathTb.Text.EndsWith(".xls") || filePathTb.Text.EndsWith(".xlsx")))
+            if (!(filePathTb.Text.EndsWith(value: ".xml") || filePathTb.Text.EndsWith(value: ".xls") || filePathTb.Text.EndsWith(value: ".xlsx")))
             {
-                this._logger.Info(new Exception("输入文件要求为xml，xls或xlsx格式."));
-                OutputDisplay.ShowMessage("输入文件要求为xml，xls或xlsx格式.", Color.Red);
+                this._logger.Info(message: new Exception(message: "输入文件要求为xml，xls或xlsx格式."));
+                OutputDisplay.ShowMessage(msg: "输入文件要求为xml，xls或xlsx格式.", color: Color.Red);
                 return true;
             }
 
-            if (!File.Exists(filePathTb.Text))
+            if (!File.Exists(path: filePathTb.Text))
             {
-                this._logger.Info(new Exception($"{filePathTb.Text} 已不存在，请重新输入文件地址."));
-                MessageBox.Show($"{filePathTb.Text} 已不存在，请重新输入文件地址.", "Warning");
+                this._logger.Info(message: new Exception(message: string.Format(format: "{0} 已不存在，请重新输入文件地址.", arg0: filePathTb.Text)));
+                MessageBox.Show(text: string.Format(format: "{0} 已不存在，请重新输入文件地址.", arg0: filePathTb.Text), caption: "Warning");
                 return true;
             }
 

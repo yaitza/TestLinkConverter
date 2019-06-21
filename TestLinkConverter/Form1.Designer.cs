@@ -1,5 +1,5 @@
 ﻿
-namespace TestLinkTransfer
+namespace TestLinkConverter
 {
     partial class Form
     {
