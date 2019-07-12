@@ -1,4 +1,4 @@
-﻿namespace TransferModel
+﻿namespace ConvertModel
 {
     public enum StatusType
     {

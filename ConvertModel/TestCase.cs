@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TransferModel
+namespace ConvertModel
 {
     public class TestCase
     {
@@ -63,6 +63,11 @@ namespace TransferModel
         /// 测试用例的关键字
         /// </summary>
         public List<string> Keywords { get; set; }
+
+        /// <summary>
+        /// 测试用例关联需求
+        /// </summary>
+        public string Requirement { get; set; }
 
         /// <summary>
         /// 测试用例测试步骤

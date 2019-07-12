@@ -8,17 +8,12 @@ using System.Threading.Tasks;
 using System.Xml;
 using log4net;
 
-namespace TransferLibrary
+namespace ConvertLibrary
 {
     public class XmlAnalysis
     {
         // TODO 未实现获取测试用例并获取对应测试套
         private readonly ILog _logger = LogManager.GetLogger(typeof(XmlAnalysis));
-        /// <summary>
-        /// 解析文件地址
-        /// </summary>
-        private readonly string _filePath;
-
         /// <summary>
         /// XMLDocument对象
         /// </summary>
@@ -33,7 +28,8 @@ namespace TransferLibrary
         {
             if (File.Exists(filePath))
             {
-                this._filePath = filePath;
+                this._xmlDoc = new XmlDocument();
+                this._xmlDoc.Load(filePath);
             }
             else
             {
@@ -41,11 +37,7 @@ namespace TransferLibrary
                 this._logger.Error(new Exception(message));
                 throw new Exception(message); 
             }
-
-            this._xmlDoc = new XmlDocument();
-            this._xmlDoc.Load(this._filePath);
         }
-
 
         /// <summary>
         /// 获取所有标记为TestCase的节点数据
@@ -76,7 +68,6 @@ namespace TransferLibrary
 
             return this._nodesList;
         }
-
         
         /// <summary>
         /// 递归获取测试套下所有测试用例

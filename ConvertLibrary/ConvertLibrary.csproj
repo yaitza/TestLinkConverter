@@ -71,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonHelper.cs" />
-    <Compile Include="EpplusExcelAnalysis.cs" />
+    <Compile Include="ExcelAnalysisByEpplus.cs" />
     <Compile Include="ExcelAnalysis.cs" />
     <Compile Include="ExcelHandler.cs" />
     <Compile Include="OutputDisplay.cs" />

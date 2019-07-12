@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Net;
-using System.Text.RegularExpressions;
 using System.Xml;
-using ConvertLibrary;
+using ConvertModel;
 using log4net;
-using TransferModel;
 
-namespace TransferLibrary
+namespace ConvertLibrary
 {
     public class XmlToModel
     {
         private readonly ILog _logger = LogManager.GetLogger(typeof (XmlToModel));
 
-        private List<XmlNode> _sourceNodes; 
+        private readonly List<XmlNode> _sourceNodes; 
         public XmlToModel(List<XmlNode> xmlNodes)
         {
             this._sourceNodes = xmlNodes;
@@ -37,15 +34,16 @@ namespace TransferLibrary
 
             try
             {
-                if (node.Attributes.Count == 0)
+                if (node.Attributes != null && node.Attributes.Count == 0)
                 {
                     return tc;
                 }
-                if (node.Attributes.Count != 1)
+                if (node.Attributes != null && node.Attributes.Count != 1)
                 {
                     tc.InternalId = node.Attributes["internalid"].Value;
                 }
-                tc.Name = node.Attributes["name"].Value;
+
+                if (node.Attributes != null) tc.Name = node.Attributes["name"].Value;
             }
             catch (NullReferenceException ex)
             {
@@ -74,7 +72,6 @@ namespace TransferLibrary
                         tc.Preconditions = CommonHelper.DelTags(xmlNode.InnerText);
                         break;
                     case "execution_type":
-                        
                         tc.ExecutionType = CommonHelper.StrToExecType(xmlNode.InnerText);
                         break;
                     case "importance":
@@ -92,10 +89,18 @@ namespace TransferLibrary
                         tc.Status = (StatusType) int.Parse(xmlNode.InnerText);
                         break;
                     case "steps":
-                        tc.TestSteps = this.GetAllSteps(xmlNode);
+                        tc.TestSteps = GetAllSteps(xmlNode);
                         break;
-                    //TODO KeyWords未解析
-                    //TODO Requirements未解析
+                    case "keywords":
+                        tc.Keywords = new List<string>();
+                        foreach (XmlNode childNode in xmlNode.ChildNodes)
+                        {
+                            if (childNode.Attributes != null) tc.Keywords.Add(childNode.Attributes["name"].Value);
+                        }
+                        break;
+                    case "requirement":
+                        tc.Requirement = xmlNode.InnerText;
+                        break;
                     default:
                         break;
                 }
@@ -103,13 +108,12 @@ namespace TransferLibrary
             return tc;
         }
 
-
         /// <summary>
         /// 获取测试步骤
         /// </summary>
         /// <param name="xmlNode">XML Node</param>
         /// <returns>List TestStep</returns>
-        private List<TestStep> GetAllSteps(XmlNode xmlNode)
+        private static List<TestStep> GetAllSteps(XmlNode xmlNode)
         {
             List<TestStep> stepsList = new List<TestStep>();
             foreach (XmlNode node in xmlNode.ChildNodes)

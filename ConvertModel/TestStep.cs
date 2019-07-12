@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TransferModel
+﻿namespace ConvertModel
 {
     public class TestStep
     {

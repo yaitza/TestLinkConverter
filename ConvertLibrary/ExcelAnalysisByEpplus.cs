@@ -3,19 +3,19 @@ using System.IO;
 using System.Drawing;
 using OfficeOpenXml;
 using System.Collections.Generic;
-using TransferModel;
 using log4net;
-using TransferLibrary;
+using ConvertLibrary;
+using ConvertModel;
 
 namespace ConvertLibrary
 {
-    public class EpplusExcelAnalysis
+    public class ExcelAnalysisByEpplus
     {
-        private readonly ILog _logger = LogManager.GetLogger(typeof(EpplusExcelAnalysis));
-        private ExcelPackage excelPackage;
+        private readonly ILog _logger = LogManager.GetLogger(typeof(ExcelAnalysisByEpplus));
+        private readonly ExcelPackage _excelPackage;
 
 
-        public EpplusExcelAnalysis(string excelFilePath)
+        public ExcelAnalysisByEpplus(string excelFilePath)
         {
             if (string.IsNullOrEmpty(excelFilePath))
             {
@@ -32,7 +32,7 @@ namespace ConvertLibrary
             try
             {
                 FileInfo fiExcel = new System.IO.FileInfo(excelFilePath);
-                this.excelPackage = new ExcelPackage(fiExcel);
+                this._excelPackage = new ExcelPackage(fiExcel);
             }catch (Exception ex)
             {
                 OutputDisplay.ShowMessage(ex.Message, Color.Red);
@@ -43,7 +43,7 @@ namespace ConvertLibrary
         public Dictionary<string, List<TestCase>> ReadExcel()
         {
             Dictionary<string, List<TestCase>> dicAllTestCases = new Dictionary<string, List<TestCase>>();
-            int iCount = this.excelPackage.Workbook.Worksheets.Count;
+            int iCount = this._excelPackage.Workbook.Worksheets.Count;
 
             if(iCount == 0)
             {
@@ -53,23 +53,23 @@ namespace ConvertLibrary
 
             for(int iFlag = 1; iFlag <= iCount; iFlag++)
             {
-                ExcelWorksheet excelWorksheet = this.excelPackage.Workbook.Worksheets[iFlag];
-                var TestCase = this.GetExcelSheetData(excelWorksheet);
+                ExcelWorksheet excelWorksheet = this._excelPackage.Workbook.Worksheets[iFlag];
+                var testCase = this.GetExcelSheetData(excelWorksheet);
 
                 if (dicAllTestCases.ContainsKey(excelWorksheet.Name))
                 {
                     OutputDisplay.ShowMessage($"同一页签名:{excelWorksheet.Name}已在本Excel中出现过.",Color.GreenYellow);
                 }
 
-                if(TestCase.Count == 0)
+                if(testCase.Count == 0)
                 {
                     OutputDisplay.ShowMessage($"页签:{excelWorksheet.Name}无任何可转换用例数据.", Color.GreenYellow);
                     continue;
                 }
 
-                dicAllTestCases.Add(excelWorksheet.Name, TestCase);
+                dicAllTestCases.Add(excelWorksheet.Name, testCase);
             }
-            this.excelPackage.Dispose();
+            this._excelPackage.Dispose();
             return dicAllTestCases;
         }
 
@@ -114,11 +114,13 @@ namespace ConvertLibrary
                 
                 if (currentCell.Value is null)
                 {
-                    TestStep ts = new TestStep();
-                    ts.StepNumber = tc.TestSteps.Count + 1;
-                    ts.ExecutionType = ExecType.手动;
-                    ts.Actions = eWorksheet.Cells[i, 7].Text.ToString();
-                    ts.ExpectedResults = eWorksheet.Cells[i, 8].Text.ToString();
+                    TestStep ts = new TestStep
+                    {
+                        StepNumber = tc.TestSteps.Count + 1,
+                        ExecutionType = ExecType.手动,
+                        Actions = eWorksheet.Cells[i, 7].Text.ToString(),
+                        ExpectedResults = eWorksheet.Cells[i, 8].Text.ToString()
+                    };
 
                     tc.TestSteps.Add(ts);
                     continue;
@@ -129,28 +131,26 @@ namespace ConvertLibrary
                     {
                         tcList.Add(tc);
                     }
-                    tc = new TestCase();
 
-                    tc.ExternalId = string.Format($"{currentCell.Text.ToString()}_{new Random().Next(0, 10000)}");
+                    tc = new TestCase
+                    {
+                        ExternalId = string.Format($"{currentCell.Text.ToString()}_{new Random().Next(0, 10000)}"),
+                        Name = eWorksheet.Cells[i, 2].Text.ToString(),
+                        Importance = CommonHelper.StrToImportanceType(eWorksheet.Cells[i, 3].Text.ToString()),
+                        ExecutionType = CommonHelper.StrToExecType(eWorksheet.Cells[i, 4].Text.ToString()),
+                        Summary = eWorksheet.Cells[i, 5].Text.ToString(),
+                        Preconditions = eWorksheet.Cells[i, 6].Text.ToString()
+                    };
 
-                    tc.Name = eWorksheet.Cells[i, 2].Text.ToString();
+                    TestStep tsOne = new TestStep
+                    {
+                        StepNumber = 1,
+                        ExecutionType = ExecType.手动,
+                        Actions = eWorksheet.Cells[i, 7].Text.ToString(),
+                        ExpectedResults = eWorksheet.Cells[i, 8].Text.ToString()
+                    };
 
-                    tc.Importance = CommonHelper.StrToImportanceType(eWorksheet.Cells[i, 3].Text.ToString());
-
-                    tc.ExecutionType = CommonHelper.StrToExecType(eWorksheet.Cells[i, 4].Text.ToString());
-
-                    tc.Summary = eWorksheet.Cells[i, 5].Text.ToString();
-
-                    tc.Preconditions = eWorksheet.Cells[i, 6].Text.ToString();
-
-                    TestStep ts_one = new TestStep();
-                    ts_one.StepNumber = 1;
-                    ts_one.ExecutionType = ExecType.手动;
-                    ts_one.Actions = eWorksheet.Cells[i, 7].Text.ToString();
-                    ts_one.ExpectedResults = eWorksheet.Cells[i, 8].Text.ToString();
-
-                    tc.TestSteps = new List<TestStep>();
-                    tc.TestSteps.Add(ts_one);
+                    tc.TestSteps = new List<TestStep> {tsOne};
                 }
             }
 

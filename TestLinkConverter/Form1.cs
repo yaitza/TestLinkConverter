@@ -6,9 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using ConvertLibrary;
+using ConvertModel;
 using log4net;
-using TransferLibrary;
-using TransferModel;
 
 namespace TestLinkConverter
 {
@@ -30,20 +29,17 @@ namespace TestLinkConverter
             OutputDisplay.ShowMethod += this.OutputRichTextBox;
         }
 
-        private void OutputRichTextBox(string msg, Color color)
+
+        private void startBtn_Click(object sender, EventArgs e)
         {
-            if (this.outputRtb.InvokeRequired)
-            {
-                DisplayMessage dm = new DisplayMessage(OutputRichTextBox);
-                this.Invoke(dm, new object[] { msg, color});
-            }
-            else
-            {
-                this.outputRtb.SelectionColor = color;
-                this.outputRtb.AppendText( $"{DateTime.Now.ToString("u")} {msg} {Environment.NewLine}");
-                this.outputRtb.Focus();
-            }
+            this._starTime = DateTime.Now;
+            CommonHelper.KillExcelProcess();
+            if (this.FileChecked(filePathTb.Text)) return;
+
+            this.backgroundWorker.RunWorkerAsync(filePathTb.Text);
+            this.timer.Start();
         }
+
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -88,17 +84,6 @@ namespace TestLinkConverter
             }
         }
 
-
-        private void startBtn_Click(object sender, EventArgs e)
-        {
-            this._starTime = DateTime.Now;
-            CommonHelper.KillExcelProcess();
-            if (this.FileChecked(filePathTb.Text)) return;
-
-            this.backgroundWorker.RunWorkerAsync(filePathTb.Text);
-            this.timer.Start();
-        }
-
         /// <summary>
         /// Excel转换为XML
         /// </summary>
@@ -107,7 +92,7 @@ namespace TestLinkConverter
         {
             try
             {
-                EpplusExcelAnalysis excelAnalysis = new EpplusExcelAnalysis(fileDir);
+                ExcelAnalysisByEpplus excelAnalysis = new ExcelAnalysisByEpplus(fileDir);
                 _tcDic = excelAnalysis.ReadExcel();
                 XmlHandler xh = new XmlHandler(_tcDic);
                 xh.WriteXml();
@@ -201,6 +186,21 @@ namespace TestLinkConverter
         private void downloadlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("IExplore.exe", "https://raw.githubusercontent.com/yaitza/TestLinkConverter/master/Resource/TestCaseTemplate.xlsx");
+        }
+
+        private void OutputRichTextBox(string msg, Color color)
+        {
+            if (this.outputRtb.InvokeRequired)
+            {
+                DisplayMessage dm = new DisplayMessage(OutputRichTextBox);
+                this.Invoke(dm, new object[] { msg, color });
+            }
+            else
+            {
+                this.outputRtb.SelectionColor = color;
+                this.outputRtb.AppendText($"{DateTime.Now.ToString("u")} {msg} {Environment.NewLine}");
+                this.outputRtb.Focus();
+            }
         }
     }
 }

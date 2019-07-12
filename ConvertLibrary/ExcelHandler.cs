@@ -4,11 +4,11 @@ using System.Drawing;
 using System.Reflection;
 using System.Threading;
 using ConvertLibrary;
+using ConvertModel;
 using log4net;
-using TransferModel;
 using Excel = Microsoft.Office.Interop.Excel;
 
-namespace TransferLibrary
+namespace ConvertLibrary
 {
     public class ExcelHandler
     {
@@ -47,8 +47,8 @@ namespace TransferLibrary
 
             excelApp.DisplayAlerts = false;
 
-            string saveDir = fileName.Replace("TestCaseTemplate.xlsx", $"TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
-            OutputDisplay.ShowMessage(string.Format("文件保存路勁：{0}\n", saveDir), Color.Azure);
+            string saveDir = fileName.Replace("TestCaseTemplate.xlsx", $"TestCase_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
+            OutputDisplay.ShowMessage($"文件保存路勁：{saveDir}\n", Color.Azure);
             workbook.SaveAs(saveDir);
             workbook.Close(false, Missing.Value, Missing.Value);
             excelApp.Quit();
@@ -71,18 +71,27 @@ namespace TransferLibrary
                 OutputDisplay.ShowMessage(node.Name, Color.Chartreuse);
                 workSheet.Cells[iFlag, 1] = node.ExternalId;
                 workSheet.Cells[iFlag, 2] = CommonHelper.DelTags(node.Name);
-                workSheet.Cells[iFlag, 3] = node.Importance.ToString();
-                workSheet.Cells[iFlag, 4] = node.ExecutionType.ToString();
-                workSheet.Cells[iFlag, 5] = CommonHelper.DelTags(node.Summary);
-                workSheet.Cells[iFlag, 6] = CommonHelper.DelTags(node.Preconditions);
+                string keywords = string.Empty;
+                if (node.Keywords != null)
+                {
+                    foreach (string keyword in node.Keywords)
+                    {
+                        keywords = keywords + keyword + ",";
+                    }
+                }
+                workSheet.Cells[iFlag, 3] = keywords.TrimEnd(',');
+                workSheet.Cells[iFlag, 4] = node.Importance.ToString();
+                workSheet.Cells[iFlag, 5] = node.ExecutionType.ToString();
+                workSheet.Cells[iFlag, 6] = CommonHelper.DelTags(node.Summary);
+                workSheet.Cells[iFlag, 7] = CommonHelper.DelTags(node.Preconditions);
                 int iMerge = 0;
 
                 if (node.TestSteps != null && node.TestSteps.Count != 0)
                 {
-                    foreach (TestStep step in node.TestSteps)
+                    foreach (var step in node.TestSteps)
                     {
-                        workSheet.Cells[iFlag, 7] = CommonHelper.DelTags(step.Actions);
-                        workSheet.Cells[iFlag, 8] = CommonHelper.DelTags(step.ExpectedResults);
+                        workSheet.Cells[iFlag, 8] = CommonHelper.DelTags(step.Actions);
+                        workSheet.Cells[iFlag, 9] = CommonHelper.DelTags(step.ExpectedResults);
                         iFlag++;
                         iMerge++;
                     }

@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading;
 using System.Xml;
 using ConvertLibrary;
-using TransferModel;
+using ConvertModel;
 
-namespace TransferLibrary
+namespace ConvertLibrary
 {
     public class XmlHandler
     {

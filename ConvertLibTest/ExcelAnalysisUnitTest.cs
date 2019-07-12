@@ -1,7 +1,6 @@
 ﻿using System;
 using ConvertLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TransferLibrary;
 
 namespace TransferLibTest
 {
