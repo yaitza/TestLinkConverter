@@ -68,7 +68,7 @@ namespace ConvertLibrary
             List<TestCase> tcList = new List<TestCase>();
             int usedRows, usedCols;
 
-            if(eWorksheet.Dimension is null)
+            if(eWorksheet.Dimension == null)
             {
                 this._logger.Warn(new Exception("No TestCase, this Sheet is new!"));
                 return new List<TestCase>();
@@ -102,7 +102,7 @@ namespace ConvertLibrary
             {
                 var currentCell = eWorksheet.Cells[i, 1];
                 
-                if (currentCell.Value is null)
+                if (currentCell.Value == null)
                 {
                     TestStep ts = new TestStep
                     {
