@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace TestLinkConverter
 {
-    public partial class DonateForm : Form
+    public partial class DonateForm : System.Windows.Forms.Form
     {
         public DonateForm()
         {
