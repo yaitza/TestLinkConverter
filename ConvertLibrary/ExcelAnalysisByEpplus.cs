@@ -101,7 +101,12 @@ namespace ConvertLibrary
             for (int i = 2; i < usedRows; i++)
             {
                 var currentCell = eWorksheet.Cells[i, 1];
-                
+                //设置单元格格式为文本格式，防止为自定义格式时读取单元格报错
+                for (int j = 2; j <= 9; j++)
+                {
+                    eWorksheet.Cells[i, j].Style.Numberformat.Format = "@";
+                }
+
                 if (currentCell.Value == null)
                 {
                     TestStep ts = new TestStep
@@ -132,7 +137,7 @@ namespace ConvertLibrary
                         Summary = eWorksheet.Cells[i, 6].Text.ToString(),
                         Preconditions = eWorksheet.Cells[i, 7].Text.ToString()
                     };
-
+                    
                     TestStep tsOne = new TestStep
                     {
                         StepNumber = 1,
