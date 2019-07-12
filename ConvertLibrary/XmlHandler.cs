@@ -12,7 +12,6 @@ namespace ConvertLibrary
 {
     public class XmlHandler
     {
-        //TODO 测试套数据未妥善处理
         private readonly Dictionary<string, List<TestCase>> _tcList;
 
         public XmlHandler(Dictionary<string, List<TestCase>> tcCases)
@@ -55,6 +54,12 @@ namespace ConvertLibrary
                         tsStr += "</step>";
                     }
                     fieldsStr += $"<steps>{tsStr}</steps>";
+                    String keywordStr = $"<keywords>";
+                    foreach (string keyword in testCase.Keywords)
+                    {
+                        keywordStr += $"<keyword name=\"{keyword}\"><notes><![CDATA[]]></notes></keyword>";
+                    }
+                    fieldsStr += keywordStr + "</keywords>";
                     string tcStr = $"<testcase name=\"{testCase.Name}\">{fieldsStr}</testcase>";
                     Thread.Sleep(1000);
                     tcStrList.Add(tcStr);

@@ -3,6 +3,7 @@ using System.IO;
 using System.Drawing;
 using OfficeOpenXml;
 using System.Collections.Generic;
+using System.Linq;
 using log4net;
 using ConvertLibrary;
 using ConvertModel;
@@ -45,21 +46,10 @@ namespace ConvertLibrary
             Dictionary<string, List<TestCase>> dicAllTestCases = new Dictionary<string, List<TestCase>>();
             int iCount = this._excelPackage.Workbook.Worksheets.Count;
 
-            if(iCount == 0)
-            {
-                OutputDisplay.ShowMessage("表中无Sheet页！", Color.Red);
-                return null;
-            }
-
             for(int iFlag = 1; iFlag <= iCount; iFlag++)
             {
                 ExcelWorksheet excelWorksheet = this._excelPackage.Workbook.Worksheets[iFlag];
                 var testCase = this.GetExcelSheetData(excelWorksheet);
-
-                if (dicAllTestCases.ContainsKey(excelWorksheet.Name))
-                {
-                    OutputDisplay.ShowMessage($"同一页签名:{excelWorksheet.Name}已在本Excel中出现过.",Color.GreenYellow);
-                }
 
                 if(testCase.Count == 0)
                 {
@@ -136,18 +126,19 @@ namespace ConvertLibrary
                     {
                         ExternalId = string.Format($"{currentCell.Text.ToString()}_{new Random().Next(0, 10000)}"),
                         Name = eWorksheet.Cells[i, 2].Text.ToString(),
-                        Importance = CommonHelper.StrToImportanceType(eWorksheet.Cells[i, 3].Text.ToString()),
-                        ExecutionType = CommonHelper.StrToExecType(eWorksheet.Cells[i, 4].Text.ToString()),
-                        Summary = eWorksheet.Cells[i, 5].Text.ToString(),
-                        Preconditions = eWorksheet.Cells[i, 6].Text.ToString()
+                        Keywords = eWorksheet.Cells[i, 3].Text.ToString().Split(',').ToList(),
+                        Importance = CommonHelper.StrToImportanceType(eWorksheet.Cells[i, 4].Text.ToString()),
+                        ExecutionType = CommonHelper.StrToExecType(eWorksheet.Cells[i, 5].Text.ToString()),
+                        Summary = eWorksheet.Cells[i, 6].Text.ToString(),
+                        Preconditions = eWorksheet.Cells[i, 7].Text.ToString()
                     };
 
                     TestStep tsOne = new TestStep
                     {
                         StepNumber = 1,
                         ExecutionType = ExecType.手动,
-                        Actions = eWorksheet.Cells[i, 7].Text.ToString(),
-                        ExpectedResults = eWorksheet.Cells[i, 8].Text.ToString()
+                        Actions = eWorksheet.Cells[i, 8].Text.ToString(),
+                        ExpectedResults = eWorksheet.Cells[i, 9].Text.ToString()
                     };
 
                     tc.TestSteps = new List<TestStep> {tsOne};

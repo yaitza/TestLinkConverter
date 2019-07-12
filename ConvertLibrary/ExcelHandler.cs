@@ -44,9 +44,7 @@ namespace ConvertLibrary
             this.WriteInWorkSheet(workbook);
 
             excelApp.Visible = false;
-
             excelApp.DisplayAlerts = false;
-
             string saveDir = fileName.Replace("TestCaseTemplate.xlsx", $"TestCase_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
             OutputDisplay.ShowMessage($"文件保存路勁：{saveDir}\n", Color.Azure);
             workbook.SaveAs(saveDir);
