@@ -35,8 +35,6 @@ namespace TestLinkConverter
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.filePathTb = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.xeRb = new System.Windows.Forms.RadioButton();
-            this.exRb = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.startBtn = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
@@ -46,6 +44,7 @@ namespace TestLinkConverter
             this.DonateLab = new System.Windows.Forms.Label();
             this.outputRtb = new System.Windows.Forms.RichTextBox();
             this.downloadlinkLabel = new System.Windows.Forms.LinkLabel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // getFilePathBtn
@@ -69,7 +68,7 @@ namespace TestLinkConverter
             // 
             this.filePathTb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.filePathTb.Location = new System.Drawing.Point(95, 74);
+            this.filePathTb.Location = new System.Drawing.Point(93, 74);
             this.filePathTb.Margin = new System.Windows.Forms.Padding(4);
             this.filePathTb.Name = "filePathTb";
             this.filePathTb.Size = new System.Drawing.Size(417, 25);
@@ -85,41 +84,15 @@ namespace TestLinkConverter
             this.label1.TabIndex = 2;
             this.label1.Text = "文件路径：";
             // 
-            // xeRb
-            // 
-            this.xeRb.AutoSize = true;
-            this.xeRb.Checked = true;
-            this.xeRb.Location = new System.Drawing.Point(99, 24);
-            this.xeRb.Margin = new System.Windows.Forms.Padding(4);
-            this.xeRb.Name = "xeRb";
-            this.xeRb.Size = new System.Drawing.Size(124, 19);
-            this.xeRb.TabIndex = 3;
-            this.xeRb.TabStop = true;
-            this.xeRb.Text = "XML -> Excel";
-            this.xeRb.UseVisualStyleBackColor = true;
-            this.xeRb.CheckedChanged += new System.EventHandler(this.xeRb_CheckedChanged);
-            // 
-            // exRb
-            // 
-            this.exRb.AutoSize = true;
-            this.exRb.Location = new System.Drawing.Point(255, 24);
-            this.exRb.Margin = new System.Windows.Forms.Padding(4);
-            this.exRb.Name = "exRb";
-            this.exRb.Size = new System.Drawing.Size(124, 19);
-            this.exRb.TabIndex = 4;
-            this.exRb.Text = "Excel -> XML";
-            this.exRb.UseVisualStyleBackColor = true;
-            this.exRb.CheckedChanged += new System.EventHandler(this.exRb_CheckedChanged);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 26);
+            this.label2.Location = new System.Drawing.Point(9, 26);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 15);
+            this.label2.Size = new System.Drawing.Size(450, 15);
             this.label2.TabIndex = 5;
-            this.label2.Text = "转换形式：";
+            this.label2.Text = "转换形式：支持xml和Excel互转，导入xml转为Excel；反之亦然。";
             // 
             // startBtn
             // 
@@ -203,7 +176,7 @@ namespace TestLinkConverter
             // downloadlinkLabel
             // 
             this.downloadlinkLabel.AutoSize = true;
-            this.downloadlinkLabel.Location = new System.Drawing.Point(439, 26);
+            this.downloadlinkLabel.Location = new System.Drawing.Point(474, 26);
             this.downloadlinkLabel.Name = "downloadlinkLabel";
             this.downloadlinkLabel.Size = new System.Drawing.Size(107, 15);
             this.downloadlinkLabel.TabIndex = 13;
@@ -211,11 +184,23 @@ namespace TestLinkConverter
             this.downloadlinkLabel.Text = "获取Excel模板";
             this.downloadlinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.downloadlinkLabel_LinkClicked);
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(127, 519);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(143, 15);
+            this.linkLabel1.TabIndex = 15;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "fork us on GitHub";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1_LinkClicked);
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(605, 545);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.downloadlinkLabel);
             this.Controls.Add(this.outputRtb);
             this.Controls.Add(this.DonateLab);
@@ -223,8 +208,6 @@ namespace TestLinkConverter
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.startBtn);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.exRb);
-            this.Controls.Add(this.xeRb);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.filePathTb);
             this.Controls.Add(this.getFilePathBtn);
@@ -242,8 +225,6 @@ namespace TestLinkConverter
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.TextBox filePathTb;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton xeRb;
-        private System.Windows.Forms.RadioButton exRb;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.ProgressBar progressBar;
@@ -253,6 +234,7 @@ namespace TestLinkConverter
         private System.Windows.Forms.Label DonateLab;
         private System.Windows.Forms.RichTextBox outputRtb;
         private System.Windows.Forms.LinkLabel downloadlinkLabel;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 
