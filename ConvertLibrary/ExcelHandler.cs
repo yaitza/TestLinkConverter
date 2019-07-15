@@ -67,6 +67,7 @@ namespace ConvertLibrary
                     continue;
                 }
                 OutputDisplay.ShowMessage(node.Name, Color.Chartreuse);
+                ProgressBarShow.SetProgressValue(this._sourceTestCases.IndexOf(node) * 100 / this._sourceTestCases.Count);
                 workSheet.Cells[iFlag, 1] = node.ExternalId;
                 workSheet.Cells[iFlag, 2] = CommonHelper.DelTags(node.Name);
                 string keywords = string.Empty;
@@ -100,7 +101,7 @@ namespace ConvertLibrary
                     iMerge++;
                 }
                 this.MergeCells(workSheet, iMerge, iFlag - iMerge);
-                Thread.Sleep(1000);
+                Thread.Sleep(50);
             }
             workSheet.Cells[iFlag++, 1] = "END";
         }
@@ -113,8 +114,8 @@ namespace ConvertLibrary
         /// <param name="iFlag"></param>
         private void MergeCells(Excel.Worksheet workSheet, int iMerge, int iFlag)
         {
-            //导出Excel前6列均需要合并单元格
-            for (int i = 1; i <= 6; i++)
+            //导出Excel前7列均需要合并单元格
+            for (int i = 1; i <= 7; i++)
             {
                 Excel.Range rangeLecture = workSheet.Range[workSheet.Cells[iFlag, i], workSheet.Cells[iFlag + iMerge - 1, i]];
                 rangeLecture.Application.DisplayAlerts = false;

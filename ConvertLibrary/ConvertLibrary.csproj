@@ -75,6 +75,7 @@
     <Compile Include="ExcelAnalysis.cs" />
     <Compile Include="ExcelHandler.cs" />
     <Compile Include="OutputDisplay.cs" />
+    <Compile Include="ProgressBarShow.cs" />
     <Compile Include="XmlHandler.cs" />
     <Compile Include="XmlAnalysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

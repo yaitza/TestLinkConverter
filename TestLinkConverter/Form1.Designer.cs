@@ -112,7 +112,6 @@ namespace TestLinkConverter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar.Location = new System.Drawing.Point(11, 132);
             this.progressBar.Margin = new System.Windows.Forms.Padding(4);
-            this.progressBar.Maximum = 1000;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(463, 29);
             this.progressBar.Step = 1;

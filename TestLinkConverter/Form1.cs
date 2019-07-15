@@ -22,11 +22,14 @@ namespace TestLinkConverter
 
         private delegate void DisplayMessage(string msg, Color color);
 
+        private delegate void SetPos(int ipos);
+
 
         public Form()
         {
             InitializeComponent();
             OutputDisplay.ShowMethod += this.OutputRichTextBox;
+            ProgressBarShow.SetProgressValue += this.SetProgressValue;
         }
 
 
@@ -57,14 +60,12 @@ namespace TestLinkConverter
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.timer.Stop();
-            this.progressBar.Value = this.progressBar.Maximum;
             TimeSpan consume = DateTime.Now - this._starTime;
-
             string showMsg = $"转换用例数: {_tcDic.Sum(keyValuePair => keyValuePair.Value.Count)}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.\n用例生成目录: {System.Environment.CurrentDirectory.ToString()}";
             MessageBox.Show(showMsg);
             OutputDisplay.ShowMessage(showMsg, Color.Azure);
-            this.progressBar.Value = this.progressBar.Minimum;
             this.filePathTb.Text = string.Empty;
+            this.progressBar.Value = this.progressBar.Minimum;
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -200,6 +201,19 @@ namespace TestLinkConverter
                 this.outputRtb.SelectionColor = color;
                 this.outputRtb.AppendText($"{DateTime.Now.ToString("u")} {msg} {Environment.NewLine}");
                 this.outputRtb.Focus();
+            }
+        }
+
+        private void SetProgressValue(int ipos)
+        {
+            if (this.InvokeRequired)
+            {
+                SetPos setPos = new SetPos(SetProgressValue);
+                this.Invoke(setPos, new object[] {ipos});
+            }
+            else
+            {
+                this.progressBar.Value = Convert.ToInt32(ipos);
             }
         }
 
