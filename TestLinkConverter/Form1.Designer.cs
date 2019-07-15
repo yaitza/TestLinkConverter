@@ -38,13 +38,13 @@ namespace TestLinkConverter
             this.label2 = new System.Windows.Forms.Label();
             this.startBtn = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.timer = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.linkLabel = new System.Windows.Forms.LinkLabel();
             this.DonateLab = new System.Windows.Forms.Label();
             this.outputRtb = new System.Windows.Forms.RichTextBox();
             this.downloadlinkLabel = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // getFilePathBtn
@@ -117,10 +117,6 @@ namespace TestLinkConverter
             this.progressBar.Step = 1;
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar.TabIndex = 7;
-            // 
-            // timer
-            // 
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // backgroundWorker
             // 
@@ -227,13 +223,13 @@ namespace TestLinkConverter
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.ProgressBar progressBar;
-        private System.Windows.Forms.Timer timer;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.LinkLabel linkLabel;
         private System.Windows.Forms.Label DonateLab;
         private System.Windows.Forms.RichTextBox outputRtb;
         private System.Windows.Forms.LinkLabel downloadlinkLabel;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Timer timer;
     }
 }
 

@@ -34,7 +34,7 @@ namespace ConvertLibrary
                 foreach (TestCase testCase in keyValuePair.Value)
                 {
                     OutputDisplay.ShowMessage(testCase.Name, Color.Chartreuse);
-                    ProgressBarShow.SetProgressValue(keyValuePair.Value.IndexOf(testCase) * 100 / keyValuePair.Value.Count);
+                    ProgressBarShow.ShowProgressValue(keyValuePair.Value.IndexOf(testCase) * 100 / keyValuePair.Value.Count);
                     string fieldsStr = $"<node_order><![CDATA[{testCase.NodeOrder}]]></node_order>";
                     fieldsStr += $"<externalid><![CDATA[{testCase.ExternalId}]]></externalid>";
                     fieldsStr += $"<version><![CDATA[{testCase.Version}]]></version>";
@@ -65,7 +65,7 @@ namespace ConvertLibrary
                     Thread.Sleep(50);
                     tcStrList.Add(tcStr);
                 }
-
+                ProgressBarShow.ShowProgressValue(100);
                 dicCase.Add(keyValuePair.Key, tcStrList);
             }
 

@@ -67,7 +67,7 @@ namespace ConvertLibrary
                     continue;
                 }
                 OutputDisplay.ShowMessage(node.Name, Color.Chartreuse);
-                ProgressBarShow.SetProgressValue(this._sourceTestCases.IndexOf(node) * 100 / this._sourceTestCases.Count);
+                ProgressBarShow.ShowProgressValue(this._sourceTestCases.IndexOf(node) * 100 / this._sourceTestCases.Count);
                 workSheet.Cells[iFlag, 1] = node.ExternalId;
                 workSheet.Cells[iFlag, 2] = CommonHelper.DelTags(node.Name);
                 string keywords = string.Empty;
@@ -104,6 +104,8 @@ namespace ConvertLibrary
                 Thread.Sleep(50);
             }
             workSheet.Cells[iFlag++, 1] = "END";
+            ProgressBarShow.ShowProgressValue(100);
+
         }
 
         /// <summary>

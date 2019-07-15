@@ -68,15 +68,6 @@ namespace TestLinkConverter
             this.progressBar.Value = this.progressBar.Minimum;
         }
 
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            if (this.progressBar.Value < this.progressBar.Maximum)
-            {
-                this.progressBar.PerformStep();
-            }
-        }
-
-
         private void getFilePathBtn_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -172,17 +163,6 @@ namespace TestLinkConverter
             System.Windows.Forms.Form donateForm = new DonateForm();
             donateForm.Show();
         }
-
-        private void xeRb_CheckedChanged(object sender, EventArgs e)
-        {
-            this.openFileDialog.Filter = "xml|*.xml|Excel 2007Plus|*.xlsx";
-        }
-
-        private void exRb_CheckedChanged(object sender, EventArgs e)
-        {
-            this.openFileDialog.Filter = "Excel 2007Plus|*.xlsx|xml|*.xml";
-        }
-
 
         private void downloadlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
