@@ -46,12 +46,19 @@ namespace ConvertLibrary
         public List<XmlNode> GetAllTestCaseNodes()
         {
             XmlNode xn = this._xmlDoc.SelectSingleNode("testsuite");
-
-            if (xn == null)
+            XmlNode xnTc = this._xmlDoc.SelectSingleNode("testcases");
+            if (xn == null && xnTc == null)
             {
                 this._logger.Warn(new Exception("对应导出xml无测试用例数据."));
                 throw new Exception("对应导出xml无测试用例数据.");
             }
+
+            if (xn == null && null != xnTc)
+            {
+                List<XmlNode> xnTcList = xnTc.ChildNodes.Cast<XmlNode>().Where(xmlNodeTc => xmlNodeTc.Name.Equals("testcase")).ToList();
+                return xnTcList;
+            }
+            
             List<XmlNode> xnList = xn.ChildNodes.Cast<XmlNode>().Where(xmlNode => xmlNode.Name.Equals("testsuite")).ToList();
 
             if (xnList.Count == 0)
