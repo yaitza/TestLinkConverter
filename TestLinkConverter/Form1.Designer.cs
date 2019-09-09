@@ -68,7 +68,7 @@ namespace TestLinkConverter
             // 
             this.filePathTb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.filePathTb.Location = new System.Drawing.Point(93, 74);
+            this.filePathTb.Location = new System.Drawing.Point(95, 74);
             this.filePathTb.Margin = new System.Windows.Forms.Padding(4);
             this.filePathTb.Name = "filePathTb";
             this.filePathTb.Size = new System.Drawing.Size(417, 25);
