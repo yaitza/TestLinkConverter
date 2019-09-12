@@ -58,13 +58,17 @@ namespace ConvertLibrary
                 List<XmlNode> xnTcList = xnTc.ChildNodes.Cast<XmlNode>().Where(xmlNodeTc => xmlNodeTc.Name.Equals("testcase")).ToList();
                 return xnTcList;
             }
-            
+
             List<XmlNode> xnList = xn.ChildNodes.Cast<XmlNode>().Where(xmlNode => xmlNode.Name.Equals("testsuite")).ToList();
 
             if (xnList.Count == 0)
             {
                 foreach (XmlNode node in xn.ChildNodes)
                 {
+                    if (!node.Name.Equals("testcase"))
+                    {
+                        continue;
+                    }
                     this._nodesList.Add(node);
                 }
             }

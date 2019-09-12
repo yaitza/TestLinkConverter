@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Reflection;
+using System.IO;
+using System.Linq;
 using System.Threading;
-using ConvertLibrary;
 using ConvertModel;
 using log4net;
-using Excel = Microsoft.Office.Interop.Excel;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace ConvertLibrary
 {
@@ -25,39 +26,31 @@ namespace ConvertLibrary
         /// </summary>
         public void WriteExcel()
         {
-            string currentDir = System.Environment.CurrentDirectory;
-            string fileName = $"{currentDir}\\TestCaseTemplate.xlsx";
+            string currentDir = Environment.CurrentDirectory;
+            string saveDir = $"{currentDir}\\TestCase_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
 
-            Excel.Application excelApp = new Excel.ApplicationClass();
-
-            Excel.Workbook workbook;
-
-            if (System.IO.File.Exists(fileName))
+            using (var p = new ExcelPackage())
             {
-                workbook = excelApp.Workbooks.Open(fileName, 0, false, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                this.WriteInWorkSheet(p.Workbook);
+                p.SaveAs(new FileInfo(saveDir));
             }
-            else
-            {
-                workbook = excelApp.Workbooks.Add(true);
-            }
-
-            this.WriteInWorkSheet(workbook);
-
-            excelApp.Visible = false;
-            excelApp.DisplayAlerts = false;
-            string saveDir = fileName.Replace("TestCaseTemplate.xlsx", $"TestCase_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
             OutputDisplay.ShowMessage($"文件保存路勁：{saveDir}\n", Color.Azure);
-            workbook.SaveAs(saveDir);
-            workbook.Close(false, Missing.Value, Missing.Value);
-            excelApp.Quit();
-
-            workbook = null;
-            excelApp = null;
         }
 
-        private void WriteInWorkSheet(Excel.Workbook workBook)
+        private void WriteInWorkSheet(ExcelWorkbook workBook)
         {
-            var workSheet = (Excel.Worksheet)workBook.Worksheets.Item[1];
+            var workSheet = workBook.Worksheets.Add("MySheet");
+
+            int maxHierarchy = 0;
+            foreach (TestCase testCase in this._sourceTestCases)
+            {
+                if (maxHierarchy < testCase.TestCaseHierarchy.Count)
+                {
+                    maxHierarchy = testCase.TestCaseHierarchy.Count;
+                }
+            }
+
+            BuildTemplate(workSheet, maxHierarchy);
 
             int iFlag = 2;
             foreach (TestCase node in this._sourceTestCases)
@@ -68,8 +61,14 @@ namespace ConvertLibrary
                 }
                 OutputDisplay.ShowMessage(node.Name, Color.Chartreuse);
                 ProgressBarShow.ShowProgressValue(this._sourceTestCases.IndexOf(node) * 100 / this._sourceTestCases.Count);
-                workSheet.Cells[iFlag, 1] = node.ExternalId;
-                workSheet.Cells[iFlag, 2] = CommonHelper.DelTags(node.Name);
+                workSheet.Cells[iFlag, 1].Value = node.ExternalId;
+
+                for (int i = 0; i < node.TestCaseHierarchy.Count; i++)
+                {
+                    workSheet.Cells[iFlag, i + 2].Value = node.TestCaseHierarchy.ToArray()[i];
+                }
+
+                workSheet.Cells[iFlag, maxHierarchy + 2].Value = CommonHelper.DelTags(node.Name);
                 string keywords = string.Empty;
                 if (node.Keywords != null)
                 {
@@ -78,19 +77,19 @@ namespace ConvertLibrary
                         keywords = keywords + keyword + ",";
                     }
                 }
-                workSheet.Cells[iFlag, 3] = keywords.TrimEnd(',');
-                workSheet.Cells[iFlag, 4] = node.Importance.ToString();
-                workSheet.Cells[iFlag, 5] = node.ExecutionType.ToString();
-                workSheet.Cells[iFlag, 6] = CommonHelper.DelTags(node.Summary);
-                workSheet.Cells[iFlag, 7] = CommonHelper.DelTags(node.Preconditions);
+                workSheet.Cells[iFlag, maxHierarchy + 3].Value = keywords.TrimEnd(',');
+                workSheet.Cells[iFlag, maxHierarchy + 4].Value = node.Importance.ToString();
+                workSheet.Cells[iFlag, maxHierarchy + 5].Value = node.ExecutionType.ToString();
+                workSheet.Cells[iFlag, maxHierarchy + 6].Value = CommonHelper.DelTags(node.Summary);
+                workSheet.Cells[iFlag, maxHierarchy + 7].Value = CommonHelper.DelTags(node.Preconditions);
                 int iMerge = 0;
 
                 if (node.TestSteps != null && node.TestSteps.Count != 0)
                 {
                     foreach (var step in node.TestSteps)
                     {
-                        workSheet.Cells[iFlag, 8] = CommonHelper.DelTags(step.Actions);
-                        workSheet.Cells[iFlag, 9] = CommonHelper.DelTags(step.ExpectedResults);
+                        workSheet.Cells[iFlag, maxHierarchy + 8].Value = CommonHelper.DelTags(step.Actions);
+                        workSheet.Cells[iFlag, maxHierarchy + 9].Value = CommonHelper.DelTags(step.ExpectedResults);
                         iFlag++;
                         iMerge++;
                     }
@@ -100,30 +99,62 @@ namespace ConvertLibrary
                     iFlag++;
                     iMerge++;
                 }
-                this.MergeCells(workSheet, iMerge, iFlag - iMerge);
+                this.MergeCells(workSheet, iMerge, iFlag - iMerge, maxHierarchy+9);
                 Thread.Sleep(50);
             }
-            workSheet.Cells[iFlag++, 1] = "END";
+            workSheet.Cells[iFlag++, 1].Value = "END";
             ProgressBarShow.ShowProgressValue(100);
 
         }
+        private void BuildTemplate(ExcelWorksheet ws, int maxHierarchy)
+        {
+            ws.Cells[1, 1].Value = "用例编号";
+            for (int i = 1; i <= maxHierarchy; i++)
+            {
+                ws.Cells[1, i + 1].Value = GetCountRefundInfoInChanese(i.ToString()) + "级模块";
+            }
 
+            ws.Cells[1, maxHierarchy + 2].Value = "用例名称";
+            ws.Cells[1, maxHierarchy + 3].Value = "关键字";
+            ws.Cells[1, maxHierarchy + 4].Value = "用例等级";
+            ws.Cells[1, maxHierarchy + 5].Value = "执行方式";
+            ws.Cells[1, maxHierarchy + 6].Value = "用例摘要";
+            ws.Cells[1, maxHierarchy + 7].Value = "预置条件";
+            ws.Cells[1, maxHierarchy + 8].Value = "操作步骤";
+            ws.Cells[1, maxHierarchy + 9].Value = "期望结果";
+            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.BackgroundColor.SetColor(Color.CornflowerBlue);
+            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Color.SetColor(Color.White);
+            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Bold = true;
+        }
         /// <summary>
         /// 合并单元格
         /// </summary>
         /// <param name="workSheet">指定Sheet页</param>
         /// <param name="iMerge"></param>
         /// <param name="iFlag"></param>
-        private void MergeCells(Excel.Worksheet workSheet, int iMerge, int iFlag)
+        private void MergeCells(ExcelWorksheet workSheet, int iMerge, int iFlag, int handleCellsCount)
         {
-            //导出Excel前7列均需要合并单元格
-            for (int i = 1; i <= 7; i++)
+            //导出Excel前handleCellsCount-2列均需要合并单元格，排除预置条件和操作步骤列。
+            for (int i = 1; i <= handleCellsCount-2; i++)
             {
-                Excel.Range rangeLecture = workSheet.Range[workSheet.Cells[iFlag, i], workSheet.Cells[iFlag + iMerge - 1, i]];
-                rangeLecture.Application.DisplayAlerts = false;
-                rangeLecture.Merge(Missing.Value);
-                rangeLecture.Application.DisplayAlerts = true;
+                workSheet.Cells[iFlag, i, iFlag + iMerge - 1, i].Merge = true;
             }
+        }
+
+        private string GetCountRefundInfoInChanese(string inputNum)
+        {
+            string[] strArr = { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九", };
+            string[] Chinese = { "", "十", "百", "千", "万", "十", "百", "千", "亿" };
+            char[] tmpArr = inputNum.ToString().ToArray();
+            string tmpVal = "";
+            for (int i = 0; i < tmpArr.Length; i++)
+            {
+                tmpVal += strArr[tmpArr[i] - 48];        //ASCII编码 0为48
+                tmpVal += Chinese[tmpArr.Length - 1 - i];//根据对应的位数插入对应的单位
+            }
+
+            return tmpVal;
         }
     }
 }

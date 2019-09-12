@@ -105,6 +105,8 @@ namespace ConvertLibrary
                         break;
                 }
             }
+            tc.TestCaseHierarchy = GetTestCaseHierarchy(node);
+
             return tc;
         }
 
@@ -142,6 +144,27 @@ namespace ConvertLibrary
                 stepsList.Add(ts);
             }
             return stepsList;
+        }
+
+        private List<string> GetTestCaseHierarchy(XmlNode xmlNode)
+        {
+            List<string> suiteNames = new List<string>();
+            RecursionGetNodes(xmlNode, suiteNames);
+
+            return suiteNames;
+        }
+
+        private void RecursionGetNodes(XmlNode xmlNode, List<string> suiteNames)
+        {
+            if (xmlNode.ParentNode.Name.Equals("testsuite"))
+            {
+                RecursionGetNodes(xmlNode.ParentNode, suiteNames);
+            }
+
+            if (xmlNode.Name.Equals("testsuite"))
+            {
+                suiteNames.Add(xmlNode.Attributes["name"].Value);
+            }
         }
     }
 }
