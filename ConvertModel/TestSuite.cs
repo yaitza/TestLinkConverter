@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConvertModel;
+﻿using System.Collections.Generic;
 
-namespace ConvertLibrary
+namespace ConvertModel
 {
-    class TestSuite
+    public class TestSuite
     {
         public string Name { get; set; }
 
-        public List<TestSuite> TestSuites { get; set; }
+        public List<string> NameHierarchy { get; set; }
 
         public List<TestCase> TestCases { get; set; }
     }

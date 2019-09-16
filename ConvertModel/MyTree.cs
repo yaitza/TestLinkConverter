@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace ConvertLibrary
+namespace ConvertModel
 {
-    class MyTree<T>
+    public class MyTree<T>
     {
         private List<MyTree<T>> _nodes;
 
@@ -32,6 +32,7 @@ namespace ConvertLibrary
             this.Data = data;
             this._nodes = new List<MyTree<T>>();
         }
+
 
         public void AddNode(MyTree<T> node)
         {

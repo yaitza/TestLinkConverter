@@ -72,7 +72,6 @@ namespace ConvertLibrary
                     }
                     suiteTc[suitenames.TrimStart('|')].Add(tcStr);
 
-
                 }
                 this.WriteXml1(suiteTc);
                 ProgressBarShow.ShowProgressValue(100);
@@ -154,5 +153,7 @@ namespace ConvertLibrary
             }
             OutputDisplay.ShowMessage(string.Format("文件保存路勁：{0}\n", filePath), Color.Azure);
         }
+
+
     }
 }
