@@ -9,6 +9,9 @@ namespace ConvertModel
         /// </summary>
         public string InternalId { get; set; }
 
+        /// <summary>
+        /// 测试套名称
+        /// </summary>
         public List<string> TestCaseHierarchy { get; set; }
 
         /// <summary>

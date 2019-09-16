@@ -111,7 +111,7 @@ namespace ConvertLibrary
             ws.Cells[1, 1].Value = "用例编号";
             for (int i = 1; i <= maxHierarchy; i++)
             {
-                ws.Cells[1, i + 1].Value = GetCountRefundInfoInChanese(i.ToString()) + "级模块";
+                ws.Cells[1, i + 1].Value = NumberToChinese(i.ToString()) + "级模块";
             }
 
             ws.Cells[1, maxHierarchy + 2].Value = "用例名称";
@@ -127,12 +127,14 @@ namespace ConvertLibrary
             ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Color.SetColor(Color.White);
             ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Bold = true;
         }
+
         /// <summary>
         /// 合并单元格
         /// </summary>
         /// <param name="workSheet">指定Sheet页</param>
         /// <param name="iMerge"></param>
         /// <param name="iFlag"></param>
+        /// <param name="handleCellsCount"></param>
         private void MergeCells(ExcelWorksheet workSheet, int iMerge, int iFlag, int handleCellsCount)
         {
             //导出Excel前handleCellsCount-2列均需要合并单元格，排除预置条件和操作步骤列。
@@ -142,7 +144,7 @@ namespace ConvertLibrary
             }
         }
 
-        private string GetCountRefundInfoInChanese(string inputNum)
+        private string NumberToChinese(string inputNum)
         {
             string[] strArr = { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九", };
             string[] Chinese = { "", "十", "百", "千", "万", "十", "百", "千", "亿" };

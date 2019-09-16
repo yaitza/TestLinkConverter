@@ -12,7 +12,6 @@ namespace ConvertLibrary
 {
     public class XmlAnalysis
     {
-        // TODO 未实现获取测试用例并获取对应测试套
         private readonly ILog _logger = LogManager.GetLogger(typeof(XmlAnalysis));
         /// <summary>
         /// XMLDocument对象
@@ -53,7 +52,7 @@ namespace ConvertLibrary
                 throw new Exception("对应导出xml无测试用例数据.");
             }
 
-            if (xn == null && null != xnTc)
+            if (xn == null)
             {
                 List<XmlNode> xnTcList = xnTc.ChildNodes.Cast<XmlNode>().Where(xmlNodeTc => xmlNodeTc.Name.Equals("testcase")).ToList();
                 return xnTcList;

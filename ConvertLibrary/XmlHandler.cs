@@ -1,12 +1,10 @@
-﻿using System;
+﻿using ConvertModel;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Text;
+using System.Linq;
 using System.Threading;
-using System.Xml;
-using ConvertLibrary;
-using ConvertModel;
 
 namespace ConvertLibrary
 {
@@ -30,6 +28,7 @@ namespace ConvertLibrary
             foreach (KeyValuePair<string, List<TestCase>> keyValuePair in _tcList)
             {
                 OutputDisplay.ShowMessage($"【{keyValuePair.Key}】数据读取......", Color.MediumVioletRed);
+                Dictionary<string, List<string>> suiteTc = new Dictionary<string, List<string>>();
                 List<string> tcStrList = new List<string>();
                 foreach (TestCase testCase in keyValuePair.Value)
                 {
@@ -64,7 +63,18 @@ namespace ConvertLibrary
                     string tcStr = $"<testcase name=\"{testCase.Name}\">{fieldsStr}</testcase>";
                     Thread.Sleep(50);
                     tcStrList.Add(tcStr);
+
+                    string suitenames = string.Empty;
+                    testCase.TestCaseHierarchy.ForEach(item => suitenames = suitenames + "|" + item);
+                    if (!suiteTc.Keys.Contains(suitenames.TrimStart('|')))
+                    {
+                        suiteTc.Add(suitenames.TrimStart('|'), new List<string>());
+                    }
+                    suiteTc[suitenames.TrimStart('|')].Add(tcStr);
+
+
                 }
+                this.WriteXml1(suiteTc);
                 ProgressBarShow.ShowProgressValue(100);
                 dicCase.Add(keyValuePair.Key, tcStrList);
             }
@@ -88,6 +98,8 @@ namespace ConvertLibrary
                 sw.Write(tsStr);
                 foreach (KeyValuePair<string, List<string>> casePair in this.CaseToStr())
                 {
+                    Dictionary<string,string> sTcs = new Dictionary<string, string>();
+
                     sw.Write($"<testsuite name = \"{casePair.Key}\">");
                     sw.Write("<node_order><![CDATA[]]></node_order>");
                     sw.Write("<details><![CDATA[]]></details>");
@@ -98,6 +110,46 @@ namespace ConvertLibrary
                     sw.Write("</testsuite>");
                 }
                 sw.Write("</testsuite>");
+                sw.Close();
+            }
+            OutputDisplay.ShowMessage(string.Format("文件保存路勁：{0}\n", filePath), Color.Azure);
+        }
+
+        private string CollectionSuite(Dictionary<string, List<string>> sTcs)
+        {
+            string suiteStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+            
+            foreach (KeyValuePair<string, List<string>> keyValuePair in sTcs)
+            {
+                foreach (string suite in keyValuePair.Key.Split('|'))
+                {
+                    suiteStr += $"<testsuite name = \"{suite}\">";
+                    suiteStr += "<node_order><![CDATA[]]></node_order>";
+                    suiteStr += "<details><![CDATA[]]></details>";
+                    suiteStr += "{0}";
+                }
+
+                foreach (string testcase in keyValuePair.Value)
+                {
+                    suiteStr += testcase;
+                }
+
+                foreach (string suite in keyValuePair.Key.Split('|'))
+                {
+                    suiteStr += "</testsuite>";
+                }
+            }
+
+            return suiteStr;
+        }
+
+        public void WriteXml1(Dictionary<string, List<string>> sTcs)
+        {
+            string filePath = $"{System.Environment.CurrentDirectory}\\TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}_new.xml";
+            FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate);
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                sw.Write(this.CollectionSuite(sTcs));
                 sw.Close();
             }
             OutputDisplay.ShowMessage(string.Format("文件保存路勁：{0}\n", filePath), Color.Azure);

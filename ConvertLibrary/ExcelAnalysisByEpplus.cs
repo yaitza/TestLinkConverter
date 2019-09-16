@@ -4,6 +4,7 @@ using System.Drawing;
 using OfficeOpenXml;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using log4net;
 using ConvertLibrary;
 using ConvertModel;
@@ -87,8 +88,8 @@ namespace ConvertLibrary
 
             for(int i=1; i < eWorksheet.Dimension.End.Row; i++)
             {
-                if(eWorksheet.Cells[i,1].Text != null || eWorksheet.Cells[i,1].Text.ToString() != string.Empty ||
-                    !eWorksheet.Cells[i, 1].Text.ToString().Equals("END"))
+                if(eWorksheet.Cells[i,1].Value != null || eWorksheet.Cells[i,1].Text != string.Empty ||
+                    !eWorksheet.Cells[i, 1].Text.Equals("END"))
                 {
                     continue;
                 }
@@ -102,7 +103,7 @@ namespace ConvertLibrary
             {
                 var currentCell = eWorksheet.Cells[i, 1];
                 //设置单元格格式为文本格式，防止为自定义格式时读取单元格报错
-                for (int j = 2; j <= 9; j++)
+                for (int j = 2; j <= usedCols; j++)
                 {
                     eWorksheet.Cells[i, j].Style.Numberformat.Format = "@";
                 }
@@ -113,8 +114,8 @@ namespace ConvertLibrary
                     {
                         StepNumber = tc.TestSteps.Count + 1,
                         ExecutionType = ExecType.手动,
-                        Actions = eWorksheet.Cells[i, 7].Text.ToString(),
-                        ExpectedResults = eWorksheet.Cells[i, 8].Text.ToString()
+                        Actions = eWorksheet.Cells[i, usedCols-1].Text,
+                        ExpectedResults = eWorksheet.Cells[i, usedCols].Text
                     };
 
                     tc.TestSteps.Add(ts);
@@ -127,23 +128,36 @@ namespace ConvertLibrary
                         tcList.Add(tc);
                     }
 
+                    List<string> testSuitesName = new List<string>();
+                    if (usedCols > 9)
+                    {
+                        for (int j = 1; j <= usedCols-9; j++)
+                        {
+                            if (eWorksheet.Cells[i, j + 1].Value != null)
+                            {
+                                testSuitesName.Add(eWorksheet.Cells[i, j+1].Text);
+                            }
+                        }
+                    }
+
                     tc = new TestCase
                     {
-                        ExternalId = string.Format($"{currentCell.Text.ToString()}_{new Random().Next(0, 10000)}"),
-                        Name = eWorksheet.Cells[i, 2].Text.ToString(),
-                        Keywords = eWorksheet.Cells[i, 3].Text.ToString().Split(',').ToList(),
-                        Importance = CommonHelper.StrToImportanceType(eWorksheet.Cells[i, 4].Text.ToString()),
-                        ExecutionType = CommonHelper.StrToExecType(eWorksheet.Cells[i, 5].Text.ToString()),
-                        Summary = eWorksheet.Cells[i, 6].Text.ToString(),
-                        Preconditions = eWorksheet.Cells[i, 7].Text.ToString()
+                        ExternalId = string.Format($"{currentCell.Text}_{new Random().Next(0, 10000)}"),
+                        TestCaseHierarchy = testSuitesName,
+                        Name = eWorksheet.Cells[i, usedCols-7].Text,
+                        Keywords = eWorksheet.Cells[i, usedCols-6].Text.Split(',').ToList(),
+                        Importance = CommonHelper.StrToImportanceType(eWorksheet.Cells[i, usedCols-5].Text),
+                        ExecutionType = CommonHelper.StrToExecType(eWorksheet.Cells[i, usedCols-4].Text),
+                        Summary = eWorksheet.Cells[i, usedCols-3].Text,
+                        Preconditions = eWorksheet.Cells[i, usedCols-2].Text
                     };
                     
                     TestStep tsOne = new TestStep
                     {
                         StepNumber = 1,
                         ExecutionType = ExecType.手动,
-                        Actions = eWorksheet.Cells[i, 8].Text.ToString(),
-                        ExpectedResults = eWorksheet.Cells[i, 9].Text.ToString()
+                        Actions = eWorksheet.Cells[i, usedCols-1].Text.ToString(),
+                        ExpectedResults = eWorksheet.Cells[i, usedCols].Text.ToString()
                     };
 
                     tc.TestSteps = new List<TestStep> {tsOne};

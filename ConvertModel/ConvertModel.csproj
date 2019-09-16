@@ -36,6 +36,8 @@
     <Compile Include="TestCase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestStep.cs" />
+    <Compile Include="TestSuite.cs" />
+    <Compile Include="MyTree.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System">
