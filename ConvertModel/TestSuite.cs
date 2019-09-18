@@ -9,5 +9,7 @@ namespace ConvertModel
         public List<string> NameHierarchy { get; set; }
 
         public List<TestCase> TestCases { get; set; }
+
+        public string TestLinkStr { get; set; }
     }
 }

@@ -13,8 +13,9 @@ namespace ConvertLibrary
             this._tcList = tcCases;
         }
 
-        public void BuildTestSuite()
+        public Dictionary<int, List<TestSuite>> BuildTestSuite()
         {
+            //TODO 存在不同的层级测试套名称相同的问题
             Dictionary<string, List<TestCase>> suiteTc = new Dictionary<string, List<TestCase>>();
             Dictionary<int, List<TestSuite>> tsDic = new Dictionary<int, List<TestSuite>>();
 
@@ -53,7 +54,6 @@ namespace ConvertLibrary
 
                 string suiteName = suiteArray[countSuite - 1];
                 TestSuite ts = new TestSuite { Name = suiteName, TestCases = keyValuePair.Value, NameHierarchy = suiteArray.ToList() };
-                MyTree<TestSuite> tsTree = new MyTree<TestSuite>(ts);
                 if (!tsDic.ContainsKey(countSuite))
                 {
                     tsDic.Add(countSuite, new List<TestSuite>());
@@ -64,23 +64,10 @@ namespace ConvertLibrary
                     tsDic[countSuite].Add(ts);
                 }
             }
+
+            return tsDic;
         }
 
-        public void BuildTree(Dictionary<int, List<TestSuite>> tsDic)
-        {
-            TestSuite ts = new TestSuite();
-            ts.Name = "mySheet";
-            TreeNode myTreeNodes = new TreeNode(ts);
 
-            foreach (KeyValuePair<int, List<TestSuite>> pair in tsDic)
-            {
-                foreach (TestSuite testSuite in pair.Value)
-                {
-                    var item = myTreeNodes.AddChildNode(testSuite);
-                }
-
-            }
-
-        }
     }
 }

@@ -86,8 +86,12 @@ namespace TestLinkConverter
             {
                 ExcelAnalysisByEpplus excelAnalysis = new ExcelAnalysisByEpplus(fileDir);
                 _tcDic = excelAnalysis.ReadExcel();
+
+                var tsg = new TestSuiteGenerator(_tcDic);
+                var tsDic = tsg.BuildTestSuite();
+
                 XmlHandler xh = new XmlHandler(_tcDic);
-                xh.WriteXml();
+                xh.WriteXml2(xh.BuildStr(tsDic));
             }
             catch (Exception ex)
             {

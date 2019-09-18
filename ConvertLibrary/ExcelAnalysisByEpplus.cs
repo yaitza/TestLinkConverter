@@ -99,7 +99,7 @@ namespace ConvertLibrary
 
             TestCase tc = new TestCase();
 
-            for (int i = 2; i < usedRows; i++)
+            for (int i = 2; i <= usedRows; i++)
             {
                 var currentCell = eWorksheet.Cells[i, 1];
                 //设置单元格格式为文本格式，防止为自定义格式时读取单元格报错

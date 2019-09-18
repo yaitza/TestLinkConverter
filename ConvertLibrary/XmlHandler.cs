@@ -17,6 +17,8 @@ namespace ConvertLibrary
             this._tcList = tcCases;
         }
 
+        #region 之前逻辑
+
         /// <summary>
         /// 测试用例转为Str
         /// </summary>
@@ -73,7 +75,6 @@ namespace ConvertLibrary
                     suiteTc[suitenames.TrimStart('|')].Add(tcStr);
 
                 }
-                this.WriteXml1(suiteTc);
                 ProgressBarShow.ShowProgressValue(100);
                 dicCase.Add(keyValuePair.Key, tcStrList);
             }
@@ -97,7 +98,7 @@ namespace ConvertLibrary
                 sw.Write(tsStr);
                 foreach (KeyValuePair<string, List<string>> casePair in this.CaseToStr())
                 {
-                    Dictionary<string,string> sTcs = new Dictionary<string, string>();
+                    Dictionary<string, string> sTcs = new Dictionary<string, string>();
 
                     sw.Write($"<testsuite name = \"{casePair.Key}\">");
                     sw.Write("<node_order><![CDATA[]]></node_order>");
@@ -114,44 +115,101 @@ namespace ConvertLibrary
             OutputDisplay.ShowMessage(string.Format("文件保存路勁：{0}\n", filePath), Color.Azure);
         }
 
-        private string CollectionSuite(Dictionary<string, List<string>> sTcs)
+        #endregion
+
+        private string TestSuiteToStr(TestSuite ts)
         {
-            string suiteStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-            
-            foreach (KeyValuePair<string, List<string>> keyValuePair in sTcs)
+            string tsStr = String.Empty;
+            tsStr += $"<testsuite name = \"{ts.Name}\">";
+            tsStr += "<node_order><![CDATA[]]></node_order>";
+            tsStr += "<details><![CDATA[]]></details>";
+            if (ts.TestCases!= null && ts.TestCases.Count != 0)
             {
-                foreach (string suite in keyValuePair.Key.Split('|'))
+                foreach (TestCase @case in ts.TestCases)
                 {
-                    suiteStr += $"<testsuite name = \"{suite}\">";
-                    suiteStr += "<node_order><![CDATA[]]></node_order>";
-                    suiteStr += "<details><![CDATA[]]></details>";
-                    suiteStr += "{0}";
-                }
-
-                foreach (string testcase in keyValuePair.Value)
-                {
-                    suiteStr += testcase;
-                }
-
-                foreach (string suite in keyValuePair.Key.Split('|'))
-                {
-                    suiteStr += "</testsuite>";
+                    tsStr += this.TestCaseToStr(@case);
                 }
             }
+            tsStr += ts.TestLinkStr;
+            tsStr += "</testsuite>";
 
-            return suiteStr;
+            return tsStr;
         }
 
-        public void WriteXml1(Dictionary<string, List<string>> sTcs)
+        private string TestCaseToStr(TestCase tc)
         {
-            string filePath = $"{System.Environment.CurrentDirectory}\\TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}_new.xml";
+            OutputDisplay.ShowMessage(tc.Name, Color.Chartreuse);
+            string fieldsStr = $"<node_order><![CDATA[{tc.NodeOrder}]]></node_order>";
+            fieldsStr += $"<externalid><![CDATA[{tc.ExternalId}]]></externalid>";
+            fieldsStr += $"<version><![CDATA[{tc.Version}]]></version>";
+            fieldsStr += $"<summary><![CDATA[{tc.Summary}]]></summary>";
+            fieldsStr += $"<preconditions><![CDATA[{tc.Preconditions}]]></preconditions>";
+            fieldsStr += $"<execution_type><![CDATA[{tc.ExecutionType.ToString()}]]></execution_type>";
+            fieldsStr += $"<importance><![CDATA[{tc.Importance.ToString()}]]></importance>";
+            fieldsStr += $"<estimated_exec_duration>{tc.EstimatedExecDuration}</estimated_exec_duration>";
+            fieldsStr += $"<status>{tc.Status}</status>";
+            string tsStr = "";
+            foreach (TestStep testStep in tc.TestSteps)
+            {
+                tsStr += "<step>";
+                tsStr += $"<step_number><![CDATA[{testStep.StepNumber}]]></step_number>";
+                tsStr += $"<actions><![CDATA[{testStep.Actions}]]></actions>";
+                tsStr += $"<expectedresults><![CDATA[{testStep.ExpectedResults}]]></expectedresults>";
+                tsStr += $"<execution_type><![CDATA[{testStep.ExecutionType}]]></execution_type>";
+                tsStr += "</step>";
+            }
+            fieldsStr += $"<steps>{tsStr}</steps>";
+            String keywordStr = $"<keywords>";
+            foreach (string keyword in tc.Keywords)
+            {
+                keywordStr += $"<keyword name=\"{keyword}\"><notes><![CDATA[]]></notes></keyword>";
+            }
+            fieldsStr += keywordStr + "</keywords>";
+            string tcStr = $"<testcase name=\"{tc.Name}\">{fieldsStr}</testcase>";
+            return tcStr;
+        }
+
+        public void WriteXml2(string sTcs)
+        {
+            string filePath = $"{System.Environment.CurrentDirectory}\\TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}_tree.xml";
             FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate);
             using (StreamWriter sw = new StreamWriter(fs))
             {
-                sw.Write(this.CollectionSuite(sTcs));
+                sw.Write(sTcs);
                 sw.Close();
             }
             OutputDisplay.ShowMessage(string.Format("文件保存路勁：{0}\n", filePath), Color.Azure);
+        }
+
+        public string BuildStr(Dictionary<int, List<TestSuite>> tsDic)
+        {
+            for (int i = tsDic.Keys.Count; i > 1 ; i--)
+            {
+                foreach (TestSuite suite in tsDic[i])
+                {
+                    //TODO 存在测试套里面既有测试用例又有测试套的情况
+                    string parenName = suite.NameHierarchy.ToArray()[i-2];
+                    string testStr = string.Empty;
+                    testStr = TestSuiteToStr(suite);
+
+                    foreach (TestSuite testSuite in tsDic[i-1])
+                    {
+                        if (parenName.Equals(testSuite.Name))
+                        {
+                            testSuite.TestLinkStr += testStr;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            string resultStr = string.Empty;
+            foreach (TestSuite testSuite in tsDic[1])
+            {
+                resultStr += this.TestSuiteToStr(testSuite);
+            }
+
+            return resultStr;
         }
 
 

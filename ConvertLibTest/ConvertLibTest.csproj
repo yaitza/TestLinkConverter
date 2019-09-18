@@ -47,6 +47,7 @@
     <Compile Include="ExcelAnalysisUnitTest.cs" />
     <Compile Include="EpplusExcelAnalysisTest.cs" />
     <Compile Include="TestSuiteGeneratorTest.cs" />
+    <Compile Include="XmlHandlerTest.cs" />
     <Compile Include="XmlToModelUnitTest.cs" />
     <Compile Include="XmlAnalysisUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
