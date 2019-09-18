@@ -183,19 +183,7 @@ namespace ConvertLibrary
             string tcStr = $"<testcase name=\"{tc.Name}\">{fieldsStr}</testcase>";
             return tcStr;
         }
-
-        public void WriteXml2(string sTcs)
-        {
-            string filePath = $"{System.Environment.CurrentDirectory}\\TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}_tree.xml";
-            FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate);
-            using (StreamWriter sw = new StreamWriter(fs))
-            {
-                sw.Write(sTcs);
-                sw.Close();
-            }
-            OutputDisplay.ShowMessage(string.Format("文件保存路勁：{0}\n", filePath), Color.Azure);
-        }
-
+        
         public string BuildStr(Dictionary<int, List<TestSuite>> tsDic)
         {
             for (int i = tsDic.Keys.Count; i > 1; i--)
@@ -227,7 +215,16 @@ namespace ConvertLibrary
 
             return resultStr;
         }
-
-
+        public void WriteXml2(string sTcs)
+        {
+            string filePath = $"{System.Environment.CurrentDirectory}\\TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}_tree.xml";
+            FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate);
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                sw.Write(sTcs);
+                sw.Close();
+            }
+            OutputDisplay.ShowMessage(string.Format("文件保存路勁：{0}\n", filePath), Color.Azure);
+        }
     }
 }
