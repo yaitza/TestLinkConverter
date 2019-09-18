@@ -12,15 +12,14 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 
 支持解析的XML内部结构如下：
 
-![pic1](/Resource/Image/pic1.png)
+![pic1](/Resource/Image/pic11.png)
 
-1. 代码支持多层testsuite嵌套，均能解析出对应的testcase，图示例较为简单，只作为说明。
 2. 本次针对XML解析至解析了常规使用字段，未解析全部导出XML字段。
 
 ## Excel Convert To XML
 
 支持解析Excel的格式如下：
-![pic3](/Resource/Image/pic3.png)
+![pic3](/Resource/Image/pic31.png)
 
 **注意:**   
 
@@ -44,26 +43,28 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 ​	**下载地址：**	<https://www.microsoft.com/net/download/thank-you/net452-developer-pack>  
 
 ---
-## 问题  
-代码过程中以及环境设置中出现的相关问题**【已废弃，不再调用微软dll】**。
-###### 1. 安装包安装，建议安装至C盘以外的系统盘。存在写入Excel文件时，没有权限等问题。    
+#### 问题  
+1. 代码过程中以及环境设置中出现的相关问题**【已废弃，不再调用微软dll】**。
 
-###### 2. 进行文件转换时，建议不要打开Excel进程，可能出现进程占用导致转换失败等问题。  
+> 1. 安装包安装，建议安装至C盘以外的系统盘。存在写入Excel文件时，没有权限等问题。    
+> 2. 进行文件转换时，建议不要打开Excel进程，可能出现进程占用导致转换失败等问题。  
+> 3. 调用Excel相关类库时环境配置问题。
+>
+> **问题描述：**  
+> 无法嵌入互操作类型“Microsoft.Office.Interop.Word.ApplicationClass”。请改用适用的接口。
+> 错误 4317 无法嵌入互操作类型“Microsoft.Office.Interop.Word.ApplicationClass”。请改用适用的接口。
+> 类型“Microsoft.Office.Interop.Word.ApplicationClass”未定义构造函数。  
+> **解决办法：**  
+> 1.在Visual Studio 中点击菜单项“视图->解决方案资源管理器”，在其中点开“引用”文件夹，在"Microsoft.Office.Interop.Excel;" 上点击鼠标右键，选择“属性”，将属性中的“嵌入互操作类型”的值改为“false”即可。  
+>
+> 2.采用第三方类库EPPlus进行Excel文件的解析，避免出现Excel解析等相关问题。  
+>
+> **说明:**  
+> 引用Excel类库：Microsoft Excel 14.0 Object Library，需要安装Office 2010.    
+>
+> ![pic2](/Resource/Image/pic2.png)
 
-###### 3. 调用Excel相关类库时环境配置问题。
-**问题描述：**  
-无法嵌入互操作类型“Microsoft.Office.Interop.Word.ApplicationClass”。请改用适用的接口。
-错误 4317 无法嵌入互操作类型“Microsoft.Office.Interop.Word.ApplicationClass”。请改用适用的接口。
-类型“Microsoft.Office.Interop.Word.ApplicationClass”未定义构造函数。  
-**解决办法：**  
-1.在Visual Studio 中点击菜单项“视图->解决方案资源管理器”，在其中点开“引用”文件夹，在"Microsoft.Office.Interop.Excel;" 上点击鼠标右键，选择“属性”，将属性中的“嵌入互操作类型”的值改为“false”即可。  
 
-2.采用第三方类库EPPlus进行Excel文件的解析，避免出现Excel解析等相关问题。  
-
-**说明:**  
-引用Excel类库：Microsoft Excel 14.0 Object Library，需要安装Office 2010.    
-
-![pic2](/Resource/Image/pic2.png)
 
 ## 临时记录
 ### 1. TestLink字段解析
