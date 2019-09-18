@@ -12,9 +12,21 @@ namespace ConvertLibrary
     {
         private readonly Dictionary<string, List<TestCase>> _tcList;
 
+        private readonly List<TestCase> _allCases;
+
+        private readonly int _tcCount;
+
         public XmlHandler(Dictionary<string, List<TestCase>> tcCases)
         {
             this._tcList = tcCases;
+            this._allCases = new List<TestCase>();
+            foreach (KeyValuePair<string, List<TestCase>> keyValuePair in _tcList)
+            {
+                this._allCases.AddRange(keyValuePair.Value);
+            }
+
+            this._tcCount = this._allCases.Count;
+
         }
 
         #region 之前逻辑
@@ -123,7 +135,7 @@ namespace ConvertLibrary
             tsStr += $"<testsuite name = \"{ts.Name}\">";
             tsStr += "<node_order><![CDATA[]]></node_order>";
             tsStr += "<details><![CDATA[]]></details>";
-            if (ts.TestCases!= null && ts.TestCases.Count != 0)
+            if (ts.TestCases != null && ts.TestCases.Count != 0)
             {
                 foreach (TestCase @case in ts.TestCases)
                 {
@@ -138,7 +150,10 @@ namespace ConvertLibrary
 
         private string TestCaseToStr(TestCase tc)
         {
+            Thread.Sleep(20);
+            _allCases.Remove(tc);
             OutputDisplay.ShowMessage(tc.Name, Color.Chartreuse);
+            ProgressBarShow.ShowProgressValue((_tcCount - _allCases.Count) * 100 / _tcCount);
             string fieldsStr = $"<node_order><![CDATA[{tc.NodeOrder}]]></node_order>";
             fieldsStr += $"<externalid><![CDATA[{tc.ExternalId}]]></externalid>";
             fieldsStr += $"<version><![CDATA[{tc.Version}]]></version>";
@@ -183,16 +198,16 @@ namespace ConvertLibrary
 
         public string BuildStr(Dictionary<int, List<TestSuite>> tsDic)
         {
-            for (int i = tsDic.Keys.Count; i > 1 ; i--)
+            for (int i = tsDic.Keys.Count; i > 1; i--)
             {
                 foreach (TestSuite suite in tsDic[i])
                 {
                     //TODO 存在测试套里面既有测试用例又有测试套的情况
-                    string parenName = suite.NameHierarchy.ToArray()[i-2];
+                    string parenName = suite.NameHierarchy.ToArray()[i - 2];
                     string testStr = string.Empty;
                     testStr = TestSuiteToStr(suite);
 
-                    foreach (TestSuite testSuite in tsDic[i-1])
+                    foreach (TestSuite testSuite in tsDic[i - 1])
                     {
                         if (parenName.Equals(testSuite.Name))
                         {
@@ -208,6 +223,7 @@ namespace ConvertLibrary
             {
                 resultStr += this.TestSuiteToStr(testSuite);
             }
+            ProgressBarShow.ShowProgressValue(100);
 
             return resultStr;
         }
