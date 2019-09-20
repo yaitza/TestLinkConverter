@@ -5,3 +5,5 @@ bin/
 *.user
 /Setup/Setup/Express
 /Resource/TestCase - 副本.xlsx
+/TestLinkConverterSetup
+/TestLinkConverter/publish
