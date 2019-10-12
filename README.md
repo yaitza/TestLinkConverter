@@ -14,8 +14,6 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 
 ![pic1](/Resource/Image/pic11.png)
 
-2. 本次针对XML解析至解析了常规使用字段，未解析全部导出XML字段。
-
 ## Excel Convert To XML
 
 支持解析Excel的格式如下：
@@ -23,7 +21,8 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 
 **注意:**   
 
-2. 支持Excel多Sheet页转换，每个Sheet页默认为一个测试套。
+1. 支持Excel多Sheet页转换，每个Sheet页默认为一个测试套。
+2. 本次针对XML解析至解析了常规使用字段，未解析全部导出XML字段。
 
 ---
 ## 引用三方类库
@@ -42,8 +41,28 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 ### 3..Net FrameWork 4.5.2  
 ​	**下载地址：**	<https://www.microsoft.com/net/download/thank-you/net452-developer-pack>  
 
----
-#### 问题  
+## 参考引用
+#### 1. TestLink字段解析
+​	http://wangsx.cn/?p=648
+
+#### 2. Excel读写示例 
+​	http://blog.csdn.net/zzukun/article/details/50830439
+
+#### 3. EXE打包教程  
+​	http://www.cnblogs.com/yinsq/p/5254893.html
+
+​	https://blog.csdn.net/L120305q/article/details/98210048
+
+​	https://blog.csdn.net/DonetRen/article/details/88766135
+
+#### 4. C#中跨线程访问控件问题解决方案  
+​	http://blog.csdn.net/henreash/article/details/7789566
+
+#### 5. Excel解析采用开源库EPPlus  
+​	https://github.com/JanKallman/EPPlus
+
+#### 日志记录  
+
 1. 代码过程中以及环境设置中出现的相关问题**【已废弃，不再调用微软dll】**。
 
 > 1. 安装包安装，建议安装至C盘以外的系统盘。存在写入Excel文件时，没有权限等问题。    
@@ -65,20 +84,4 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 > ![pic2](/Resource/Image/pic2.png)
 
 
-
-## 临时记录
-### 1. TestLink字段解析
-​	http://wangsx.cn/?p=648
-
-### 2. Excel读写示例 
-​	http://blog.csdn.net/zzukun/article/details/50830439
-
-### 3. EXE打包教程  
-​	http://www.cnblogs.com/yinsq/p/5254893.html
-
-### 4. C#中跨线程访问控件问题解决方案  
-​	http://blog.csdn.net/henreash/article/details/7789566
-
-### 5. Excel解析采用开源库EPPlus  
-​	https://github.com/JanKallman/EPPlus
 
