@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading;
 using ConvertModel;
 using log4net;
 using OfficeOpenXml;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 using OfficeOpenXml.Style;
 
 namespace ConvertLibrary
@@ -15,10 +17,13 @@ namespace ConvertLibrary
     {
         private readonly ILog _logger = LogManager.GetLogger(typeof(ExcelHandler));
         private readonly List<TestCase> _sourceTestCases;
+        private readonly bool _isShowStepsNo;
 
+        [Obsolete]
         public ExcelHandler(List<TestCase> outputCases)
         {
             this._sourceTestCases = outputCases;
+            _isShowStepsNo = ConfigurationSettings.AppSettings["isShowStepsNo"].Equals("true");
         }
 
         /// <summary>
@@ -88,8 +93,18 @@ namespace ConvertLibrary
                 {
                     foreach (var step in node.TestSteps)
                     {
-                        workSheet.Cells[iFlag, maxHierarchy + 8].Value = CommonHelper.DelTags(step.Actions);
-                        workSheet.Cells[iFlag, maxHierarchy + 9].Value = CommonHelper.DelTags(step.ExpectedResults);
+                        if (this._isShowStepsNo)
+                        {
+                            workSheet.Cells[iFlag, maxHierarchy + 8].Value = node.TestSteps.IndexOf(step) + 1;
+                            workSheet.Cells[iFlag, maxHierarchy + 9].Value = CommonHelper.DelTags(step.Actions);
+                            workSheet.Cells[iFlag, maxHierarchy + 10].Value = CommonHelper.DelTags(step.ExpectedResults);
+                        }
+                        else
+                        {
+                            workSheet.Cells[iFlag, maxHierarchy + 8].Value = CommonHelper.DelTags(step.Actions);
+                            workSheet.Cells[iFlag, maxHierarchy + 9].Value = CommonHelper.DelTags(step.ExpectedResults);
+                        }
+                       
                         iFlag++;
                         iMerge++;
                     }
@@ -120,12 +135,27 @@ namespace ConvertLibrary
             ws.Cells[1, maxHierarchy + 5].Value = "执行方式";
             ws.Cells[1, maxHierarchy + 6].Value = "用例摘要";
             ws.Cells[1, maxHierarchy + 7].Value = "预置条件";
-            ws.Cells[1, maxHierarchy + 8].Value = "操作步骤";
-            ws.Cells[1, maxHierarchy + 9].Value = "期望结果";
-            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.BackgroundColor.SetColor(Color.CornflowerBlue);
-            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Color.SetColor(Color.White);
-            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Bold = true;
+            if (this._isShowStepsNo)
+            {
+                ws.Cells[1, maxHierarchy + 8].Value = "序号";
+                ws.Cells[1, maxHierarchy + 9].Value = "操作步骤";
+                ws.Cells[1, maxHierarchy + 10].Value = "期望结果";
+                ws.Cells[1, 1, 1, maxHierarchy + 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[1, 1, 1, maxHierarchy + 10].Style.Fill.BackgroundColor.SetColor(Color.CornflowerBlue);
+                ws.Cells[1, 1, 1, maxHierarchy + 10].Style.Font.Color.SetColor(Color.White);
+                ws.Cells[1, 1, 1, maxHierarchy + 10].Style.Font.Bold = true;
+            }
+            else
+            {
+                ws.Cells[1, maxHierarchy + 8].Value = "操作步骤";
+                ws.Cells[1, maxHierarchy + 9].Value = "期望结果";
+                ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.BackgroundColor.SetColor(Color.CornflowerBlue);
+                ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Color.SetColor(Color.White);
+                ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Bold = true;
+            }
+            
+            
         }
 
         /// <summary>
