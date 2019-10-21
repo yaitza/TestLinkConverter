@@ -35,6 +35,12 @@
     <Reference Include="EPPlus">
       <HintPath>..\DLL\EPPlus.dll</HintPath>
     </Reference>
+    <Reference Include="GoogleAnalyticsTracker.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=04ab204e84b117c0, processorArchitecture=MSIL">
+      <HintPath>..\packages\GoogleAnalyticsTracker.Core.5.0.0\lib\portable45-net45+win8+wpa81\GoogleAnalyticsTracker.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleAnalyticsTracker.Simple, Version=5.0.0.0, Culture=neutral, PublicKeyToken=04ab204e84b117c0, processorArchitecture=MSIL">
+      <HintPath>..\packages\GoogleAnalyticsTracker.Simple.5.0.0\lib\portable45-net45+win8+wpa81\GoogleAnalyticsTracker.Simple.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\DLL\log4net.dll</HintPath>
@@ -74,6 +80,7 @@
     <Compile Include="ExcelAnalysisByEpplus.cs" />
     <Compile Include="ExcelAnalysis.cs" />
     <Compile Include="ExcelHandler.cs" />
+    <Compile Include="GoogleAnalyticsTracker.cs" />
     <Compile Include="OutputDisplay.cs" />
     <Compile Include="ProgressBarShow.cs" />
     <Compile Include="TestSuiteGenerator.cs" />
@@ -87,6 +94,9 @@
       <Project>{6C5EF48D-E57D-43E0-958B-AC8A136DC524}</Project>
       <Name>ConvertModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

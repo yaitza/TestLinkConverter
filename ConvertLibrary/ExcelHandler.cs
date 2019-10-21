@@ -93,18 +93,15 @@ namespace ConvertLibrary
                 {
                     foreach (var step in node.TestSteps)
                     {
+                        string stepNo = string.Empty;
                         if (this._isShowStepsNo)
                         {
-                            workSheet.Cells[iFlag, maxHierarchy + 8].Value = node.TestSteps.IndexOf(step) + 1;
-                            workSheet.Cells[iFlag, maxHierarchy + 9].Value = CommonHelper.DelTags(step.Actions);
-                            workSheet.Cells[iFlag, maxHierarchy + 10].Value = CommonHelper.DelTags(step.ExpectedResults);
+                            stepNo = $"{node.TestSteps.IndexOf(step) + 1}、";
                         }
-                        else
-                        {
-                            workSheet.Cells[iFlag, maxHierarchy + 8].Value = CommonHelper.DelTags(step.Actions);
-                            workSheet.Cells[iFlag, maxHierarchy + 9].Value = CommonHelper.DelTags(step.ExpectedResults);
-                        }
-                       
+
+                        workSheet.Cells[iFlag, maxHierarchy + 8].Value = $"{stepNo}{CommonHelper.DelTags(step.Actions)}";
+                        workSheet.Cells[iFlag, maxHierarchy + 9].Value = $"{stepNo}{CommonHelper.DelTags(step.ExpectedResults)}";
+
                         iFlag++;
                         iMerge++;
                     }
@@ -135,27 +132,13 @@ namespace ConvertLibrary
             ws.Cells[1, maxHierarchy + 5].Value = "执行方式";
             ws.Cells[1, maxHierarchy + 6].Value = "用例摘要";
             ws.Cells[1, maxHierarchy + 7].Value = "预置条件";
-            if (this._isShowStepsNo)
-            {
-                ws.Cells[1, maxHierarchy + 8].Value = "序号";
-                ws.Cells[1, maxHierarchy + 9].Value = "操作步骤";
-                ws.Cells[1, maxHierarchy + 10].Value = "期望结果";
-                ws.Cells[1, 1, 1, maxHierarchy + 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[1, 1, 1, maxHierarchy + 10].Style.Fill.BackgroundColor.SetColor(Color.CornflowerBlue);
-                ws.Cells[1, 1, 1, maxHierarchy + 10].Style.Font.Color.SetColor(Color.White);
-                ws.Cells[1, 1, 1, maxHierarchy + 10].Style.Font.Bold = true;
-            }
-            else
-            {
-                ws.Cells[1, maxHierarchy + 8].Value = "操作步骤";
-                ws.Cells[1, maxHierarchy + 9].Value = "期望结果";
-                ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.BackgroundColor.SetColor(Color.CornflowerBlue);
-                ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Color.SetColor(Color.White);
-                ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Bold = true;
-            }
-            
-            
+            ws.Cells[1, maxHierarchy + 8].Value = "操作步骤";
+            ws.Cells[1, maxHierarchy + 9].Value = "期望结果";
+            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.BackgroundColor.SetColor(Color.CornflowerBlue);
+            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Color.SetColor(Color.White);
+            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Bold = true;
+        
         }
 
         /// <summary>

@@ -30,11 +30,13 @@ namespace TestLinkConverter
             InitializeComponent();
             OutputDisplay.ShowMethod += this.OutputRichTextBox;
             ProgressBarShow.SetProgressValue += this.SetProgressValue;
+            GoogleAnalyticsTracker.Tracker("Form", "Initialize");
         }
 
 
         private void startBtn_Click(object sender, EventArgs e)
         {
+            GoogleAnalyticsTracker.Tracker("Form", "Start");
             this._starTime = DateTime.Now;
             CommonHelper.KillExcelProcess();
             if (this.FileChecked(filePathTb.Text)) return;
@@ -82,6 +84,7 @@ namespace TestLinkConverter
         /// <param name="fileDir">文件路径</param>
         private void ExcelToXml(string fileDir)
         {
+            GoogleAnalyticsTracker.Tracker("Work", "ExcelToXml");
             try
             {
                 ExcelAnalysisByEpplus excelAnalysis = new ExcelAnalysisByEpplus(fileDir);
@@ -107,6 +110,7 @@ namespace TestLinkConverter
         /// <param name="fileDir">文件路径</param>
         private void XmlToExcel(string fileDir)
         {
+            GoogleAnalyticsTracker.Tracker("Work", "XmlToExcel");
             try
             {
                 XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
