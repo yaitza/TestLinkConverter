@@ -26,19 +26,19 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 
 ## 用户手册
 
-1. 测试用例步骤以及测试结果带序号可配置
+1. **测试用例步骤以及测试结果带序号可配置**
 
    文件目录下：.\TestLinkConverterSetup\TestLinkConverter.exe.config
 
    ![user-guide-001](/Resource/Image/user-guide-001.png)
 
-[^true:]: 为打开测试用例以及测试结果添加步骤序号。
+   **true:**为打开测试用例以及测试结果添加步骤序号。
 
-![user-guide-002](/Resource/Image/user-guide-002.png)
+   ![user-guide-002](/Resource/Image/user-guide-002.png)
 
-[^false]: 为关闭测试用例以及测试结果添加步骤序号，默认为false。
+   **false:**为关闭测试用例以及测试结果添加步骤序号，默认为false。
 
-![user-guide-003](/Resource/Image/user-guide-003.png)
+   ![user-guide-003](/Resource/Image/user-guide-003.png)
 
 
 
