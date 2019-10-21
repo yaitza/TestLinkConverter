@@ -168,6 +168,7 @@ namespace TestLinkConverter
 
         private void DonateLab_Click(object sender, EventArgs e)
         {
+            GoogleAnalyticsTracker.Tracker("Form", "Donate");
             System.Windows.Forms.Form donateForm = new DonateForm();
             donateForm.Show();
         }
