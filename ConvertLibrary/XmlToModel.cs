@@ -66,10 +66,10 @@ namespace ConvertLibrary
                         tc.Version = xmlNode.InnerText;
                         break;
                     case "summary":
-                        tc.Summary = CommonHelper.DelTags(xmlNode.InnerText);
+                        tc.Summary = xmlNode.InnerText;
                         break;
                     case "preconditions":
-                        tc.Preconditions = CommonHelper.DelTags(xmlNode.InnerText);
+                        tc.Preconditions = xmlNode.InnerText;
                         break;
                     case "execution_type":
                         tc.ExecutionType = CommonHelper.StrToExecType(xmlNode.InnerText);

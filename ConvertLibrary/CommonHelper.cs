@@ -1,4 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using ConvertModel;
 
@@ -22,11 +26,11 @@ namespace ConvertLibrary
         /// 删除HTML标签以及删除字符串换行符
         /// </summary>
         /// <param name="sourceStr">源字符串</param>
+        /// <param name="isShowLines">是否显示换行符</param>
         /// <returns>处理后字符串</returns>
         public static string DelTags(string sourceStr)
         {
-            string newStr = DelHtmlTags(sourceStr);
-            return DelLinsTags(newStr);
+            return DelHtmlTags(sourceStr);
         }
 
 
@@ -54,15 +58,22 @@ namespace ConvertLibrary
             return newStr;
         }
 
-        /// <summary>
-        /// 删除字符串中换行符
-        /// </summary>
-        /// <param name="sourceStr">源字符串</param>
-        /// <returns>处理后字符串</returns>
-        private static string DelLinsTags(string sourceStr)
+        public static string GenerateNoByLineBreak(string sourceStr)
         {
-            string newStr = sourceStr.Replace("\n", "").Replace("\r", "").Replace("\t","");
-            return newStr;
+            string strResult = string.Empty;
+            string[] strList = sourceStr.Split(new[] { "<li>" }, StringSplitOptions.None);
+            int iFlag = 1;
+            foreach (string s in strList)
+            {
+                if (string.IsNullOrWhiteSpace(DelHtmlTags(s)))
+                {
+                    continue;
+                }
+                strResult += $"{iFlag}、{DelHtmlTags(s)}{Environment.NewLine}";
+                iFlag++;
+            }
+
+            return strResult.TrimEnd((char[])"\n\r".ToCharArray());
         }
 
         /// <summary>
