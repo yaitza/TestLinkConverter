@@ -175,6 +175,7 @@ namespace TestLinkConverter
 
         private void downloadlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            GoogleAnalyticsTracker.Tracker("Form", "DownloadTemplate");
             System.Diagnostics.Process.Start("IExplore.exe", "https://raw.githubusercontent.com/yaitza/TestLinkConverter/master/Resource/TestCaseTemplate.xlsx");
         }
 
@@ -208,6 +209,7 @@ namespace TestLinkConverter
 
         private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            GoogleAnalyticsTracker.Tracker("Form", "ClickHomeSiteUrl");
             System.Diagnostics.Process.Start("https://github.com/yaitza/TestLinkConverter/");
         }
     }
