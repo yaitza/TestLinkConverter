@@ -207,12 +207,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6E47E232BB8D455C811F7A27F3965046"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_6EAFEA7521CF0BD3668AA6E6755A38D6"
         "OwnerKey" = "8:_73A0CEB307DE410DBF14820327759CDF"
         "MsmSig" = "8:_UNDEFINED"
@@ -902,6 +896,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
         "Release"
@@ -1737,26 +1739,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6E47E232BB8D455C811F7A27F3965046"
-            {
-            "SourcePath" = "8:..\\TestLinkConverter\\favicon.ico"
-            "TargetName" = "8:favicon.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_CB866B40408B456E87EC4568101014B9"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6EAFEA7521CF0BD3668AA6E6755A38D6"
@@ -3063,7 +3045,7 @@
             "Target" = "8:_73A0CEB307DE410DBF14820327759CDF"
             "Folder" = "8:_189019B4722547D88C555E573A3929C0"
             "WorkingFolder" = "8:_CB866B40408B456E87EC4568101014B9"
-            "Icon" = "8:_6E47E232BB8D455C811F7A27F3965046"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }
@@ -3467,7 +3449,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_73A0CEB307DE410DBF14820327759CDF"
             {
-            "SourcePath" = "8:..\\TestLinkConverter\\obj\\Release\\TestLinkConverter.exe"
+            "SourcePath" = "8:..\\TestLinkConverter\\obj\\Debug\\TestLinkConverter.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CB866B40408B456E87EC4568101014B9"
