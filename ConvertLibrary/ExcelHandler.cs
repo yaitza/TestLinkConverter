@@ -157,7 +157,7 @@ namespace ConvertLibrary
             ws.Cells[1, maxHierarchy + 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, maxHierarchy + 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             ws.Column(maxHierarchy + 6).Width = 10;
-            ws.Cells[1, maxHierarchy + 7].Value = "测试机型";
+            ws.Cells[1, maxHierarchy + 7].Value = "适用机型";
             ws.Cells[1, maxHierarchy + 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, maxHierarchy + 7].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             ws.Column(maxHierarchy + 7).Width = 10;

@@ -170,7 +170,7 @@ namespace ConvertLibrary
                         continue;
                     }
 
-                    if (titleName.Contains("测试机型"))
+                    if (titleName.Contains("机型"))
                     {
                         if (cellObject != null)
                         {
