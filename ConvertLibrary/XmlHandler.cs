@@ -174,12 +174,27 @@ namespace ConvertLibrary
                 tsStr += "</step>";
             }
             fieldsStr += $"<steps>{tsStr}</steps>";
-            String keywordStr = $"<keywords>";
-            foreach (string keyword in tc.Keywords)
+            if (tc.Keywords != null)
             {
-                keywordStr += $"<keyword name=\"{keyword}\"><notes><![CDATA[]]></notes></keyword>";
+                String keywordStr = $"<keywords>";
+                foreach (string keyword in tc.Keywords)
+                {
+                    keywordStr += $"<keyword name=\"{keyword}\"><notes><![CDATA[]]></notes></keyword>";
+                }
+                fieldsStr += keywordStr + "</keywords>";
             }
-            fieldsStr += keywordStr + "</keywords>";
+
+            if (tc.CustomFileds != null && tc.CustomFileds.Count > 0)
+            {
+                String customFileds = $"<custom_fields>";
+                foreach (KeyValuePair<string, string> tcCustomFiled in tc.CustomFileds)
+                {
+                    customFileds +=$"<custom_field><name><![CDATA[{tcCustomFiled.Key}]]></name><value><![CDATA[{tcCustomFiled.Value}]]></value></custom_field>";
+                }
+
+                fieldsStr += customFileds + "</custom_fields>";
+            }
+            
             string tcStr = $"<testcase name=\"{tc.Name}\">{fieldsStr}</testcase>";
             return tcStr;
         }

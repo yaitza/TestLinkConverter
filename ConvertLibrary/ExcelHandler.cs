@@ -8,7 +8,6 @@ using System.Threading;
 using ConvertModel;
 using log4net;
 using OfficeOpenXml;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 using OfficeOpenXml.Style;
 
 namespace ConvertLibrary
@@ -58,6 +57,7 @@ namespace ConvertLibrary
             BuildTemplate(workSheet, maxHierarchy);
 
             int iFlag = 2;
+            List<string> testSuitNames = new List<string>();
             foreach (TestCase node in this._sourceTestCases)
             {
                 if (node.Name == null && node.TestSteps == null)
@@ -67,39 +67,26 @@ namespace ConvertLibrary
                 OutputDisplay.ShowMessage(node.Name, Color.Chartreuse);
                 ProgressBarShow.ShowProgressValue(this._sourceTestCases.IndexOf(node) * 100 / this._sourceTestCases.Count);
                 workSheet.Row(iFlag).CustomHeight = true;
-                workSheet.Cells[iFlag, 1].Value = node.ExternalId;
 
                 for (int i = 0; i < node.TestCaseHierarchy.Count; i++)
                 {
-                    workSheet.Cells[iFlag, i + 2].Value = node.TestCaseHierarchy.ToArray()[i];
-                }
-
-                workSheet.Cells[iFlag, maxHierarchy + 2].Value = CommonHelper.DelTags(node.Name);
-                string keywords = string.Empty;
-                if (node.Keywords != null)
-                {
-                    foreach (string keyword in node.Keywords)
+                    if (testSuitNames.Contains(node.TestCaseHierarchy.ToArray()[i]))
                     {
-                        keywords = keywords + keyword + Environment.NewLine;
+                        continue;
                     }
+                    else
+                    {
+                        workSheet.Cells[iFlag, i + 1].Value = node.TestCaseHierarchy.ToArray()[i];
+                        testSuitNames.Insert(i, node.TestCaseHierarchy.ToArray()[i]);
+                    }
+                    iFlag++;
                 }
-                workSheet.Cells[iFlag, maxHierarchy + 3].Value = keywords.TrimEnd((char[])"\n\r".ToCharArray());
-                workSheet.Cells[iFlag, maxHierarchy + 4].Value = node.Importance.ToString();
-                workSheet.Cells[iFlag, maxHierarchy + 5].Value = node.ExecutionType.ToString();
 
-                if (this._isShowStepsNo)
-                {
-                    workSheet.Cells[iFlag, maxHierarchy + 6].Value = CommonHelper.GenerateNoByLineBreak(node.Summary);
-                    workSheet.Cells[iFlag, maxHierarchy + 7].Value =CommonHelper.GenerateNoByLineBreak(node.Preconditions);
-                }
-                else
-                {
-                    workSheet.Cells[iFlag, maxHierarchy + 6].Value = CommonHelper.DelTags(node.Summary);
-                    workSheet.Cells[iFlag, maxHierarchy + 7].Value = CommonHelper.DelTags(node.Preconditions);
-                }
+                workSheet.Cells[iFlag, maxHierarchy + 1].Value = node.ExternalId;
+                workSheet.Cells[iFlag, maxHierarchy + 2].Value = CommonHelper.DelTags(node.Name);
+                workSheet.Cells[iFlag, maxHierarchy + 3].Value = CommonHelper.GenerateNoByLineBreak(node.Preconditions);
 
                 int iMerge = 0;
-
                 if (node.TestSteps != null && node.TestSteps.Count != 0)
                 {
                     foreach (var step in node.TestSteps)
@@ -110,8 +97,8 @@ namespace ConvertLibrary
                             stepNo = $"{node.TestSteps.IndexOf(step) + 1}、";
                         }
 
-                        workSheet.Cells[iFlag, maxHierarchy + 8].Value = $"{stepNo}{CommonHelper.DelTags(step.Actions)}";
-                        workSheet.Cells[iFlag, maxHierarchy + 9].Value = $"{stepNo}{CommonHelper.DelTags(step.ExpectedResults)}";
+                        workSheet.Cells[iFlag, maxHierarchy + 4].Value = $"{stepNo}{CommonHelper.DelTags(step.Actions)}";
+                        workSheet.Cells[iFlag, maxHierarchy + 5].Value = $"{stepNo}{CommonHelper.DelTags(step.ExpectedResults)}";
 
                         iFlag++;
                         iMerge++;
@@ -122,6 +109,13 @@ namespace ConvertLibrary
                     iFlag++;
                     iMerge++;
                 }
+
+                workSheet.Cells[iFlag, maxHierarchy + 6].Value = node.CustomFileds.First().Value;
+                workSheet.Cells[iFlag, maxHierarchy + 7].Value = node.CustomFileds.Last().Value;
+                workSheet.Cells[iFlag, maxHierarchy + 8].Value = node.Importance.ToString();
+                workSheet.Cells[iFlag, maxHierarchy + 9].Value = node.Requirement;
+
+
                 this.MergeCells(workSheet, iMerge, iFlag - iMerge, maxHierarchy+9);
                 Thread.Sleep(50);
             }
@@ -131,61 +125,58 @@ namespace ConvertLibrary
         }
         private void BuildTemplate(ExcelWorksheet ws, int maxHierarchy)
         {
-            ws.Cells[1, 1].Value = "用例编号";
-            // 水平居中
-            ws.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            // 垂直居中
-            ws.Cells[1, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            // 设置列宽为10mm
-            ws.Column(1).Width = 10;
             for (int i = 1; i <= maxHierarchy; i++)
             {
-                ws.Cells[1, i + 1].Value = NumberToChinese(i.ToString()) + "级模块";
-                ws.Cells[1, i + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                ws.Cells[1, i + 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                ws.Column(i + 1).Width = 10;
+                ws.Cells[1, i].Value = NumberToChinese(i.ToString()) + "级";
+                ws.Cells[1, i].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells[1, i].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                ws.Column(i).Width = 10;
             }
 
-            ws.Cells[1, maxHierarchy + 2].Value = "用例名称";
+            ws.Cells[1, maxHierarchy + 1].Value = "用例编号";
+            ws.Cells[1, maxHierarchy + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells[1, maxHierarchy + 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            ws.Column(maxHierarchy + 1).Width = 10;
+            ws.Cells[1, maxHierarchy + 2].Value = "用例标题";
             ws.Cells[1, maxHierarchy + 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, maxHierarchy + 2].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             ws.Column(maxHierarchy + 2).Width = 30;
-            ws.Cells[1, maxHierarchy + 3].Value = "关键字";
+            ws.Cells[1, maxHierarchy + 3].Value = "预置条件";
             ws.Cells[1, maxHierarchy + 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, maxHierarchy + 3].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            ws.Column(maxHierarchy + 3).Width = 8;
-            ws.Cells[1, maxHierarchy + 4].Value = "用例等级";
+            ws.Column(maxHierarchy + 3).Width = 20;
+            ws.Cells[1, maxHierarchy + 4].Value = "操作步骤";
             ws.Cells[1, maxHierarchy + 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, maxHierarchy + 4].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            ws.Column(maxHierarchy + 4).Width = 10;
-            ws.Cells[1, maxHierarchy + 5].Value = "执行方式";
+            ws.Column(maxHierarchy + 4).Width = 30;
+            ws.Cells[1, maxHierarchy + 5].Value = "期望结果";
             ws.Cells[1, maxHierarchy + 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, maxHierarchy + 5].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            ws.Column(maxHierarchy + 5).Width = 10;
-            ws.Cells[1, maxHierarchy + 6].Value = "用例摘要";
+            ws.Column(maxHierarchy + 5).Width = 20;
+            ws.Cells[1, maxHierarchy + 6].Value = "测试环境";
             ws.Cells[1, maxHierarchy + 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, maxHierarchy + 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            ws.Column(maxHierarchy + 6).Width = 30;
-            ws.Cells[1, maxHierarchy + 7].Value = "预置条件";
+            ws.Column(maxHierarchy + 6).Width = 10;
+            ws.Cells[1, maxHierarchy + 7].Value = "测试机型";
             ws.Cells[1, maxHierarchy + 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, maxHierarchy + 7].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            ws.Column(maxHierarchy + 7).Width = 30;
-            ws.Cells[1, maxHierarchy + 8].Value = "操作步骤";
+            ws.Column(maxHierarchy + 7).Width = 10;
+            ws.Cells[1, maxHierarchy + 8].Value = "优先级";
             ws.Cells[1, maxHierarchy + 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, maxHierarchy + 8].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            ws.Column(maxHierarchy + 8).Width = 40;
-            ws.Cells[1, maxHierarchy + 9].Value = "期望结果";
+            ws.Column(maxHierarchy + 8).Width = 10;
+            ws.Cells[1, maxHierarchy + 9].Value = "对于需求编号";
             ws.Cells[1, maxHierarchy + 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, maxHierarchy + 9].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            ws.Column(maxHierarchy + 9).Width = 30;
-            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.BackgroundColor.SetColor(Color.CornflowerBlue);
-            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Color.SetColor(Color.White);
-            ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Bold = true;
+            ws.Column(maxHierarchy + 9).Width = 10;
+            //ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            //ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Fill.BackgroundColor.SetColor(Color.CornflowerBlue);
+            //ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Color.SetColor(Color.White);
+            //ws.Cells[1, 1, 1, maxHierarchy + 9].Style.Font.Bold = true;
 
             // 单元格自适应大小。
-            ws.Cells.Style.ShrinkToFit = true;
-            ws.Cells.Style.WrapText = true;
+            //ws.Cells.Style.ShrinkToFit = true;
+            //ws.Cells.Style.WrapText = true;
 
         }
 

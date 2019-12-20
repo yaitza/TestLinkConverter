@@ -5,6 +5,7 @@ using OfficeOpenXml;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using log4net;
 using ConvertLibrary;
 using ConvertModel;
@@ -86,19 +87,7 @@ namespace ConvertLibrary
                 return tcList;
             }
 
-            for(int i=1; i < eWorksheet.Dimension.End.Row; i++)
-            {
-                if(eWorksheet.Cells[i,1].Value != null || eWorksheet.Cells[i,1].Text != string.Empty ||
-                    !eWorksheet.Cells[i, 1].Text.Equals("END"))
-                {
-                    continue;
-                }
-                usedRows = i;
-                break;
-            }
-
-            TestCase tc = new TestCase();
-
+            String[] testSuitesName = new string[10];
             for (int i = 2; i <= usedRows; i++)
             {
                 var currentCell = eWorksheet.Cells[i, 1];
@@ -108,61 +97,130 @@ namespace ConvertLibrary
                     eWorksheet.Cells[i, j].Style.Numberformat.Format = "@";
                 }
 
-                if (currentCell.Value == null)
+                TestCase tcTemp = new TestCase();
+                TestStep ts = new TestStep { StepNumber = 1, ExecutionType = ExecType.手动 };
+                Dictionary<String, String> custormFiled = new Dictionary<string, string>();
+                for (int j = 1; j <= usedCols; j++)
                 {
-                    TestStep ts = new TestStep
+                    String titleName = eWorksheet.Cells[1, j].Value.ToString();
+                    var cellObject = eWorksheet.Cells[i, j].Value;
+                    if (titleName.Contains("级") && cellObject != null && !titleName.Contains("优先") )
                     {
-                        StepNumber = tc.TestSteps.Count + 1,
-                        ExecutionType = ExecType.手动,
-                        Actions = eWorksheet.Cells[i, usedCols-1].Text,
-                        ExpectedResults = eWorksheet.Cells[i, usedCols].Text
-                    };
-
-                    tc.TestSteps.Add(ts);
-                    continue;
-                }
-                else
-                {
-                    if(tc.ExternalId != null)
-                    {
-                        tcList.Add(tc);
+                        testSuitesName[j-1] = cellObject.ToString();
+                        continue;
                     }
 
-                    List<string> testSuitesName = new List<string>();
-                    if (usedCols > 9)
+
+                    if (titleName.Contains("用例编号"))
                     {
-                        for (int j = 1; j <= usedCols-9; j++)
+                        if (cellObject != null)
                         {
-                            if (eWorksheet.Cells[i, j + 1].Value != null)
-                            {
-                                testSuitesName.Add(eWorksheet.Cells[i, j+1].Text);
-                            }
+                            tcTemp.ExternalId =
+                                string.Format($"{cellObject.ToString()}_{new Random().Next(0, 10000)}");
+                        }
+                        continue;
+                    }
+
+                    if (titleName.Contains("用例标题"))
+                    {
+                        if (cellObject != null)
+                        {
+                            tcTemp.Name = cellObject.ToString();
+                            continue;
                         }
                     }
 
-                    tc = new TestCase
+                    if (titleName.Contains("预置条件"))
                     {
-                        ExternalId = string.Format($"{currentCell.Text}_{new Random().Next(0, 10000)}"),
-                        TestCaseHierarchy = testSuitesName,
-                        Name = eWorksheet.Cells[i, usedCols-7].Text,
-                        Keywords = eWorksheet.Cells[i, usedCols-6].Text.Split(',').ToList(),
-                        Importance = CommonHelper.StrToImportanceType(eWorksheet.Cells[i, usedCols-5].Text),
-                        ExecutionType = CommonHelper.StrToExecType(eWorksheet.Cells[i, usedCols-4].Text),
-                        Summary = eWorksheet.Cells[i, usedCols-3].Text,
-                        Preconditions = eWorksheet.Cells[i, usedCols-2].Text
-                    };
-                    
-                    TestStep tsOne = new TestStep
-                    {
-                        StepNumber = 1,
-                        ExecutionType = ExecType.手动,
-                        Actions = eWorksheet.Cells[i, usedCols-1].Text.ToString(),
-                        ExpectedResults = eWorksheet.Cells[i, usedCols].Text.ToString()
-                    };
+                        if (cellObject != null)
+                        {
+                            tcTemp.Preconditions = cellObject.ToString();
+                            continue;
+                        }
+                    }
 
-                    tc.TestSteps = new List<TestStep> {tsOne};
+                    if (titleName.Contains("操作步骤"))
+                    {
+                        if (cellObject != null)
+                        {
+                            ts.Actions = cellObject.ToString();
+                            continue;
+                        }
+                    }
+
+                    if (titleName.Contains("期望结果"))
+                    {
+                        if (cellObject != null)
+                        {
+                            ts.ExpectedResults = cellObject.ToString();
+                            continue;
+                        }
+                    }
+
+                    if (titleName.Contains("测试环境"))
+                    {
+                        if (cellObject != null)
+                        {
+                            custormFiled.Add(titleName, cellObject.ToString());
+                        }
+                        else
+                        {
+                            custormFiled.Add(titleName, String.Empty);
+                        }
+                        continue;
+                    }
+
+                    if (titleName.Contains("测试机型"))
+                    {
+                        if (cellObject != null)
+                        {
+                            custormFiled.Add(titleName, cellObject.ToString());
+                        }
+                        else
+                        {
+                            custormFiled.Add(titleName, String.Empty);
+                        }
+                        continue;
+                    }
+
+                    if (titleName.Contains("优先级"))
+                    {
+                        if (cellObject != null)
+                        {
+                            tcTemp.Importance = CommonHelper.StrToImportanceType(cellObject.ToString());
+                        }
+                        continue;
+                    }
+
+                    if (titleName.Contains("需求编号"))
+                    {
+                        if (cellObject != null)
+                        {
+                            tcTemp.Requirement = cellObject.ToString();
+                        }
+                    }
                 }
+                tcTemp.TestSteps = new List<TestStep> {ts};
+                tcTemp.CustomFileds = custormFiled;
+
+                List<String> testSuitesNameList = new List<String>();
+                foreach (string s in testSuitesName)
+                {
+                    if (!String.IsNullOrEmpty(s))
+                    {
+                        testSuitesNameList.Add(s);
+                    }
+                }
+                tcTemp.TestCaseHierarchy = testSuitesNameList;
+        
+                if (String.IsNullOrEmpty(tcTemp.Name))
+                {
+                    continue;
+                }
+
+                tcList.Add(tcTemp);
             }
+            
 
             return tcList;
         }

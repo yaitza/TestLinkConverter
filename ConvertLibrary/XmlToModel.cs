@@ -98,6 +98,29 @@ namespace ConvertLibrary
                             if (childNode.Attributes != null) tc.Keywords.Add(childNode.Attributes["name"].Value);
                         }
                         break;
+                    case "custom_fields":
+                        tc.CustomFileds = new Dictionary<string, string>();
+                        foreach (XmlNode childNode in xmlNode.ChildNodes)
+                        {
+                            string name=string.Empty, value=string.Empty;
+                            foreach (XmlNode nodeTmp in childNode.ChildNodes)
+                            {
+                                switch (nodeTmp.Name)
+                                {
+                                    case "name":
+                                        name = nodeTmp.InnerText;
+                                        break;
+                                    case "value":
+                                        value = nodeTmp.InnerText;
+                                        break;
+                                    default:
+                                        break;
+
+                                }
+                            }
+                            tc.CustomFileds.Add(name, value);
+                        }
+                        break;
                     case "requirement":
                         tc.Requirement = xmlNode.InnerText;
                         break;

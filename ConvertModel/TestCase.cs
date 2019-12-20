@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ConvertModel
 {
@@ -78,5 +79,7 @@ namespace ConvertModel
         /// 测试用例测试步骤
         /// </summary>
         public List<TestStep> TestSteps { get; set; } 
+
+        public Dictionary<String, String> CustomFileds { get; set; }
     }
 }
