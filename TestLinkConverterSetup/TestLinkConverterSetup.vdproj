@@ -902,6 +902,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
         "Release"
@@ -1394,7 +1402,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -2375,7 +2383,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -2931,24 +2939,24 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TestLinkConverterSetup"
-        "ProductCode" = "8:{0EA78D42-2883-452F-B462-51E55551E9EB}"
-        "PackageCode" = "8:{709D6E9B-C0EC-46FA-A3B1-9E275D99B294}"
+        "ProductCode" = "8:{2268C9AC-A3E5-4577-9A47-828C625A40C5}"
+        "PackageCode" = "8:{69C66B1D-585B-44A1-9F8C-B8CEFC55E043}"
         "UpgradeCode" = "8:{B5656A0A-A83D-4AD2-A93C-1AB705CD4153}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:yzj306875630@outlook.com"
+        "ProductVersion" = "8:1.8.2"
+        "Manufacturer" = "8:yaitza@foxmail.com"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:TestLinkConverterSetup"
+        "Title" = "8:TestLinkConverter"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:yzj306875630@outlook.com"
-        "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:"
-        "ARPURLINFOABOUT" = "8:"
+        "ARPCONTACT" = "8:yaitza@foxmail.com"
+        "Keywords" = "8:TestLink"
+        "ARPCOMMENTS" = "8:TestLink Excel Xml Converter"
+        "ARPURLINFOABOUT" = "8:http://www.yaitza.cn/"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
@@ -3052,6 +3060,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_B4C1E85A5AB541D1A51E2FEF50DFD436"
+            {
+            "Name" = "8:TestLinkConverter"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_73A0CEB307DE410DBF14820327759CDF"
+            "Folder" = "8:_60A0B56D943C428BA480567E2F1DC6FB"
+            "WorkingFolder" = "8:_CB866B40408B456E87EC4568101014B9"
+            "Icon" = "8:_6E47E232BB8D455C811F7A27F3965046"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F817E7587CF6417FB7C2099F6321F3A7"
             {
             "Name" = "8:TestLinkConverter"
