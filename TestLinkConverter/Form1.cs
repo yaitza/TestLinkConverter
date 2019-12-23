@@ -30,13 +30,13 @@ namespace TestLinkConverter
             InitializeComponent();
             OutputDisplay.ShowMethod += this.OutputRichTextBox;
             ProgressBarShow.SetProgressValue += this.SetProgressValue;
-            GoogleAnalyticsTracker.Tracker("Form", "Initialize");
+            _ = GoogleAnalyticsTracker.Tracker("Form", "Initialize");
         }
 
 
         private void startBtn_Click(object sender, EventArgs e)
         {
-            GoogleAnalyticsTracker.Tracker("Form", "Start");
+            _ = GoogleAnalyticsTracker.Tracker("Form", "Start");
             this._starTime = DateTime.Now;
             CommonHelper.KillExcelProcess();
             if (this.FileChecked(filePathTb.Text)) return;
@@ -45,7 +45,7 @@ namespace TestLinkConverter
             this.timer.Start();
         }
 
-
+        [Obsolete]
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             string filePath = (string)e.Argument;
@@ -84,7 +84,7 @@ namespace TestLinkConverter
         /// <param name="fileDir">文件路径</param>
         private void ExcelToXml(string fileDir)
         {
-            GoogleAnalyticsTracker.Tracker("Work", "ExcelToXml");
+            _ = GoogleAnalyticsTracker.Tracker("Work", "ExcelToXml");
             try
             {
                 ExcelAnalysisByEpplus excelAnalysis = new ExcelAnalysisByEpplus(fileDir);
@@ -108,9 +108,10 @@ namespace TestLinkConverter
         /// XML转换为Excel
         /// </summary>
         /// <param name="fileDir">文件路径</param>
+        [Obsolete]
         private void XmlToExcel(string fileDir)
         {
-            GoogleAnalyticsTracker.Tracker("Work", "XmlToExcel");
+            _ = GoogleAnalyticsTracker.Tracker("Work", "XmlToExcel");
             try
             {
                 XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
@@ -163,19 +164,20 @@ namespace TestLinkConverter
 
         private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            _ = GoogleAnalyticsTracker.Tracker("Form", "ClickPersonalUrl");
             System.Diagnostics.Process.Start("https://yaitza.github.io/");
         }
 
         private void DonateLab_Click(object sender, EventArgs e)
         {
-            GoogleAnalyticsTracker.Tracker("Form", "Donate");
+            _ = GoogleAnalyticsTracker.Tracker("Form", "Donate");
             System.Windows.Forms.Form donateForm = new DonateForm();
             donateForm.Show();
         }
 
         private void downloadlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            GoogleAnalyticsTracker.Tracker("Form", "DownloadTemplate");
+            _ = GoogleAnalyticsTracker.Tracker("Form", "DownloadTemplate");
             System.Diagnostics.Process.Start("IExplore.exe", "https://raw.githubusercontent.com/yaitza/TestLinkConverter/master/Resource/TestCaseTemplate.xlsx");
         }
 
@@ -209,7 +211,7 @@ namespace TestLinkConverter
 
         private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            GoogleAnalyticsTracker.Tracker("Form", "ClickHomeSiteUrl");
+            _ = GoogleAnalyticsTracker.Tracker("Form", "ClickHomeSiteUrl");
             System.Diagnostics.Process.Start("https://github.com/yaitza/TestLinkConverter/");
         }
     }
