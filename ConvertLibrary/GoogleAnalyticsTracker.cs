@@ -15,9 +15,8 @@ namespace ConvertLibrary
     {
         public static async Task Tracker(string pageTitle, string pageUrl)
         {
-            AnalyticsSession aSession = new AnalyticsSession();
             SimpleTrackerEnvironment ste = new SimpleTrackerEnvironment(Environment.OSVersion.ToString(), Environment.OSVersion.VersionString, "");
-            using (SimpleTracker tracker = new SimpleTracker("UA-97814311-2", aSession, ste))
+            using (SimpleTracker tracker = new SimpleTracker("UA-97814311-2", ste))
             {
                 await tracker.TrackPageViewAsync(pageTitle, pageUrl, new Dictionary<int, string>());
             }
