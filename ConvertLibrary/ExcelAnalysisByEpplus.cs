@@ -134,7 +134,7 @@ namespace ConvertLibrary
                     {
                         if (cellObject != null)
                         {
-                            tcTemp.Preconditions = cellObject.ToString();
+                            tcTemp.Preconditions = CommonHelper.DelExcelTags(cellObject.ToString());
                             continue;
                         }
                     }
@@ -143,7 +143,7 @@ namespace ConvertLibrary
                     {
                         if (cellObject != null)
                         {
-                            ts.Actions = cellObject.ToString();
+                            ts.Actions = CommonHelper.DelExcelTags(cellObject.ToString());
                             continue;
                         }
                     }
@@ -152,7 +152,7 @@ namespace ConvertLibrary
                     {
                         if (cellObject != null)
                         {
-                            ts.ExpectedResults = cellObject.ToString();
+                            ts.ExpectedResults = CommonHelper.DelExcelTags(cellObject.ToString());
                             continue;
                         }
                     }

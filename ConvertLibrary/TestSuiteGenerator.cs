@@ -23,7 +23,7 @@ namespace ConvertLibrary
             {
                 foreach (TestCase @case in keyValuePair.Value)
                 {
-                    string suitenames = string.Empty;
+                    string suitenames = keyValuePair.Key;
                     @case.TestCaseHierarchy.ForEach(item => suitenames = suitenames + "|" + item);
                     if (!suiteTc.Keys.Contains(suitenames.TrimStart('|')))
                     {

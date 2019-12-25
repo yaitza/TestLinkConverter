@@ -58,6 +58,13 @@ namespace ConvertLibrary
             return newStr;
         }
 
+        public static string DelExcelTags(string sourceStr)
+        {
+            string newStr = Regex.Replace(sourceStr, " ", "");
+            newStr = Regex.Replace(newStr, @"([\n])+", "", RegexOptions.IgnoreCase);
+            return newStr;
+        }
+
         public static string GenerateNoByLineBreak(string sourceStr)
         {
             string strResult = string.Empty;
