@@ -46,7 +46,7 @@ namespace ConvertLibrary
                         tsDic.Add(i, new List<TestSuite>());
                     }
 
-                    if (!tsDic[i].Exists(item => item.Name == tsTemp.Name))
+                    if (!tsDic[i].Exists(item => item.UnqiueCode == tsTemp.UnqiueCode ))
                     {
                         tsDic[i].Add(tsTemp);
                     }
@@ -59,7 +59,7 @@ namespace ConvertLibrary
                     tsDic.Add(countSuite, new List<TestSuite>());
                 }
 
-                if (!tsDic[countSuite].Exists(item => item.Name == ts.Name))
+                if (!tsDic[countSuite].Exists(item => item.UnqiueCode == ts.UnqiueCode))
                 {
                     tsDic[countSuite].Add(ts);
                 }
