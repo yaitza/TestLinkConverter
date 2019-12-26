@@ -106,7 +106,13 @@ namespace ConvertLibrary
                     var cellObject = eWorksheet.Cells[i, j].Value;
                     if (titleName.Contains("级") && cellObject != null && !titleName.Contains("优先") )
                     {
+
                         testSuitesName[j-1] = cellObject.ToString();
+
+                        for (int k = j; k < testSuitesName.Length; k++)
+                        {
+                            testSuitesName[k] = null;
+                        }
                         continue;
                     }
 
