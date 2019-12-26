@@ -35,7 +35,6 @@ namespace TestLinkConverter
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.filePathTb = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.startBtn = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
@@ -45,6 +44,8 @@ namespace TestLinkConverter
             this.downloadlinkLabel = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.cB_testcase = new System.Windows.Forms.CheckBox();
+            this.cB_requirement = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // getFilePathBtn
@@ -83,16 +84,6 @@ namespace TestLinkConverter
             this.label1.Size = new System.Drawing.Size(82, 15);
             this.label1.TabIndex = 2;
             this.label1.Text = "文件路径：";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 26);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(450, 15);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "转换形式：支持xml和Excel互转，导入xml转为Excel；反之亦然。";
             // 
             // startBtn
             // 
@@ -191,11 +182,35 @@ namespace TestLinkConverter
             this.linkLabel1.Text = "fork us on GitHub";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1_LinkClicked);
             // 
+            // cB_testcase
+            // 
+            this.cB_testcase.AutoSize = true;
+            this.cB_testcase.Location = new System.Drawing.Point(21, 22);
+            this.cB_testcase.Name = "cB_testcase";
+            this.cB_testcase.Size = new System.Drawing.Size(93, 19);
+            this.cB_testcase.TabIndex = 16;
+            this.cB_testcase.Text = "TestCase";
+            this.cB_testcase.UseVisualStyleBackColor = true;
+            this.cB_testcase.Click += new System.EventHandler(this.CB_testcase_Click);
+            // 
+            // cB_requirement
+            // 
+            this.cB_requirement.AutoSize = true;
+            this.cB_requirement.Location = new System.Drawing.Point(169, 22);
+            this.cB_requirement.Name = "cB_requirement";
+            this.cB_requirement.Size = new System.Drawing.Size(117, 19);
+            this.cB_requirement.TabIndex = 17;
+            this.cB_requirement.Text = "Requirement";
+            this.cB_requirement.UseVisualStyleBackColor = true;
+            this.cB_requirement.Click += new System.EventHandler(this.CB_requirement_Click);
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(605, 545);
+            this.Controls.Add(this.cB_requirement);
+            this.Controls.Add(this.cB_testcase);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.downloadlinkLabel);
             this.Controls.Add(this.outputRtb);
@@ -203,7 +218,6 @@ namespace TestLinkConverter
             this.Controls.Add(this.linkLabel);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.startBtn);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.filePathTb);
             this.Controls.Add(this.getFilePathBtn);
@@ -221,7 +235,6 @@ namespace TestLinkConverter
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.TextBox filePathTb;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
@@ -231,6 +244,8 @@ namespace TestLinkConverter
         private System.Windows.Forms.LinkLabel downloadlinkLabel;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.CheckBox cB_testcase;
+        private System.Windows.Forms.CheckBox cB_requirement;
     }
 }
 

@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Words, Version=19.12.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resource\Dll\Aspose.Words.dll</HintPath>
+    </Reference>
     <Reference Include="EPPlus">
       <HintPath>..\DLL\EPPlus.dll</HintPath>
     </Reference>
@@ -84,6 +88,7 @@
     <Compile Include="OutputDisplay.cs" />
     <Compile Include="ProgressBarShow.cs" />
     <Compile Include="TestSuiteGenerator.cs" />
+    <Compile Include="XmlDocAnalysis.cs" />
     <Compile Include="XmlHandler.cs" />
     <Compile Include="XmlAnalysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

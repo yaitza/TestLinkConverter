@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using ConvertLibrary;
 using ConvertModel;
@@ -30,20 +31,40 @@ namespace TestLinkConverter
             InitializeComponent();
             OutputDisplay.ShowMethod += this.OutputRichTextBox;
             ProgressBarShow.SetProgressValue += this.SetProgressValue;
-            GoogleAnalyticsTracker.Tracker("specificForm", "Initialize");
+            _ = GoogleAnalyticsTracker.Tracker("specificForm", "Initialize");
         }
 
 
         private void startBtn_Click(object sender, EventArgs e)
         {
-            GoogleAnalyticsTracker.Tracker("specificForm", "Start");
-            this._starTime = DateTime.Now;
-            CommonHelper.KillExcelProcess();
             if (this.FileChecked(filePathTb.Text)) return;
+            if (cB_testcase.Checked)
+            {
+                this._starTime = DateTime.Now;
+                CommonHelper.KillExcelProcess();
+                this.backgroundWorker.RunWorkerAsync(filePathTb.Text);
+                this.timer.Start();
+            }
 
-            this.backgroundWorker.RunWorkerAsync(filePathTb.Text);
-            this.timer.Start();
+            if (cB_requirement.Checked)
+            {
+                Thread thread = new Thread(new ParameterizedThreadStart(XmlToDoc));
+                thread.Start(filePathTb.Text);
+            }
+            
         }
+
+        private void XmlToDoc(object obj)
+        {
+            string fileDir = obj as string;
+            _ = GoogleAnalyticsTracker.Tracker("specificWork", "XmlToDoc");
+            XmlDocAnalysis xda = new XmlDocAnalysis(fileDir);
+            List<Requirement> requirements = xda.XmlToDoc();
+            xda.WriteDoc(requirements);
+            string showMsg = $"转换需求数: {requirements.Count} .\n用例生成目录: {System.Environment.CurrentDirectory.ToString()}";
+            MessageBox.Show(showMsg);
+        }
+
 
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
@@ -84,7 +105,7 @@ namespace TestLinkConverter
         /// <param name="fileDir">文件路径</param>
         private void ExcelToXml(string fileDir)
         {
-            GoogleAnalyticsTracker.Tracker("specificWork", "ExcelToXml");
+            _ = GoogleAnalyticsTracker.Tracker("specificWork", "ExcelToXml");
             try
             {
                 ExcelAnalysisByEpplus excelAnalysis = new ExcelAnalysisByEpplus(fileDir);
@@ -110,7 +131,7 @@ namespace TestLinkConverter
         /// <param name="fileDir">文件路径</param>
         private void XmlToExcel(string fileDir)
         {
-            GoogleAnalyticsTracker.Tracker("specificWork", "XmlToExcel");
+            _ = GoogleAnalyticsTracker.Tracker("specificWork", "XmlToExcel");
             try
             {
                 XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
@@ -168,14 +189,14 @@ namespace TestLinkConverter
 
         private void DonateLab_Click(object sender, EventArgs e)
         {
-            GoogleAnalyticsTracker.Tracker("specificForm", "Donate");
+            _ = GoogleAnalyticsTracker.Tracker("specificForm", "Donate");
             System.Windows.Forms.Form donateForm = new DonateForm();
             donateForm.Show();
         }
 
         private void downloadlinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            GoogleAnalyticsTracker.Tracker("specificForm", "DownloadTemplate");
+            _ = GoogleAnalyticsTracker.Tracker("specificForm", "DownloadTemplate");
             System.Diagnostics.Process.Start("IExplore.exe", "https://raw.githubusercontent.com/yaitza/TestLinkConverter/master/Resource/TestCaseTemplate.xlsx");
         }
 
@@ -209,8 +230,21 @@ namespace TestLinkConverter
 
         private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            GoogleAnalyticsTracker.Tracker("specificForm", "ClickHomeSiteUrl");
+            _ = GoogleAnalyticsTracker.Tracker("specificForm", "ClickHomeSiteUrl");
             System.Diagnostics.Process.Start("https://github.com/yaitza/TestLinkConverter/");
+        }
+
+        private void CB_requirement_Click(object sender, EventArgs e)
+        {
+            this.cB_testcase.CheckState = CheckState.Unchecked; ;
+            this.cB_requirement.CheckState = CheckState.Checked;
+        }
+
+        private void CB_testcase_Click(object sender, EventArgs e)
+        {
+            this.cB_requirement.CheckState = CheckState.Unchecked;
+            this.cB_testcase.CheckState = CheckState.Checked;
+
         }
     }
 }

@@ -32,6 +32,7 @@
   <ItemGroup>
     <Compile Include="ExecType.cs" />
     <Compile Include="ImportanceType.cs" />
+    <Compile Include="Requirement.cs" />
     <Compile Include="StatusType.cs" />
     <Compile Include="TestCase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
