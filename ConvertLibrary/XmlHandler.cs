@@ -152,7 +152,7 @@ namespace ConvertLibrary
         {
             Thread.Sleep(20);
             _allCases.Remove(tc);
-            OutputDisplay.ShowMessage(tc.Name, Color.Chartreuse);
+            // 写文件时进行进度条展示
             ProgressBarShow.ShowProgressValue((_tcCount - _allCases.Count) * 100 / _tcCount);
             string fieldsStr = $"<node_order><![CDATA[{tc.NodeOrder}]]></node_order>";
             fieldsStr += $"<externalid><![CDATA[{tc.ExternalId}]]></externalid>";
@@ -212,19 +212,17 @@ namespace ConvertLibrary
                 resultStr += this.TestSuiteToStr(testSuite);
             }
             ProgressBarShow.ShowProgressValue(100);
-
             return resultStr;
         }
-        public void WriteXml2(string sTcs)
+        public void WriteXml2(string sTcs, string fileDir)
         {
-            string filePath = $"{System.Environment.CurrentDirectory}\\TestCase_{DateTime.Now.ToString("yyyyMMddHHmmss")}_tree.xml";
-            FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate);
+            FileStream fs = new FileStream(fileDir, FileMode.OpenOrCreate);
             using (StreamWriter sw = new StreamWriter(fs))
             {
                 sw.Write(sTcs);
                 sw.Close();
             }
-            OutputDisplay.ShowMessage(string.Format("文件保存路勁：{0}\n", filePath), Color.Azure);
+            OutputDisplay.ShowMessage(string.Format("文件保存路勁：{0}\n", fileDir), Color.Azure);
         }
     }
 }

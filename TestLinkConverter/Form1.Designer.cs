@@ -45,6 +45,7 @@ namespace TestLinkConverter
             this.downloadlinkLabel = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // getFilePathBtn
@@ -90,9 +91,9 @@ namespace TestLinkConverter
             this.label2.Location = new System.Drawing.Point(9, 26);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(450, 15);
+            this.label2.Size = new System.Drawing.Size(236, 15);
             this.label2.TabIndex = 5;
-            this.label2.Text = "转换形式：支持xml和Excel互转，导入xml转为Excel；反之亦然。";
+            this.label2.Text = "转换形式：支持xml和Excel互转。";
             // 
             // startBtn
             // 
@@ -231,6 +232,7 @@ namespace TestLinkConverter
         private System.Windows.Forms.LinkLabel downloadlinkLabel;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
 

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using ConvertLibrary;
 using ConvertModel;
@@ -24,7 +25,7 @@ namespace TestLinkConverter
 
         private delegate void SetPos(int ipos);
 
-
+        
         public Form()
         {
             InitializeComponent();
@@ -45,6 +46,7 @@ namespace TestLinkConverter
             this.timer.Start();
         }
 
+        [STAThread]
         [Obsolete]
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -59,14 +61,20 @@ namespace TestLinkConverter
             }
         }
 
+        [Obsolete]
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.timer.Stop();
             TimeSpan consume = DateTime.Now - this._starTime;
-            string showMsg = $"转换用例数: {_tcDic.Sum(keyValuePair => keyValuePair.Value.Count)}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.\n用例生成目录: {System.Environment.CurrentDirectory.ToString()}";
+            string showMsg = $"转换用例数: {_tcDic.Sum(keyValuePair => keyValuePair.Value.Count)}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.";
             MessageBox.Show(showMsg);
+
+            Thread thread = new Thread(new ParameterizedThreadStart(SaveFileByDialog));
+            thread.ApartmentState = ApartmentState.STA;
+            thread.Start(this.filePathTb.Text);
+
             OutputDisplay.ShowMessage(showMsg, Color.Azure);
-            this.filePathTb.Text = string.Empty;
+
             this.progressBar.Value = this.progressBar.Minimum;
         }
 
@@ -89,12 +97,6 @@ namespace TestLinkConverter
             {
                 ExcelAnalysisByEpplus excelAnalysis = new ExcelAnalysisByEpplus(fileDir);
                 _tcDic = excelAnalysis.ReadExcel();
-
-                var tsg = new TestSuiteGenerator(_tcDic);
-                var tsDic = tsg.BuildTestSuite();
-
-                XmlHandler xh = new XmlHandler(_tcDic);
-                xh.WriteXml2(xh.BuildStr(tsDic));
             }
             catch (Exception ex)
             {
@@ -102,6 +104,57 @@ namespace TestLinkConverter
                 OutputDisplay.ShowMessage(ex.ToString(), Color.Red);
                 return;
             }
+        }
+
+        [Obsolete]
+        private void SaveFileByDialog(object fileObj)
+        {
+            if (fileObj is string fileDir && fileDir.EndsWith("xml"))
+            {
+                if (_tcDic.First().Value == null)
+                {
+                    return;
+                }
+
+                SaveFileDialog sfd = new SaveFileDialog { RestoreDirectory = true, Filter = "Excel 2007(*.xlsx)|*.xlsx|Excel 2003(*.xls)|*.xls" };
+
+                ExcelHandler eh = new ExcelHandler(_tcDic.First().Value);
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        eh.WriteExcel(sfd.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        OutputDisplay.ShowMessage(ex.ToString(), Color.Red);
+                        this._logger.Error(ex);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                SaveFileDialog sfd = new SaveFileDialog { RestoreDirectory = true, Filter = "Xml File(*.xml)|*.xml" };
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        var tsg = new TestSuiteGenerator(_tcDic);
+                        var tsDic = tsg.BuildTestSuite();
+
+                        XmlHandler xh = new XmlHandler(_tcDic);
+                        xh.WriteXml2(xh.BuildStr(tsDic), sfd.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        OutputDisplay.ShowMessage(ex.ToString(), Color.Red);
+                        this._logger.Error(ex);
+                        return;
+                    }
+                }
+            }
+
         }
 
         /// <summary>
@@ -119,9 +172,7 @@ namespace TestLinkConverter
                 List<TestCase> tcList = xtm.OutputTestCases();
                 this._tcDic = new Dictionary<string, List<TestCase>>();
                 _tcDic.Add("TestCase", tcList);
-
-                ExcelHandler eh = new ExcelHandler(tcList);
-                eh.WriteExcel();
+                
             }
             catch (Exception ex)
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Xml;
 using ConvertModel;
 using log4net;
@@ -20,7 +21,14 @@ namespace ConvertLibrary
 
         public List<TestCase> OutputTestCases()
         {
-            return _sourceNodes.Select(this.NodeToModel).ToList();
+            List<TestCase> tcList = new List<TestCase>();
+            foreach (XmlNode node in _sourceNodes)
+            {
+                tcList.Add(NodeToModel(node));
+                ProgressBarShow.ShowProgressValue(this._sourceNodes.IndexOf(node) * 100 / (this._sourceNodes.Count-1));
+            }
+
+            return tcList;
         }
 
         /// <summary>
@@ -106,7 +114,8 @@ namespace ConvertLibrary
                 }
             }
             tc.TestCaseHierarchy = GetTestCaseHierarchy(node);
-
+            OutputDisplay.ShowMessage(tc.Name, Color.Chartreuse);
+            Thread.Sleep(100);
             return tc;
         }
 

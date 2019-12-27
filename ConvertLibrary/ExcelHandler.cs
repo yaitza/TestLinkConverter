@@ -29,17 +29,14 @@ namespace ConvertLibrary
         /// <summary>
         /// 写Excel
         /// </summary>
-        public void WriteExcel()
+        public void WriteExcel(string fileName)
         {
-            string currentDir = Environment.CurrentDirectory;
-            string saveDir = $"{currentDir}\\TestCase_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
-
             using (var p = new ExcelPackage())
             {
                 this.WriteInWorkSheet(p.Workbook);
-                p.SaveAs(new FileInfo(saveDir));
+                p.SaveAs(new FileInfo(fileName));
             }
-            OutputDisplay.ShowMessage($"文件保存路勁：{saveDir}\n", Color.Azure);
+            OutputDisplay.ShowMessage($"文件保存路勁：{fileName}\n", Color.Azure);
         }
 
         private void WriteInWorkSheet(ExcelWorkbook workBook)
@@ -64,8 +61,8 @@ namespace ConvertLibrary
                 {
                     continue;
                 }
-                OutputDisplay.ShowMessage(node.Name, Color.Chartreuse);
-                ProgressBarShow.ShowProgressValue(this._sourceTestCases.IndexOf(node) * 100 / this._sourceTestCases.Count);
+                // 写Excel时进度条展示
+                // ProgressBarShow.ShowProgressValue(this._sourceTestCases.IndexOf(node) * 100 / this._sourceTestCases.Count);
                 workSheet.Row(iFlag).CustomHeight = true;
                 workSheet.Cells[iFlag, 1].Value = node.ExternalId;
 
