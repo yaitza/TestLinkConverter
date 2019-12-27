@@ -87,7 +87,7 @@ namespace ConvertLibrary
                 return tcList;
             }
 
-            String[] testSuitesName = new string[10];
+            List<string> testSuitesName = new List<string>();
             for (int i = 2; i <= usedRows; i++)
             {
                 var currentCell = eWorksheet.Cells[i, 1];
@@ -106,7 +106,19 @@ namespace ConvertLibrary
                     var cellObject = eWorksheet.Cells[i, j].Value;
                     if (titleName.Contains("级") && cellObject != null && !titleName.Contains("优先") )
                     {
-                        testSuitesName[j-1] = cellObject.ToString();
+                        if (testSuitesName.Count < j)
+                        {
+                            testSuitesName.Add(cellObject.ToString());
+                        }
+                        else
+                        {
+                            testSuitesName[j - 1] = cellObject.ToString();
+                        }
+
+                        for (int k = j; k < testSuitesName.Count; k++)
+                        {
+                            testSuitesName.RemoveAt(k);
+                        }
                         continue;
                     }
 
