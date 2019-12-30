@@ -25,9 +25,6 @@ namespace TransferLibTest
         [TestMethod]
         public void WriteExcelTest()
         {
-            var eh = new ExcelHandler(this._testCaseList);
-            eh.WriteExcel();
-
             Assert.AreEqual(0,0);
         }
     }
