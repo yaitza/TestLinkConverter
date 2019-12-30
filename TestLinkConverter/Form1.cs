@@ -66,11 +66,17 @@ namespace TestLinkConverter
         {
             this.timer.Stop();
             TimeSpan consume = DateTime.Now - this._starTime;
-            string showMsg = $"转换用例数: {_tcDic.Sum(keyValuePair => keyValuePair.Value.Count)}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.";
-            MessageBox.Show(showMsg);
+            string showMsg = $"转换用例数: {_tcDic.Sum(keyValuePair => keyValuePair.Value.Count)}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.\n";
+            var result = MessageBox.Show(showMsg,"TestLinkConverter", MessageBoxButtons.YesNo);
+            if (result == DialogResult.No)
+            {
+                return;
+            }
 
-            Thread thread = new Thread(new ParameterizedThreadStart(SaveFileByDialog));
-            thread.ApartmentState = ApartmentState.STA;
+            Thread thread = new Thread(new ParameterizedThreadStart(SaveFileByDialog))
+            {
+                ApartmentState = ApartmentState.STA
+            };
             thread.Start(this.filePathTb.Text);
 
             OutputDisplay.ShowMessage(showMsg, Color.Azure);
