@@ -103,6 +103,11 @@ namespace ConvertLibrary
             {
                 ProgressBarShow.ShowProgressValue(i * 100 / usedRows);
                 var currentCell = eWorksheet.Cells[i, 1];
+                if (currentCell.Text.Equals("END"))
+                {
+                    continue;
+                }
+
                 //设置单元格格式为文本格式，防止为自定义格式时读取单元格报错
                 for (int j = 2; j <= usedCols; j++)
                 {
@@ -124,11 +129,6 @@ namespace ConvertLibrary
                 }
                 else
                 {
-                    if(tc.ExternalId != null)
-                    {
-                        tcList.Add(tc);
-                    }
-
                     List<string> testSuitesName = new List<string>();
                     if (usedCols > 9)
                     {
@@ -163,6 +163,11 @@ namespace ConvertLibrary
 
                     tc.TestSteps = new List<TestStep> {tsOne};
                     OutputDisplay.ShowMessage(tc.Name, Color.Chartreuse);
+
+                    if (tc.ExternalId != null)
+                    {
+                        tcList.Add(tc);
+                    }
                 }
             }
 

@@ -25,7 +25,7 @@ namespace TestLinkConverter
 
         private delegate void SetPos(int ipos);
 
-        
+
         public Form()
         {
             InitializeComponent();
@@ -67,7 +67,7 @@ namespace TestLinkConverter
             this.timer.Stop();
             TimeSpan consume = DateTime.Now - this._starTime;
             string showMsg = $"转换用例数: {_tcDic.Sum(keyValuePair => keyValuePair.Value.Count)}. 耗时: {consume.Minutes.ToString("D2")}:{consume.Seconds.ToString("D2")}.\n";
-            var result = MessageBox.Show(showMsg,"TestLinkConverter", MessageBoxButtons.YesNo);
+            var result = MessageBox.Show(showMsg, "TestLinkConverter", MessageBoxButtons.YesNo);
             if (result == DialogResult.No)
             {
                 return;
@@ -103,6 +103,33 @@ namespace TestLinkConverter
             {
                 ExcelAnalysisByEpplus excelAnalysis = new ExcelAnalysisByEpplus(fileDir);
                 _tcDic = excelAnalysis.ReadExcel();
+            }
+            catch (Exception ex)
+            {
+                this._logger.Error(ex);
+                OutputDisplay.ShowMessage(ex.ToString(), Color.Red);
+                return;
+            }
+        }
+
+
+
+        /// <summary>
+        /// XML转换为Excel
+        /// </summary>
+        /// <param name="fileDir">文件路径</param>
+        [Obsolete]
+        private void XmlToExcel(string fileDir)
+        {
+            _ = GoogleAnalyticsTracker.Tracker("Work", "XmlToExcel");
+            try
+            {
+                XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
+                XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
+                List<TestCase> tcList = xtm.OutputTestCases();
+                this._tcDic = new Dictionary<string, List<TestCase>>();
+                _tcDic.Add("TestCase", tcList);
+
             }
             catch (Exception ex)
             {
@@ -160,33 +187,9 @@ namespace TestLinkConverter
                     }
                 }
             }
-
         }
 
-        /// <summary>
-        /// XML转换为Excel
-        /// </summary>
-        /// <param name="fileDir">文件路径</param>
-        [Obsolete]
-        private void XmlToExcel(string fileDir)
-        {
-            _ = GoogleAnalyticsTracker.Tracker("Work", "XmlToExcel");
-            try
-            {
-                XmlAnalysis xmlAnalysis = new XmlAnalysis(fileDir);
-                XmlToModel xtm = new XmlToModel(xmlAnalysis.GetAllTestCaseNodes());
-                List<TestCase> tcList = xtm.OutputTestCases();
-                this._tcDic = new Dictionary<string, List<TestCase>>();
-                _tcDic.Add("TestCase", tcList);
-                
-            }
-            catch (Exception ex)
-            {
-                this._logger.Error(ex);
-                OutputDisplay.ShowMessage(ex.ToString(), Color.Red);
-                return;
-            }
-        }
+
 
         /// <summary>
         /// 检查输入文件地址是否符合要求
@@ -258,7 +261,7 @@ namespace TestLinkConverter
             if (this.InvokeRequired)
             {
                 SetPos setPos = new SetPos(SetProgressValue);
-                this.Invoke(setPos, new object[] {ipos});
+                this.Invoke(setPos, new object[] { ipos });
             }
             else
             {
