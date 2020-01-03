@@ -48,8 +48,9 @@ namespace ConvertLibrary
             XmlNode xnTc = this._xmlDoc.SelectSingleNode("testcases");
             if (xn == null && xnTc == null)
             {
-                this._logger.Warn(new NullReferenceException("对应导出xml无测试用例数据."));
-                throw new NullReferenceException("对应导出xml无测试用例数据.");
+                string message = "对应导出xml无测试用例数据.";
+                this._logger.Warn(new NullReferenceException(message));
+                throw new NullReferenceException(message);
             }
 
             if (xn == null)
