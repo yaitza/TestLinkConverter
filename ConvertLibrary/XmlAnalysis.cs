@@ -33,8 +33,8 @@ namespace ConvertLibrary
             else
             {
                 string message = $"{filePath}文件已不存在.";
-                this._logger.Error(new Exception(message));
-                throw new Exception(message); 
+                this._logger.Error(new FileNotFoundException(message));
+                throw new FileNotFoundException(message); 
             }
         }
 
@@ -48,8 +48,8 @@ namespace ConvertLibrary
             XmlNode xnTc = this._xmlDoc.SelectSingleNode("testcases");
             if (xn == null && xnTc == null)
             {
-                this._logger.Warn(new Exception("对应导出xml无测试用例数据."));
-                throw new Exception("对应导出xml无测试用例数据.");
+                this._logger.Warn(new NullReferenceException("对应导出xml无测试用例数据."));
+                throw new NullReferenceException("对应导出xml无测试用例数据.");
             }
 
             if (xn == null)

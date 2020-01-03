@@ -59,10 +59,7 @@ namespace ConvertLibrary
                 dic.Add(sheetName, tcs);
             }
 
-            //          Worksheet ws = (Worksheet) wb.Worksheets.Item[1];
-            //          tcList = this.GetExcelData(ws);
             excel.Quit();
-            excel = null;
             CommonHelper.KillExcelProcess();
 
             return dic;

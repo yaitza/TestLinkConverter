@@ -122,7 +122,7 @@ namespace ConvertLibrary
                 this.MergeCells(workSheet, iMerge, iFlag - iMerge, maxHierarchy+9);
                 Thread.Sleep(50);
             }
-            workSheet.Cells[iFlag++, 1].Value = "END";
+            workSheet.Cells[iFlag, 1].Value = "END";
             ProgressBarShow.ShowProgressValue(100);
 
         }
