@@ -12,7 +12,7 @@ namespace ConvertLibTest
     [TestClass]
     public class TestSuiteGeneratorTest
     {
-        private Dictionary<string, List<ConvertModel.TestCase>> _tcDic;
+        private readonly Dictionary<string, List<ConvertModel.TestCase>> _tcDic;
         public TestSuiteGeneratorTest()
         {
             string fileDir = @"D:\github\TestLinkConverter\TestLinkConverter\bin\Debug\TestCase_20190912105226.xlsx";

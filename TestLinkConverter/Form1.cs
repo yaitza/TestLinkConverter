@@ -40,7 +40,10 @@ namespace TestLinkConverter
             _ = GoogleAnalyticsTracker.Tracker("Form", "Start");
             this._starTime = DateTime.Now;
             CommonHelper.KillExcelProcess();
-            if (this.FileChecked(filePathTb.Text)) return;
+            if (this.FileChecked(filePathTb.Text))
+            {
+                return;
+            }
 
             this.backgroundWorker.RunWorkerAsync(filePathTb.Text);
             this.timer.Start();

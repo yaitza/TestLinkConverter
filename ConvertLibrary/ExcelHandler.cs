@@ -119,7 +119,7 @@ namespace ConvertLibrary
                     iFlag++;
                     iMerge++;
                 }
-                this.MergeCells(workSheet, iMerge, iFlag - iMerge, maxHierarchy+9);
+                MergeCells(workSheet, iMerge, iFlag - iMerge, maxHierarchy+9);
                 Thread.Sleep(50);
             }
             workSheet.Cells[iFlag, 1].Value = "END";
@@ -193,7 +193,7 @@ namespace ConvertLibrary
         /// <param name="iMerge"></param>
         /// <param name="iFlag"></param>
         /// <param name="handleCellsCount"></param>
-        private void MergeCells(ExcelWorksheet workSheet, int iMerge, int iFlag, int handleCellsCount)
+        private static void MergeCells(ExcelWorksheet workSheet, int iMerge, int iFlag, int handleCellsCount)
         {
             //导出Excel前handleCellsCount-2列均需要合并单元格，排除预置条件和操作步骤列。
             for (int i = 1; i <= handleCellsCount-2; i++)
@@ -202,16 +202,16 @@ namespace ConvertLibrary
             }
         }
 
-        private string NumberToChinese(string inputNum)
+        private static string NumberToChinese(string inputNum)
         {
             string[] strArr = { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九", };
-            string[] Chinese = { "", "十", "百", "千", "万", "十", "百", "千", "亿" };
-            char[] tmpArr = inputNum.ToString().ToArray();
+            string[] chinese = { "", "十", "百", "千", "万", "十", "百", "千", "亿" };
+            char[] tmpArr = inputNum.ToArray();
             string tmpVal = "";
             for (int i = 0; i < tmpArr.Length; i++)
             {
                 tmpVal += strArr[tmpArr[i] - 48];        //ASCII编码 0为48
-                tmpVal += Chinese[tmpArr.Length - 1 - i];//根据对应的位数插入对应的单位
+                tmpVal += chinese[tmpArr.Length - 1 - i];//根据对应的位数插入对应的单位
             }
 
             return tmpVal;

@@ -51,7 +51,10 @@ namespace ConvertLibrary
                     tc.InternalId = node.Attributes["internalid"].Value;
                 }
 
-                if (node.Attributes != null) tc.Name = node.Attributes["name"].Value;
+                if (node.Attributes != null)
+                {
+                    tc.Name = node.Attributes["name"].Value;
+                }
             }
             catch (NullReferenceException ex)
             {
@@ -103,7 +106,10 @@ namespace ConvertLibrary
                         tc.Keywords = new List<string>();
                         foreach (XmlNode childNode in xmlNode.ChildNodes)
                         {
-                            if (childNode.Attributes != null) tc.Keywords.Add(childNode.Attributes["name"].Value);
+                            if (childNode.Attributes != null)
+                            {
+                                tc.Keywords.Add(childNode.Attributes["name"].Value);
+                            }
                         }
                         break;
                     case "requirement":

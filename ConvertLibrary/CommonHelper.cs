@@ -91,22 +91,20 @@ namespace ConvertLibrary
             {
                 return (ImportanceType)int.Parse(innerText);
             }
-            else
+
+            switch (innerText.ToLowerInvariant())
             {
-                switch (innerText.ToLower())
-                {
-                    case "高":
-                    case "high":
-                        return ImportanceType.高;
-                    case "中":
-                    case "medium":
-                        return ImportanceType.中;
-                    case "低":
-                    case "low":
-                        return ImportanceType.低;
-                    default:
-                        return ImportanceType.高;
-                }
+                case "高":
+                case "high":
+                    return ImportanceType.高;
+                case "中":
+                case "medium":
+                    return ImportanceType.中;
+                case "低":
+                case "low":
+                    return ImportanceType.低;
+                default:
+                    return ImportanceType.高;
             }
         }
 

@@ -83,7 +83,9 @@ namespace ConvertLibrary
 
             for (int i = 1; i < usedRows; i++)
             {
-                if (((Range)eWorksheet.Cells[i, 1]).Text != null || ((Range)eWorksheet.Cells[i, 1]).Text.ToString() != string.Empty || !((Range)eWorksheet.Cells[i, 1]).Text.ToString().Equals("END"))
+                if (((Range)eWorksheet.Cells[i, 1]).Text != null 
+                    || !string.IsNullOrWhiteSpace(((Range)eWorksheet.Cells[i, 1]).Text.ToString())
+                    || !((Range)eWorksheet.Cells[i, 1]).Text.ToString().Equals("END"))
                 {
                     continue;
                 }

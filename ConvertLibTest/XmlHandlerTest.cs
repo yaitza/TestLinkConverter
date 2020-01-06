@@ -12,7 +12,7 @@ namespace ConvertLibTest
     [TestClass]
     public class XmlHandlerTest
     {
-        private Dictionary<string, List<ConvertModel.TestCase>> _tcDic;
+        private readonly Dictionary<string, List<ConvertModel.TestCase>> _tcDic;
         public XmlHandlerTest()
         {
             string fileDir = @"D:\github\res\TestCase1.xlsx";
