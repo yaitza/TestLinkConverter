@@ -49,8 +49,8 @@ namespace ConvertLibrary
             if (xn == null && xnTc == null)
             {
                 string message = "对应导出xml无测试用例数据.";
-                this._logger.Warn(new NullReferenceException(message));
-                throw new NullReferenceException(message);
+                this._logger.Warn(new ArgumentNullException(message));
+                throw new ArgumentNullException(message);
             }
 
             if (xn == null)
