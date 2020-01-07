@@ -165,7 +165,7 @@ namespace ConvertLibrary
             ws.Cells[1, maxHierarchy + 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, maxHierarchy + 8].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             ws.Column(maxHierarchy + 8).Width = 10;
-            ws.Cells[1, maxHierarchy + 9].Value = "对于需求编号";
+            ws.Cells[1, maxHierarchy + 9].Value = "对应需求编号";
             ws.Cells[1, maxHierarchy + 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, maxHierarchy + 9].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             ws.Column(maxHierarchy + 9).Width = 10;
