@@ -121,8 +121,26 @@ namespace ConvertLibrary
                             tc.CustomFileds.Add(name, value);
                         }
                         break;
-                    case "requirement":
-                        tc.Requirement = xmlNode.InnerText;
+                    case "requirements":
+                        foreach (XmlNode childNode in xmlNode.ChildNodes)
+                        {
+                            string doc_id = string.Empty, title = string.Empty;
+                            foreach (XmlNode nodeTemp in childNode.ChildNodes)
+                            {
+                                switch (nodeTemp.Name)
+                                {
+                                    case "doc_id":
+                                        doc_id = nodeTemp.InnerText;
+                                        break;
+                                    case "title":
+                                        title = nodeTemp.InnerText;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            tc.Requirement = $"{doc_id} {title}";
+                        }
                         break;
                     default:
                         break;
