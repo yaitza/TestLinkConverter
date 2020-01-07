@@ -128,7 +128,7 @@ namespace ConvertLibrary
                         if (cellObject != null)
                         {
                             tcTemp.ExternalId =
-                                string.Format($"{cellObject.ToString()}_{new Random().Next(0, 10000)}");
+                                string.Format($"{cellObject.ToString()}");
                         }
                         continue;
                     }
