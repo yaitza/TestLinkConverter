@@ -72,8 +72,8 @@ TestLink XML Convert to Excel or Excel Convert to XML.
 ​	* http://blog.csdn.net/zzukun/article/details/50830439
 
 #### 3. EXE打包教程  
-​	* http://www.cnblogs.com/yinsq/p/5254893.html
-​	* https://blog.csdn.net/L120305q/article/details/98210048
+​	* http://www.cnblogs.com/yinsq/p/5254893.html  
+​	* https://blog.csdn.net/L120305q/article/details/98210048  
 ​	* https://blog.csdn.net/DonetRen/article/details/88766135
 
 #### 4. C#中跨线程访问控件问题解决方案
